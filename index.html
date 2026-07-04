@@ -2997,9 +2997,9 @@
                 const daysPerWeek = parseInt(el('daysPerWeek-bgn').value);
                 const monthsPerYear = parseInt(el('monthsPerYear-bgn').value);
                 const totalAnnual = wage * daysPerWeek * 4 * monthsPerYear;
-                const averageMonthly = totalAnnual / 12;
+                const averageMonthly = bulatkanRibuan(totalAnnual / 12);
                 el('annualResult-bgn').innerHTML = formatRupiah(totalAnnual);
-                el('monthlyResult-bgn').innerHTML = formatRupiah(Math.round(averageMonthly));
+                el('monthlyResult-bgn').innerHTML = formatRupiah(averageMonthly);
             }
 
             el('role-bgn').addEventListener('change', updateRoleWage);
@@ -3040,10 +3040,10 @@
                 const musim1 = parseInt(el('musim1-tani').value);
                 const musim2 = parseInt(el('musim2-tani').value);
                 const totalHari = musim1 + musim2;
-                const totalAnnual = totalHari * wage;
-                const averageMonthly = totalAnnual / 12;
+                const totalAnnual = bulatkanRibuan(totalHari * wage);
+                const averageMonthly = bulatkanRibuan(totalAnnual / 12);
                 el('annualResult-tani').innerHTML = formatRupiah(totalAnnual);
-                el('monthlyResult-tani').innerHTML = formatRupiah(Math.round(averageMonthly));
+                el('monthlyResult-tani').innerHTML = formatRupiah(averageMonthly);
             }
 
             el('gender-tani').addEventListener('change', updateGenderWage);
