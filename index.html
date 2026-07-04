@@ -1928,10 +1928,16 @@
                     <section id="hasil-utp" class="result">
                         <div id="banner-info-utp" class="banner banner-info"></div>
 
-                        <div class="headline">
-                            <div class="headline-label">Pendapatan Bersih / Tahun</div>
-                            <div class="headline-value" id="out-bersih-utp">Rp 0</div>
-                            <div class="headline-sub" id="out-headline-sub-utp">&nbsp;</div>
+                        <div class="headline-grid">
+                            <div class="headline">
+                                <div class="headline-label">Pendapatan Kotor / Tahun</div>
+                                <div class="headline-value" id="out-omset-headline-utp">Rp 0</div>
+                            </div>
+                            <div class="headline alt">
+                                <div class="headline-label">Pendapatan Bersih / Tahun</div>
+                                <div class="headline-value" id="out-bersih-utp">Rp 0</div>
+                                <div class="headline-sub" id="out-headline-sub-utp">&nbsp;</div>
+                            </div>
                         </div>
 
                         <div class="result-head">
@@ -1991,6 +1997,32 @@
                             <tr class="total-row">
                                 <td>Pendapatan Bersih</td>
                                 <td id="out-bersih-detail-utp">0</td>
+                            </tr>
+                        </table>
+
+                        <div class="result-head">
+                            <h3>Rincian Pendapatan / Bulan</h3><span>Blok D</span>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Keterangan</th>
+                                <th>Estimasi</th>
+                            </tr>
+                            <tr>
+                                <td>Rata-rata Hasil Panen per Bulan</td>
+                                <td id="out-panen-bulan-utp">0 kg</td>
+                            </tr>
+                            <tr>
+                                <td>Pendapatan Kotor / Bulan</td>
+                                <td id="out-omset-bulan-utp">0</td>
+                            </tr>
+                            <tr>
+                                <td>Total Pengeluaran / Bulan</td>
+                                <td id="out-minus-pengeluaran-bulan-utp">0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Pendapatan Bersih / Bulan</td>
+                                <td id="out-bersih-bulan-utp">0</td>
                             </tr>
                         </table>
 
@@ -2127,10 +2159,16 @@
                     <section id="hasil-buah" class="result">
                         <div id="banner-info-buah" class="banner banner-info"></div>
 
-                        <div class="headline">
-                            <div class="headline-label">Keuntungan Bersih / Tahun</div>
-                            <div class="headline-value" id="out-tahun-laba-buah">Rp 0</div>
-                            <div class="headline-sub" id="out-headline-sub-buah">&nbsp;</div>
+                        <div class="headline-grid">
+                            <div class="headline">
+                                <div class="headline-label">Omset Kotor / Tahun</div>
+                                <div class="headline-value" id="out-omset-headline-buah">Rp 0</div>
+                            </div>
+                            <div class="headline alt">
+                                <div class="headline-label">Keuntungan Bersih / Tahun</div>
+                                <div class="headline-value" id="out-tahun-laba-buah">Rp 0</div>
+                                <div class="headline-sub" id="out-headline-sub-buah">&nbsp;</div>
+                            </div>
                         </div>
 
                         <div class="result-head">
@@ -2202,6 +2240,36 @@
                             <tr class="total-row">
                                 <td>Total Keuntungan Bersih 1 Bulan</td>
                                 <td id="out-bln-laba-buah">0</td>
+                            </tr>
+                        </table>
+
+                        <div class="result-head">
+                            <h3>Estimasi Total per Tahun (12 Bulan)</h3><span>Blok E</span>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Kategori / Item</th>
+                                <th>Total Akumulasi 1 Tahun</th>
+                            </tr>
+                            <tr>
+                                <td>Total Modal Kulakan Buah (Beli Luar)</td>
+                                <td id="out-thn-modal-buah-buah">0</td>
+                            </tr>
+                            <tr>
+                                <td>Total Biaya Operasional / Transportasi</td>
+                                <td id="out-thn-ops-buah">0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Total Pengeluaran 1 Tahun</td>
+                                <td id="out-thn-total-modal-buah">0</td>
+                            </tr>
+                            <tr>
+                                <td>Total Omset Penjualan Kotor</td>
+                                <td id="out-thn-omset-buah">0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Total Keuntungan Bersih 1 Tahun</td>
+                                <td id="out-thn-laba-buah">0</td>
                             </tr>
                         </table>
                     </section>
@@ -2788,6 +2856,11 @@
                 let pendapatanBersih = omset - totalPengeluaran;
                 let totalAset = nilaiAsetTanah + asetAlat;
 
+                let panenBulan = Math.round(totalPanenKg / 12);
+                let omsetBulan = bulatkanRibuan(omset / 12);
+                let pengeluaranBulan = bulatkanRibuan(totalPengeluaran / 12);
+                let pendapatanBersihBulan = omsetBulan - pengeluaranBulan;
+
                 el("banner-info-utp").innerHTML = pesanValidasi;
                 el("banner-info-utp").classList.add("show");
 
@@ -2805,10 +2878,17 @@
                 el("out-aset-alat-utp").innerText = formatRp(asetAlat);
                 el("out-total-aset-utp").innerText = formatRp(totalAset);
                 el("out-bersih-utp").innerHTML = formatRp(pendapatanBersih) + (pendapatanBersih < 0 ? '<span class="loss-tag">Rugi</span>' : '');
+                el("out-omset-headline-utp").innerText = formatRp(omset);
                 el("out-headline-sub-utp").innerText = "Omset " + formatRp(omset) + " dikurangi total pengeluaran " + formatRp(totalPengeluaran);
+
+                el("out-panen-bulan-utp").innerText = panenBulan.toLocaleString('id-ID') + " kg";
+                el("out-omset-bulan-utp").innerText = formatRp(omsetBulan);
+                el("out-minus-pengeluaran-bulan-utp").innerText = "- " + formatRp(pengeluaranBulan);
+                el("out-bersih-bulan-utp").innerHTML = formatRp(pendapatanBersihBulan) + (pendapatanBersihBulan < 0 ? '<span class="loss-tag">Rugi</span>' : '');
 
                 el("out-bersih-utp").closest(".headline").classList.toggle("is-loss", pendapatanBersih < 0);
                 el("out-bersih-detail-utp").classList.toggle("value-loss", pendapatanBersih < 0);
+                el("out-bersih-bulan-utp").classList.toggle("value-loss", pendapatanBersihBulan < 0);
 
                 el("hasil-utp").classList.add("show");
             }
@@ -2922,6 +3002,8 @@
                 let omsetBulan = omsetTrip * frekuensiBulan;
                 let labaBulan = labaTrip * frekuensiBulan;
 
+                let modalBuahTahun = modalBuahBulan * 12;
+                let transportTahun = transportBulan * 12;
                 let omsetTahun = omsetBulan * 12;
                 let pengeluaranTahun = pengeluaranBulan * 12;
                 let labaTahun = labaBulan * 12;
@@ -2932,6 +3014,7 @@
                 el("banner-info-buah").classList.add("show");
 
                 el("out-tahun-laba-buah").innerHTML = formatRp(labaTahun) + (labaTahun < 0 ? '<span class="loss-tag">Rugi</span>' : '');
+                el("out-omset-headline-buah").innerText = formatRp(omsetTahun);
                 el("out-headline-sub-buah").innerText = "Omset " + formatRp(omsetTahun) + " dikurangi total pengeluaran " + formatRp(pengeluaranTahun);
                 el("out-tahun-laba-buah").closest(".headline").classList.toggle("is-loss", labaTahun < 0);
 
@@ -2951,8 +3034,15 @@
                 el("out-bln-omset-buah").innerText = formatRp(omsetBulan);
                 el("out-bln-laba-buah").innerText = formatRp(labaBulan);
 
+                el("out-thn-modal-buah-buah").innerText = formatRp(modalBuahTahun);
+                el("out-thn-ops-buah").innerText = formatRp(transportTahun);
+                el("out-thn-total-modal-buah").innerText = formatRp(pengeluaranTahun);
+                el("out-thn-omset-buah").innerText = formatRp(omsetTahun);
+                el("out-thn-laba-buah").innerText = formatRp(labaTahun);
+
                 el("out-trip-laba-detail-buah").classList.toggle("value-loss", labaTrip < 0);
                 el("out-bln-laba-buah").classList.toggle("value-loss", labaBulan < 0);
+                el("out-thn-laba-buah").classList.toggle("value-loss", labaTahun < 0);
 
                 el("hasil-buah").classList.add("show");
             }
