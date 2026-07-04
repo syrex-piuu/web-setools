@@ -1,0 +1,3052 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dasbor Kalkulator Pendapatan Informal — Sensus Ekonomi 2026</title>
+    <style>
+        :root {
+            --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-mono: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            --ink: #16232c;
+            --ink-soft: #55666f;
+            --ink-faint: #8b98a0;
+            --paper: #eef1ef;
+            --surface: #ffffff;
+            --surface-alt: #f6f8f7;
+            --line: #dbe3e0;
+            --line-soft: #e9eeec;
+            --navy: #0e2a43;
+            --navy-deep: #081b2c;
+            --good: #2f8f5b;
+            --good-soft: #e6f3ea;
+            --info: #1565c0;
+            --info-soft: #e3f2fd;
+            --danger: #c0392b;
+            --danger-soft: #fbe9e7;
+            --radius-sm: 7px;
+            --radius-md: 11px;
+            --radius-lg: 18px;
+            --shadow-sm: 0 1px 2px rgba(14, 42, 67, .07);
+            --shadow-md: 0 10px 26px -10px rgba(14, 42, 67, .22);
+            --shadow-lg: 0 24px 60px -18px rgba(4, 14, 24, .38);
+            --sidebar-w: 264px;
+            --sidebar-w-collapsed: 78px;
+            --topbar-h: 58px;
+            --ease: cubic-bezier(.4, 0, .2, 1);
+        }
+
+        /* ===== warna per modul (instrumen) ===== */
+        .module-utp {
+            --accent: #9c6d16;
+            --accent-deep: #6f4d0f;
+            --accent-soft: #f5ecd8;
+        }
+
+        .module-buah {
+            --accent: #c1483a;
+            --accent-deep: #8f3226;
+            --accent-soft: #fbe7e3;
+        }
+
+        .module-bgn {
+            --accent: #c1611b;
+            --accent-deep: #8f460f;
+            --accent-soft: #fcebdb;
+        }
+
+        .module-tani {
+            --accent: #3f7a44;
+            --accent-deep: #2b5730;
+            --accent-soft: #e5f0e3;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
+            font-family: var(--font-ui);
+            background:
+                radial-gradient(circle at 1px 1px, rgba(14, 42, 67, .05) 1px, transparent 0) 0 0 / 22px 22px,
+                var(--paper);
+            color: var(--ink);
+            line-height: 1.45;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        ::selection {
+            background: rgba(14, 42, 67, .16);
+        }
+
+        :focus-visible {
+            outline: 2.5px solid var(--navy);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        /* ===== layout shell ===== */
+        .app-shell {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .app-sidebar {
+            width: var(--sidebar-w);
+            flex: 0 0 var(--sidebar-w);
+            background: linear-gradient(175deg, var(--navy-deep), var(--navy) 78%);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            box-shadow: 2px 0 22px -10px rgba(0, 0, 0, .3);
+            z-index: 50;
+            transition: width .22s var(--ease), flex-basis .22s var(--ease);
+            overflow: hidden;
+        }
+
+        .app-shell.is-collapsed .app-sidebar {
+            width: var(--sidebar-w-collapsed);
+            flex-basis: var(--sidebar-w-collapsed);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 16px 17px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, .1);
+            min-height: 26px;
+        }
+
+        .brand-mark {
+            flex: 0 0 auto;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-mark svg {
+            width: 19px;
+            height: 19px;
+            color: #fff;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            white-space: nowrap;
+            opacity: 1;
+            transition: opacity .15s var(--ease);
+        }
+
+        .app-shell.is-collapsed .brand-text {
+            opacity: 0;
+            pointer-events: none;
+            width: 0;
+            flex: 0 0 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .brand-text strong {
+            font-size: 13.5px;
+            line-height: 1.3;
+            font-weight: 700;
+            letter-spacing: -.01em;
+        }
+
+        .brand-text span {
+            font-size: 10.5px;
+            color: rgba(255, 255, 255, .5);
+        }
+
+        .sidebar-toggle {
+            flex: 0 0 auto;
+            width: calc(100% - 24px);
+            margin: 2px 12px 10px;
+            padding: 9px 10px;
+            border-radius: 9px;
+            border: 1px solid rgba(255, 255, 255, .08);
+            background: rgba(255, 255, 255, .05);
+            color: rgba(255, 255, 255, .58);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 9px;
+            cursor: pointer;
+            font-family: var(--font-ui);
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: .01em;
+            white-space: nowrap;
+            transition: background .15s, color .15s, border-color .15s;
+        }
+
+        .sidebar-toggle:hover {
+            background: rgba(255, 255, 255, .11);
+            color: #fff;
+            border-color: rgba(255, 255, 255, .16);
+        }
+
+        .sidebar-toggle svg {
+            width: 15px;
+            height: 15px;
+            flex: 0 0 auto;
+            transition: transform .22s var(--ease);
+        }
+
+        .app-shell.is-collapsed .sidebar-toggle svg {
+            transform: rotate(180deg);
+        }
+
+        .app-shell.is-collapsed .brand {
+            justify-content: center;
+            padding: 20px 0 17px;
+            gap: 0;
+        }
+
+        .app-shell.is-collapsed .sidebar-toggle {
+            width: 44px;
+            margin-left: auto;
+            margin-right: auto;
+            justify-content: center;
+            padding: 9px;
+        }
+
+        .app-shell.is-collapsed .sidebar-toggle-label {
+            display: none;
+        }
+
+        .app-nav {
+            flex: 1;
+            padding: 14px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10.5px 12px;
+            border-radius: 10px;
+            border: none;
+            background: transparent;
+            color: rgba(255, 255, 255, .68);
+            text-align: left;
+            cursor: pointer;
+            width: 100%;
+            font-family: var(--font-ui);
+            font-size: 13.5px;
+            font-weight: 600;
+            position: relative;
+            transition: background .15s, color .15s;
+            white-space: nowrap;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, .08);
+            color: #fff;
+        }
+
+        .nav-item.active {
+            background: rgba(255, 255, 255, .13);
+            color: #fff;
+        }
+
+        .nav-item.active::before {
+            content: "";
+            position: absolute;
+            left: -12px;
+            top: 8px;
+            bottom: 8px;
+            width: 4px;
+            border-radius: 0 4px 4px 0;
+            background: var(--accent, #fff);
+        }
+
+        .app-shell.is-collapsed .nav-item {
+            justify-content: center;
+            padding: 10.5px 0;
+        }
+
+        .app-shell.is-collapsed .nav-item.active::before {
+            left: 0;
+        }
+
+        .nav-num {
+            flex: 0 0 auto;
+            width: 21px;
+            height: 21px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, .1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, .58);
+        }
+
+        .nav-item.active .nav-num {
+            background: var(--accent, #fff);
+            color: #0b1f33;
+        }
+
+        .app-shell.is-collapsed .nav-num {
+            display: none;
+        }
+
+        .nav-ico {
+            flex: 0 0 auto;
+            width: 18px;
+            height: 18px;
+            display: none;
+        }
+
+        .app-shell.is-collapsed .nav-ico {
+            display: flex;
+        }
+
+        .nav-ico svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .nav-label {
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .app-shell.is-collapsed .nav-label {
+            display: none;
+        }
+
+        .sidebar-foot {
+            padding: 13px 20px 18px;
+            font-size: 10.5px;
+            color: rgba(255, 255, 255, .38);
+            border-top: 1px solid rgba(255, 255, 255, .08);
+            line-height: 1.6;
+            white-space: nowrap;
+            opacity: 1;
+            transition: opacity .12s;
+        }
+
+        .app-shell.is-collapsed .sidebar-foot {
+            opacity: 0;
+            pointer-events: none;
+            padding-left: 0;
+            padding-right: 0;
+            text-align: center;
+        }
+
+        .sidebar-backdrop {
+            display: none;
+        }
+
+        .app-topbar {
+            display: none;
+        }
+
+        .app-main {
+            flex: 1;
+            min-width: 0;
+            padding: 38px 40px 64px;
+            max-width: 1680px;
+        }
+
+        .view.module-utp .card,
+        .view.module-buah .card,
+        .view.module-bgn .card,
+        .view.module-tani .card {
+            max-width: 880px;
+        }
+
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+            animation: viewin .28s var(--ease);
+        }
+
+        @keyframes viewin {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .001ms !important;
+                transition-duration: .001ms !important;
+            }
+        }
+
+        /* ===== beranda ===== */
+        .beranda-head {
+            margin-bottom: 28px;
+        }
+
+        .beranda-head .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            color: var(--navy-deep);
+            background: var(--surface);
+            border: 1px solid var(--line);
+            padding: 5px 11px;
+            border-radius: 999px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .beranda-head h1 {
+            font-size: 27px;
+            margin: 14px 0 8px;
+            letter-spacing: -.015em;
+            color: var(--navy-deep);
+            font-weight: 750;
+        }
+
+        .beranda-head p {
+            margin: 0;
+            color: var(--ink-soft);
+            font-size: 14.5px;
+            max-width: 100%;
+            line-height: 1.65;
+        }
+
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin: 26px 0 32px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-md);
+            padding: 15px 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-card .n {
+            font-family: var(--font-mono);
+            font-size: 21px;
+            font-weight: 700;
+            color: var(--navy-deep);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-card .l {
+            font-size: 11px;
+            color: var(--ink-faint);
+            margin-top: 4px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 16px;
+        }
+
+        .instr-card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            padding: 21px;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+            transition: transform .16s var(--ease), box-shadow .16s var(--ease), border-color .16s;
+            font-family: var(--font-ui);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .instr-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent);
+        }
+
+        .instr-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent);
+        }
+
+        .instr-card .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .instr-card .ic {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--accent-soft);
+            color: var(--accent-deep);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .instr-card .ic svg {
+            width: 21px;
+            height: 21px;
+        }
+
+        .instr-card .tag {
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--ink-faint);
+            background: var(--surface-alt);
+            padding: 3px 8px;
+            border-radius: 999px;
+        }
+
+        .instr-card h3 {
+            margin: 0;
+            font-size: 15.5px;
+            color: var(--ink);
+            font-weight: 700;
+            letter-spacing: -.005em;
+        }
+
+        .instr-card p {
+            margin: 0;
+            font-size: 12.5px;
+            color: var(--ink-soft);
+            line-height: 1.6;
+        }
+
+        .instr-card .go {
+            margin-top: 3px;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--accent-deep);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .instr-card .go svg {
+            width: 14px;
+            height: 14px;
+            transition: transform .15s var(--ease);
+        }
+
+        .instr-card:hover .go svg {
+            transform: translateX(3px);
+        }
+
+        /* ===== komponen bersama modul kalkulator ===== */
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            color: var(--accent-deep);
+            background: var(--accent-soft);
+            padding: 5px 11px;
+            border-radius: 999px;
+        }
+
+        .doc-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .doc-head__icon {
+            flex: 0 0 auto;
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: var(--accent-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-deep);
+        }
+
+        .doc-head__icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .view h1 {
+            font-size: 22.5px;
+            margin: 9px 0 5px;
+            letter-spacing: -.015em;
+            color: var(--navy-deep);
+            font-weight: 750;
+        }
+
+        .doc-sub {
+            margin: 0;
+            color: var(--ink-soft);
+            font-size: 13.5px;
+            max-width: 52ch;
+            line-height: 1.6;
+        }
+
+        .callout {
+            display: flex;
+            gap: 10px;
+            background: var(--surface-alt);
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--accent);
+            border-radius: var(--radius-md);
+            padding: 13px 15px;
+            font-size: 12.8px;
+            color: var(--ink-soft);
+            margin: 20px 0 24px;
+            line-height: 1.65;
+        }
+
+        .callout svg {
+            flex: 0 0 auto;
+            width: 16px;
+            height: 16px;
+            margin-top: 2px;
+            color: var(--accent-deep);
+        }
+
+        .callout b {
+            color: var(--ink);
+        }
+
+        .callout.info {
+            background: var(--info-soft);
+            border-left-color: var(--info);
+            color: #0d4d8c;
+        }
+
+        .callout.info svg {
+            color: var(--info);
+        }
+
+        .callout.info b {
+            color: #0a3a68;
+        }
+
+        .callout .row {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 3px;
+        }
+
+        .callout .row:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            padding: 28px 28px 32px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        fieldset {
+            border: 0;
+            margin: 0 0 24px;
+            padding: 0;
+        }
+
+        .blok-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            margin-bottom: 13px;
+        }
+
+        .blok-label .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex: 0 0 auto;
+        }
+
+        .blok-label::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--line);
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        .field:last-child {
+            margin-bottom: 0;
+        }
+
+        label.field-label {
+            display: block;
+            font-weight: 600;
+            font-size: 13.5px;
+            color: var(--ink);
+            margin-bottom: 7px;
+        }
+
+        small.hint {
+            display: block;
+            font-size: 11.5px;
+            color: var(--ink-faint);
+            margin-top: 6px;
+            line-height: 1.55;
+        }
+
+        select,
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 13px;
+            border: 1.5px solid var(--line);
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ink);
+            background: var(--surface);
+            transition: border-color .15s, box-shadow .15s;
+            font-family: var(--font-ui);
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2355666f' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 13px center;
+            padding-right: 36px;
+            cursor: pointer;
+        }
+
+        input[type="text"] {
+            font-family: var(--font-mono);
+        }
+
+        select:hover,
+        input[type="text"]:hover {
+            border-color: #c6d0cd;
+        }
+
+        select:focus,
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3.5px var(--accent-soft);
+        }
+
+        .prefix-wrap {
+            position: relative;
+        }
+
+        .prefix-wrap .rp {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--ink-faint);
+            font-size: 14px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .prefix-wrap input {
+            padding-left: 34px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 13px 12px 34px;
+            border: 1.5px solid var(--line);
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--ink);
+            background: var(--surface);
+            font-family: var(--font-mono);
+            transition: border-color .15s, box-shadow .15s;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]:hover {
+            border-color: #c6d0cd;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3.5px var(--accent-soft);
+        }
+
+        .segmented {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .seg-opt {
+            position: relative;
+        }
+
+        .seg-opt input {
+            position: absolute;
+            opacity: 0;
+            inset: 0;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .seg-opt span {
+            display: block;
+            text-align: center;
+            padding: 11px 8px;
+            border: 1.5px solid var(--line);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ink-soft);
+            transition: .15s;
+            cursor: pointer;
+        }
+
+        .seg-opt span:hover {
+            border-color: #c6d0cd;
+        }
+
+        .seg-opt input:checked+span {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            color: var(--accent-deep);
+        }
+
+        .seg-opt input:focus-visible+span {
+            box-shadow: 0 0 0 3.5px var(--accent-soft);
+        }
+
+        .slider-card {
+            background: var(--surface-alt);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-md);
+            padding: 16px 16px 14px;
+        }
+
+        .slider-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
+        }
+
+        .slider-top label {
+            font-weight: 600;
+            font-size: 13.5px;
+            color: var(--ink);
+        }
+
+        .slider-value {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--accent-deep);
+            background: var(--accent-soft);
+            padding: 3px 10px;
+            border-radius: 999px;
+            min-width: 56px;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 999px;
+            background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--fill, 50%), var(--line) var(--fill, 50%), var(--line) 100%);
+            outline: none;
+            margin: 4px 0;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 3px solid var(--accent);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .18);
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 3px solid var(--accent);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .18);
+            cursor: pointer;
+        }
+
+        .slider-scale {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10.5px;
+            color: var(--ink-faint);
+            margin-top: 4px;
+        }
+
+        .hide {
+            display: none !important;
+        }
+
+        /* ===== dropdown kustom (pengganti <select> sistem) ===== */
+        .csel {
+            position: relative;
+        }
+
+        .csel-trigger {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 12px 13px;
+            border: 1.5px solid var(--line);
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-weight: 600;
+            font-family: var(--font-ui);
+            color: var(--ink);
+            background: var(--surface);
+            cursor: pointer;
+            text-align: left;
+            transition: border-color .15s, box-shadow .15s;
+        }
+
+        .csel-trigger:hover {
+            border-color: #c6d0cd;
+        }
+
+        .csel.open .csel-trigger,
+        .csel-trigger:focus-visible {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3.5px var(--accent-soft);
+        }
+
+        .csel-value {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .csel-chev {
+            flex: 0 0 auto;
+            width: 14px;
+            height: 14px;
+            color: var(--ink-faint);
+            transition: transform .18s var(--ease);
+        }
+
+        .csel.open .csel-chev {
+            transform: rotate(180deg);
+            color: var(--accent-deep);
+        }
+
+        .csel-panel {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: calc(100% + 6px);
+            background: var(--surface);
+            border: 1.5px solid var(--line);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-md);
+            list-style: none;
+            margin: 0;
+            padding: 6px;
+            z-index: 30;
+            max-height: 0;
+            overflow: hidden auto;
+            opacity: 0;
+            transform: translateY(-4px);
+            pointer-events: none;
+            transition: max-height .2s var(--ease), opacity .15s var(--ease), transform .15s var(--ease);
+        }
+
+        .csel.open .csel-panel {
+            max-height: 320px;
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .csel-opt {
+            padding: 10.5px 11px;
+            border-radius: 7px;
+            font-size: 13.5px;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--ink-soft);
+            cursor: pointer;
+            transition: background .12s, color .12s;
+        }
+
+        .csel-opt:hover {
+            background: var(--surface-alt);
+            color: var(--ink);
+        }
+
+        .csel-opt[aria-selected="true"] {
+            background: var(--accent-soft);
+            color: var(--accent-deep);
+            font-weight: 700;
+        }
+
+        /* ===== tombol kembali di setiap instrumen ===== */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: none;
+            padding: 6px 2px;
+            margin-bottom: 16px;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--ink-soft);
+            cursor: pointer;
+            font-family: var(--font-ui);
+            transition: color .15s;
+        }
+
+        .back-link:hover {
+            color: var(--accent-deep);
+        }
+
+        .back-link svg {
+            width: 14px;
+            height: 14px;
+            flex: 0 0 auto;
+            transition: transform .15s var(--ease);
+        }
+
+        .back-link:hover svg {
+            transform: translateX(-3px);
+        }
+
+        .btn-hitung {
+            width: 100%;
+            background: linear-gradient(180deg, var(--accent), var(--accent-deep));
+            color: #fff;
+            padding: 15px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: .02em;
+            cursor: pointer;
+            margin-top: 6px;
+            box-shadow: 0 8px 18px -8px var(--accent-deep);
+            transition: transform .12s var(--ease), box-shadow .12s var(--ease), filter .12s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-hitung:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 22px -8px var(--accent-deep);
+            filter: brightness(1.03);
+        }
+
+        .btn-hitung:active {
+            transform: translateY(0);
+        }
+
+        .btn-hitung svg {
+            width: 17px;
+            height: 17px;
+        }
+
+        .banner {
+            display: none;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 14px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            line-height: 1.55;
+            margin-bottom: 18px;
+            border: 1px solid transparent;
+        }
+
+        .banner.show {
+            display: flex;
+        }
+
+        .banner svg {
+            flex: 0 0 auto;
+            width: 16px;
+            height: 16px;
+            margin-top: 2px;
+        }
+
+        .banner-error {
+            background: var(--danger-soft);
+            color: #8a2c20;
+            border-color: #f3c9c0;
+        }
+
+        .banner-info {
+            background: var(--good-soft);
+            color: #1f5c3a;
+            border-color: #bfe3cd;
+        }
+
+        .result {
+            margin-top: 8px;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: fadein .35s var(--ease);
+        }
+
+        @keyframes fadein {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 32px 0 13px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--navy-deep);
+        }
+
+        .result-head h3 {
+            font-size: 14px;
+            margin: 0;
+            color: var(--navy-deep);
+            letter-spacing: .02em;
+        }
+
+        .result-head span {
+            font-size: 11px;
+            color: var(--ink-faint);
+            font-weight: 700;
+            letter-spacing: .06em;
+        }
+
+        .headline {
+            background: linear-gradient(135deg, var(--navy-deep), var(--navy));
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            color: #fff;
+            margin-bottom: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .headline::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(360px 200px at 100% 0%, rgba(255, 255, 255, .08), transparent 60%);
+        }
+
+        .headline-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .65);
+            position: relative;
+        }
+
+        .headline-value {
+            font-family: var(--font-mono);
+            font-size: 30px;
+            font-weight: 700;
+            margin-top: 6px;
+            position: relative;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -.01em;
+        }
+
+        .headline-sub {
+            font-size: 12.5px;
+            color: rgba(255, 255, 255, .7);
+            margin-top: 8px;
+            position: relative;
+        }
+
+        .headline-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 6px;
+        }
+
+        .headline-grid .headline {
+            padding: 18px;
+        }
+
+        .headline-grid .headline-value {
+            font-size: 23px;
+            margin-top: 6px;
+        }
+
+        .headline.alt {
+            background: linear-gradient(135deg, var(--accent-deep), var(--accent));
+        }
+
+        .headline.alt.is-loss {
+            background: linear-gradient(135deg, #7a2318, var(--danger));
+        }
+
+        .headline-value .loss-tag {
+            display: inline-block;
+            font-family: var(--font-ui);
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, .22);
+            padding: 2px 8px;
+            border-radius: 999px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        td.value-loss {
+            color: var(--danger) !important;
+            font-weight: 700;
+        }
+
+        .result-container {
+            background: linear-gradient(135deg, var(--navy-deep), var(--navy));
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            color: #fff;
+            margin-top: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-container::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(360px 200px at 100% 0%, rgba(255, 255, 255, .08), transparent 60%);
+        }
+
+        .result-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .6);
+            position: relative;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 22px;
+            font-weight: 700;
+            margin: 6px 0 18px;
+            position: relative;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -.01em;
+        }
+
+        .result-value.monthly {
+            font-size: 28px;
+            margin-bottom: 0;
+            color: var(--accent-soft);
+        }
+
+        .divider-dash {
+            border-top: 1px dashed rgba(255, 255, 255, .25);
+            padding-top: 14px;
+            position: relative;
+        }
+
+        .formula-note {
+            margin-top: 22px;
+            padding: 13px 15px;
+            background: var(--surface-alt);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-md);
+            font-size: 11.5px;
+            color: var(--ink-faint);
+            line-height: 1.75;
+        }
+
+        .formula-note code {
+            font-family: var(--font-mono);
+            color: var(--ink-soft);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+        }
+
+        th {
+            text-align: left;
+            padding: 9px 4px;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            border-bottom: 1.5px solid var(--line);
+        }
+
+        td {
+            padding: 11px 4px;
+            border-bottom: 1px solid var(--line-soft);
+            color: var(--ink);
+        }
+
+        td:last-child,
+        th:last-child {
+            text-align: right;
+            font-family: var(--font-mono);
+            font-variant-numeric: tabular-nums;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr.total-row td {
+            font-weight: 700;
+            color: var(--navy-deep);
+            border-top: 1.5px solid var(--line);
+            border-bottom: none;
+            background: var(--surface-alt);
+        }
+
+        tr.total-row td:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+
+        tr.total-row td:last-child {
+            border-radius: 0 8px 8px 0;
+        }
+
+        .foot-note {
+            margin-top: 28px;
+            padding-top: 18px;
+            border-top: 1px dashed var(--line);
+            font-size: 11px;
+            color: var(--ink-faint);
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* ===== responsive ===== */
+        @media (min-width:861px) {
+            .app-shell.is-collapsed .app-main {
+                max-width: 1680px;
+            }
+        }
+
+        @media (max-width:860px) {
+            .app-shell {
+                flex-direction: column;
+            }
+
+            .app-topbar {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                position: sticky;
+                top: 0;
+                height: var(--topbar-h);
+                padding: 0 14px;
+                background: linear-gradient(175deg, var(--navy-deep), var(--navy) 85%);
+                color: #fff;
+                z-index: 60;
+                box-shadow: 0 2px 14px -6px rgba(0, 0, 0, .35);
+            }
+
+            .app-topbar .hamburger {
+                flex: 0 0 auto;
+                width: 36px;
+                height: 36px;
+                border-radius: 9px;
+                border: none;
+                background: rgba(255, 255, 255, .1);
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+            }
+
+            .app-topbar .hamburger svg {
+                width: 19px;
+                height: 19px;
+            }
+
+            .app-topbar .topbar-title {
+                font-size: 13.5px;
+                font-weight: 700;
+                letter-spacing: -.005em;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .app-topbar .topbar-sub {
+                font-size: 10.5px;
+                color: rgba(255, 255, 255, .55);
+                margin-top: 1px;
+            }
+
+            .app-sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 280px;
+                flex: none;
+                height: 100vh;
+                transform: translateX(-100%);
+                transition: transform .26s var(--ease);
+                z-index: 90;
+            }
+
+            .app-shell.is-collapsed .app-sidebar {
+                width: 280px;
+            }
+
+            .app-sidebar.is-open {
+                transform: translateX(0);
+            }
+
+            .app-shell.is-collapsed .brand-text,
+            .app-shell.is-collapsed .nav-label,
+            .app-shell.is-collapsed .sidebar-foot {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .app-shell.is-collapsed .nav-num {
+                display: flex;
+            }
+
+            .app-shell.is-collapsed .nav-ico {
+                display: none;
+            }
+
+            .app-shell.is-collapsed .nav-item {
+                justify-content: flex-start;
+                padding: 10.5px 12px;
+            }
+
+            .sidebar-toggle {
+                display: none;
+            }
+
+            .sidebar-backdrop {
+                display: block;
+                position: fixed;
+                inset: 0;
+                background: rgba(4, 12, 20, .45);
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity .22s var(--ease);
+                z-index: 80;
+            }
+
+            .sidebar-backdrop.show {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .app-main {
+                padding: 22px 16px 50px;
+                max-width: 100%;
+            }
+
+            .card {
+                padding: 21px 18px 25px;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .segmented {
+                grid-template-columns: 1fr;
+            }
+
+            .headline-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .doc-head {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width:420px) {
+            .beranda-head h1 {
+                font-size: 22px;
+            }
+
+            .headline-value {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-shell" id="app-shell">
+
+        <!-- ============ TOPBAR MOBILE ============ -->
+        <header class="app-topbar">
+            <button class="hamburger" id="btn-open-sidebar" type="button" aria-label="Buka menu navigasi">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" y1="7" x2="20" y2="7" />
+                    <line x1="4" y1="12" x2="20" y2="12" />
+                    <line x1="4" y1="17" x2="20" y2="17" />
+                </svg>
+            </button>
+            <div>
+                <div class="topbar-title" id="topbar-title">Beranda</div>
+                <div class="topbar-sub">Dasbor Kalkulator &middot; SE2026</div>
+            </div>
+        </header>
+
+        <!-- ============ BACKDROP MOBILE ============ -->
+        <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+        <!-- ============ SIDEBAR / SPINE NAVIGASI ============ -->
+        <aside class="app-sidebar" id="app-sidebar">
+            <div class="brand">
+                <div class="brand-mark">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="9" rx="1.5" />
+                        <rect x="14" y="3" width="7" height="5" rx="1.5" />
+                        <rect x="14" y="12" width="7" height="9" rx="1.5" />
+                        <rect x="3" y="16" width="7" height="5" rx="1.5" />
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <strong>Dasbor Kalkulator</strong>
+                    <span>Pendapatan Informal &middot; SE2026</span>
+                </div>
+            </div>
+            <button class="sidebar-toggle" id="btn-collapse-sidebar" type="button" aria-label="Ciutkan atau lebarkan sidebar" title="Ciutkan atau lebarkan sidebar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="14 6 8 12 14 18" />
+                </svg>
+                <span class="sidebar-toggle-label">Ciutkan panel</span>
+            </button>
+            <nav class="app-nav">
+                <button class="nav-item active" data-view="beranda" type="button" title="Beranda">
+                    <span class="nav-num">&#8226;</span>
+                    <span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 11l9-8 9 8" />
+                            <path d="M5 10v10h14V10" />
+                        </svg></span>
+                    <span class="nav-label">Beranda</span>
+                </button>
+                <button class="nav-item module-utp" data-view="utp" type="button" title="Pertanian">
+                    <span class="nav-num">01</span>
+                    <span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3c3 2 4 5 4 8 0 4-2 7-4 9-2-2-4-5-4-9 0-3 1-6 4-8Z" />
+                        </svg></span>
+                    <span class="nav-label">Pertanian</span>
+                </button>
+                <button class="nav-item module-buah" data-view="buah" type="button" title="Pedagang Buah">
+                    <span class="nav-num">02</span>
+                    <span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 10h16l-1.5 9a2 2 0 0 1-2 1.7H7.5a2 2 0 0 1-2-1.7L4 10Z" />
+                            <path d="M9 10a3 3 0 0 1 6 0" />
+                        </svg></span>
+                    <span class="nav-label">Pedagang Buah</span>
+                </button>
+                <button class="nav-item module-bgn" data-view="bgn" type="button" title="Buruh Bangunan">
+                    <span class="nav-num">03</span>
+                    <span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 21h18" />
+                            <path d="M6 21V10l6-5 6 5v11" />
+                            <path d="M10 21v-6h4v6" />
+                        </svg></span>
+                    <span class="nav-label">Buruh Bangunan</span>
+                </button>
+                <button class="nav-item module-tani" data-view="tani" type="button" title="Buruh Tani">
+                    <span class="nav-num">04</span>
+                    <span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 21c-4-1-7-4-7-9 3 0 5 1 6 3" />
+                            <path d="M12 21c4-1 7-4 7-9-3 0-5 1-6 3" />
+                            <path d="M12 21V9" />
+                        </svg></span>
+                    <span class="nav-label">Buruh Tani</span>
+                </button>
+            </nav>
+            <div class="sidebar-foot">Satu berkas HTML &middot; berjalan penuh tanpa koneksi internet di lapangan.</div>
+        </aside>
+
+        <!-- ============ MAIN CONTENT ============ -->
+        <main class="app-main">
+
+            <!-- ===== BERANDA ===== -->
+            <section id="view-beranda" class="view active">
+                <div class="beranda-head">
+                    <span class="eyebrow">Sensus Ekonomi 2026</span>
+                    <h1>Dasbor Kalkulator Pendapatan Sektor Informal</h1>
+                    <p>Empat instrumen bantu enumerator CAPI untuk mengestimasi pendapatan usaha di lapangan: pertanian,
+                        dagang keliling, buruh bangunan, dan buruh tani musiman. Pilih instrumen di bawah atau melalui
+                        panel navigasi.</p>
+                </div>
+
+                <div class="stat-row">
+                    <div class="stat-card">
+                        <div class="n">4</div>
+                        <div class="l">Instrumen Kalkulator</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="n">6</div>
+                        <div class="l">Jenis Komoditas Tani</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="n">2</div>
+                        <div class="l">Model Dagang Keliling</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="n">100%</div>
+                        <div class="l">Berjalan Offline</div>
+                    </div>
+                </div>
+
+                <div class="card-grid">
+                    <button class="instr-card module-utp" data-goto="utp" type="button">
+                        <div class="top">
+                            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 3c3 2 4 5 4 8 0 4-2 7-4 9-2-2-4-5-4-9 0-3 1-6 4-8Z" />
+                                </svg></div>
+                            <span class="tag">INSTRUMEN 01</span>
+                        </div>
+                        <h3>Kalkulator Pertanian</h3>
+                        <p>Biaya produksi, hasil panen, dan nilai aset untuk padi, umbi, jambu, pisang, pepaya, dan
+                            mangga.</p>
+                        <span class="go">Buka instrumen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14M13 6l6 6-6 6" />
+                            </svg></span>
+                    </button>
+
+                    <button class="instr-card module-buah" data-goto="buah" type="button">
+                        <div class="top">
+                            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 10h16l-1.5 9a2 2 0 0 1-2 1.7H7.5a2 2 0 0 1-2-1.7L4 10Z" />
+                                    <path d="M9 10a3 3 0 0 1 6 0" />
+                                </svg></div>
+                            <span class="tag">INSTRUMEN 02</span>
+                        </div>
+                        <h3>Pedagang Buah Keliling</h3>
+                        <p>Modal, omset, dan laba per trip serta akumulasi bulanan untuk pedagang jambu dan mangga
+                            keliling.</p>
+                        <span class="go">Buka instrumen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14M13 6l6 6-6 6" />
+                            </svg></span>
+                    </button>
+
+                    <button class="instr-card module-bgn" data-goto="bgn" type="button">
+                        <div class="top">
+                            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 21h18" />
+                                    <path d="M6 21V10l6-5 6 5v11" />
+                                    <path d="M10 21v-6h4v6" />
+                                </svg></div>
+                            <span class="tag">INSTRUMEN 03</span>
+                        </div>
+                        <h3>Buruh Bangunan</h3>
+                        <p>Estimasi pendapatan bulanan kenek, tukang, dan mandor berdasarkan upah harian dan intensitas
+                            proyek.</p>
+                        <span class="go">Buka instrumen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14M13 6l6 6-6 6" />
+                            </svg></span>
+                    </button>
+
+                    <button class="instr-card module-tani" data-goto="tani" type="button">
+                        <div class="top">
+                            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 21c-4-1-7-4-7-9 3 0 5 1 6 3" />
+                                    <path d="M12 21c4-1 7-4 7-9-3 0-5 1-6 3" />
+                                    <path d="M12 21V9" />
+                                </svg></div>
+                            <span class="tag">INSTRUMEN 04</span>
+                        </div>
+                        <h3>Buruh Tani Musiman</h3>
+                        <p>Estimasi pendapatan bulanan buruh tani berdasarkan gender, upah harian, dan bulan aktif
+                            kerja.</p>
+                        <span class="go">Buka instrumen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14M13 6l6 6-6 6" />
+                            </svg></span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- ===== MODUL 01: PERTANIAN ===== -->
+            <section id="view-utp" class="view module-utp">
+                <div class="card">
+                    <button type="button" class="back-link" data-goto="beranda">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
+                        Kembali ke Beranda
+                    </button>
+                    <span class="eyebrow">Sensus Ekonomi 2026 &middot; Instrumen 01</span>
+                    <div class="doc-head">
+                        <div>
+                            <h1>Kalkulator Pendapatan Pertanian</h1>
+                            <p class="doc-sub">Estimasi biaya, hasil panen, dan pendapatan usaha tani per tahun.</p>
+                        </div>
+                        <div class="doc-head__icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3c3 2 4 5 4 8 0 4-2 7-4 9-2-2-4-5-4-9 0-3 1-6 4-8Z" />
+                                <path d="M12 11c-2-2-5-2-7-1 0 3 2 5 5 5" />
+                                <path d="M12 14c2-2 5-2 7-1 0 3-2 5-5 5" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="callout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="9" />
+                            <line x1="12" y1="8" x2="12" y2="13" />
+                            <circle cx="12" cy="16.2" r=".4" fill="currentColor" />
+                        </svg>
+                        <div><b>Logika BPS aktif:</b> Padi, Jambu, Pisang, Umbi, dan Pepaya memakai input luas lahan
+                            (m²). Mangga memakai input jumlah pohon.</div>
+                    </div>
+
+                    <form id="form-utp" novalidate>
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok A — Komoditas</div>
+                            <div class="field">
+                                <label class="field-label" for="komoditas-utp">Pilih komoditas utama</label>
+                                <div class="csel">
+                                    <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                        <span class="csel-value">Padi Inbrida</span>
+                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                                    </button>
+                                    <ul class="csel-panel" role="listbox" tabindex="-1">
+                                        <li class="csel-opt" role="option" data-value="padi" aria-selected="true">Padi Inbrida</li>
+                                        <li class="csel-opt" role="option" data-value="umbi">Umbi-umbian (Singkong/Ubi)</li>
+                                        <li class="csel-opt" role="option" data-value="jambu_merah">Jambu Merah</li>
+                                        <li class="csel-opt" role="option" data-value="pisang">Pisang</li>
+                                        <li class="csel-opt" role="option" data-value="pepaya">Pepaya</li>
+                                        <li class="csel-opt" role="option" data-value="mangga">Mangga</li>
+                                    </ul>
+                                    <input type="hidden" id="komoditas-utp" value="padi">
+                                </div>
+                            </div>
+                            <div class="field hide" id="grup-sistem-utp">
+                                <label class="field-label">Sistem usaha</label>
+                                <div class="segmented">
+                                    <label class="seg-opt"><input type="radio" name="sistem_usaha_utp" value="hamparan"
+                                            checked><span>Lahan Hamparan</span></label>
+                                    <label class="seg-opt"><input type="radio" name="sistem_usaha_utp"
+                                            value="melanja"><span>Melanja (Sewa Pohon)</span></label>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok B — Luas &amp; Kepemilikan</div>
+                            <div class="field">
+                                <label class="field-label" id="label-input-utama-utp" for="input-nilai-utp">Total Luas
+                                    Lahan (m²)</label>
+                                <input type="text" id="input-nilai-utp" inputmode="numeric" placeholder="Contoh: 825">
+                            </div>
+                            <div class="field" id="grup-status-utp">
+                                <label class="field-label" for="status-lahan-utp">Status kepemilikan lahan</label>
+                                <div class="csel">
+                                    <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                        <span class="csel-value">Milik Sendiri</span>
+                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                                    </button>
+                                    <ul class="csel-panel" role="listbox" tabindex="-1">
+                                        <li class="csel-opt" role="option" data-value="milik" aria-selected="true">Milik Sendiri</li>
+                                        <li class="csel-opt" role="option" data-value="sewa">Sewa Lahan</li>
+                                    </ul>
+                                    <input type="hidden" id="status-lahan-utp" value="milik">
+                                </div>
+                            </div>
+                            <div class="field hide" id="grup-biaya-sewa-utp">
+                                <label class="field-label" id="label-sewa-utp" for="biaya-sewa-utp">Total Biaya Sewa per
+                                    Tahun</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="biaya-sewa-utp" inputmode="numeric" placeholder="0"></div>
+                            </div>
+                        </fieldset>
+
+                        <button type="button" class="btn-hitung" id="btn-hitung-utp">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="4" y="3" width="16" height="18" rx="2" />
+                                <line x1="8" y1="8" x2="16" y2="8" />
+                                <line x1="8" y1="12" x2="16" y2="12" />
+                                <line x1="8" y1="16" x2="12" y2="16" />
+                            </svg>
+                            Generate Laporan Otomatis
+                        </button>
+                    </form>
+
+                    <div id="banner-error-utp" class="banner banner-error"></div>
+
+                    <section id="hasil-utp" class="result">
+                        <div id="banner-info-utp" class="banner banner-info"></div>
+
+                        <div class="headline">
+                            <div class="headline-label">Pendapatan Bersih / Tahun</div>
+                            <div class="headline-value" id="out-bersih-utp">Rp 0</div>
+                            <div class="headline-sub" id="out-headline-sub-utp">&nbsp;</div>
+                        </div>
+
+                        <div class="result-head">
+                            <h3>Rincian Pengeluaran / Tahun</h3><span>Blok C</span>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Kategori / Item</th>
+                                <th>Nominal (Rp)</th>
+                            </tr>
+                            <tr>
+                                <td>Biaya Produksi (Bibit, Pupuk, Obat dll)</td>
+                                <td id="out-produksi-utp">0</td>
+                            </tr>
+                            <tr>
+                                <td>Biaya Operasional Dasar (Traktor, BBM, Angkut)</td>
+                                <td id="out-ops-dasar-utp">0</td>
+                            </tr>
+                            <tr>
+                                <td>Biaya Sewa (Lahan/Pohon)</td>
+                                <td id="out-ops-sewa-utp">0</td>
+                            </tr>
+                            <tr>
+                                <td>Biaya Buruh Tani</td>
+                                <td id="out-buruh-utp">0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Total Pengeluaran 1 Tahun</td>
+                                <td id="out-total-pengeluaran-utp">0</td>
+                            </tr>
+                        </table>
+
+                        <div class="result-head">
+                            <h3>Rincian Pendapatan / Tahun</h3><span>Blok D</span>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Keterangan</th>
+                                <th>Estimasi</th>
+                            </tr>
+                            <tr>
+                                <td>Total Hasil Panen Setahun</td>
+                                <td id="out-panen-utp">0 kg</td>
+                            </tr>
+                            <tr>
+                                <td>Harga Jual (Standar Input)</td>
+                                <td id="out-harga-jual-utp">0 / kg</td>
+                            </tr>
+                            <tr>
+                                <td>Pendapatan Kotor (Omset)</td>
+                                <td id="out-omset-utp">0</td>
+                            </tr>
+                            <tr>
+                                <td>Total Pengeluaran</td>
+                                <td id="out-minus-pengeluaran-utp">0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Pendapatan Bersih</td>
+                                <td id="out-bersih-detail-utp">0</td>
+                            </tr>
+                        </table>
+
+                        <div class="result-head">
+                            <h3>Rincian Nilai Aset</h3><span>Blok E</span>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Kategori Aset</th>
+                                <th>Nilai (Rp)</th>
+                            </tr>
+                            <tr>
+                                <td>Nilai Aset Tanah</td>
+                                <td id="out-aset-tanah-utp">0</td>
+                            </tr>
+                            <tr>
+                                <td>Nilai Aset Non-Tanah (Alat Produksi/Sprayer dll)</td>
+                                <td id="out-aset-alat-utp">0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Total Aset Usaha</td>
+                                <td id="out-total-aset-utp">0</td>
+                            </tr>
+                        </table>
+                    </section>
+                </div>
+            </section>
+
+            <!-- ===== MODUL 02: PEDAGANG BUAH ===== -->
+            <section id="view-buah" class="view module-buah">
+                <div class="card">
+                    <button type="button" class="back-link" data-goto="beranda">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
+                        Kembali ke Beranda
+                    </button>
+                    <span class="eyebrow">Sensus Ekonomi 2026 &middot; Instrumen 02</span>
+                    <div class="doc-head">
+                        <div>
+                            <h1>Kalkulator Pedagang Buah Keliling</h1>
+                            <p class="doc-sub">Estimasi modal, omset, dan laba usaha dagang keliling per sekali jalan
+                                dan per bulan.</p>
+                        </div>
+                        <div class="doc-head__icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 10h16l-1.5 9a2 2 0 0 1-2 1.7H7.5a2 2 0 0 1-2-1.7L4 10Z" />
+                                <path d="M9 10a3 3 0 0 1 6 0" />
+                                <path d="M12 4c.8 0 1.5.6 1.5 1.5S12.8 7 12 7s-1.5-.6-1.5-1.5S11.2 4 12 4Z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="callout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="9" />
+                            <line x1="12" y1="8" x2="12" y2="13" />
+                            <circle cx="12" cy="16.2" r=".4" fill="currentColor" />
+                        </svg>
+                        <div>
+                            <div class="row"><b>🍎 Jambu:</b>&nbsp;Beli Rp3.500/kg &middot; Jual Rp13.000/kg &middot;
+                                Transport Rp230.000/Trip (Tetap)</div>
+                            <div class="row"><b>🥭 Mangga:</b>&nbsp;Beli Rp8.000/kg &middot; Jual Rp15.000/kg &middot;
+                                Transport (Input Manual)</div>
+                            <div class="row"><em>Frekuensi jualan default: 4x sebulan (setiap minggu).</em></div>
+                        </div>
+                    </div>
+
+                    <form id="form-buah" novalidate>
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok A — Komoditas &amp; Muatan</div>
+                            <div class="field">
+                                <label class="field-label" for="komoditas-buah">Pilih komoditas dagangan</label>
+                                <div class="csel">
+                                    <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                        <span class="csel-value">Jambu Merah</span>
+                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                                    </button>
+                                    <ul class="csel-panel" role="listbox" tabindex="-1">
+                                        <li class="csel-opt" role="option" data-value="jambu" aria-selected="true">Jambu Merah</li>
+                                        <li class="csel-opt" role="option" data-value="mangga">Mangga</li>
+                                    </ul>
+                                    <input type="hidden" id="komoditas-buah" value="jambu">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="field-label" id="label-muatan-buah" for="muatan-total-buah">Total Muatan
+                                    Sekali Berangkat (Kg)</label>
+                                <input type="text" id="muatan-total-buah" inputmode="numeric" placeholder="Contoh: 150">
+                            </div>
+                            <div class="field hide" id="grup-ops-buah">
+                                <label class="field-label" for="biaya-ops-manual-buah">Biaya Operasional per 1x
+                                    Jualan</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="biaya-ops-manual-buah" inputmode="numeric" placeholder="150.000"></div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok B — Sumber Buah</div>
+                            <div class="field">
+                                <label class="field-label">Sumber buah yang dijual</label>
+                                <div class="segmented">
+                                    <label class="seg-opt"><input type="radio" name="sumber_buah_buah"
+                                            value="beli_semua" checked><span>Beli Semua
+                                            (Tengkulak/Petani)</span></label>
+                                    <label class="seg-opt"><input type="radio" name="sumber_buah_buah"
+                                            value="campur"><span>Campur (Ada dari Kebun Sendiri)</span></label>
+                                </div>
+                            </div>
+                            <div class="field hide" id="grup-buah-sendiri-buah">
+                                <label class="field-label" id="label-sendiri-buah" for="buah-sendiri-buah">Jumlah Buah
+                                    Hasil Lahan Sendiri (Kg)</label>
+                                <input type="text" id="buah-sendiri-buah" inputmode="numeric" placeholder="Contoh: 50">
+                                <small class="hint">Modal harga beli tidak akan dihitung untuk buah dari lahan sendiri
+                                    ini.</small>
+                            </div>
+                        </fieldset>
+
+                        <button type="button" class="btn-hitung" id="btn-hitung-buah">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="4" y="3" width="16" height="18" rx="2" />
+                                <line x1="8" y1="8" x2="16" y2="8" />
+                                <line x1="8" y1="12" x2="16" y2="12" />
+                                <line x1="8" y1="16" x2="12" y2="16" />
+                            </svg>
+                            Hitung Pendapatan Bulanan
+                        </button>
+                    </form>
+
+                    <div id="banner-error-buah" class="banner banner-error"></div>
+
+                    <section id="hasil-buah" class="result">
+                        <div id="banner-info-buah" class="banner banner-info"></div>
+
+                        <div class="headline">
+                            <div class="headline-label">Keuntungan Bersih / Tahun</div>
+                            <div class="headline-value" id="out-tahun-laba-buah">Rp 0</div>
+                            <div class="headline-sub" id="out-headline-sub-buah">&nbsp;</div>
+                        </div>
+
+                        <div class="result-head">
+                            <h3>Estimasi per Sekali Jualan (1 Trip)</h3><span>Blok C</span>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Keterangan</th>
+                                <th>Estimasi Nilai</th>
+                            </tr>
+                            <tr>
+                                <td>Total Muatan Dibawa</td>
+                                <td id="out-trip-muatan-buah">0 kg</td>
+                            </tr>
+                            <tr>
+                                <td id="label-out-beli-buah">Buah Kulakan / Beli</td>
+                                <td id="out-trip-beli-kg-buah">0 kg</td>
+                            </tr>
+                            <tr>
+                                <td>Buah Lahan Sendiri (Tanpa Modal Beli)</td>
+                                <td id="out-trip-sendiri-kg-buah">0 kg</td>
+                            </tr>
+                            <tr>
+                                <td>Modal Pembelian Buah</td>
+                                <td id="out-trip-modal-buah-buah">Rp 0</td>
+                            </tr>
+                            <tr>
+                                <td>Biaya Operasional (Transport PP dll)</td>
+                                <td id="out-trip-ops-buah">Rp 0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Total Modal &amp; Pengeluaran 1x Jalan</td>
+                                <td id="out-trip-total-modal-detail-buah">Rp 0</td>
+                            </tr>
+                            <tr>
+                                <td id="label-out-omset-buah">Omset Kotor (Terjual Semua)</td>
+                                <td id="out-trip-omset-buah">Rp 0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Keuntungan Bersih 1x Jalan</td>
+                                <td id="out-trip-laba-detail-buah">Rp 0</td>
+                            </tr>
+                        </table>
+
+                        <div class="result-head">
+                            <h3>Estimasi Total per Bulan (4x Jalan)</h3><span>Blok D</span>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Kategori / Item</th>
+                                <th>Total Akumulasi 1 Bulan</th>
+                            </tr>
+                            <tr>
+                                <td>Total Modal Kulakan Buah (Beli Luar)</td>
+                                <td id="out-bln-modal-buah-buah">0</td>
+                            </tr>
+                            <tr>
+                                <td>Total Biaya Operasional / Transportasi</td>
+                                <td id="out-bln-ops-buah">0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Total Pengeluaran 1 Bulan</td>
+                                <td id="out-bln-total-modal-buah">0</td>
+                            </tr>
+                            <tr>
+                                <td>Total Omset Penjualan Kotor</td>
+                                <td id="out-bln-omset-buah">0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Total Keuntungan Bersih 1 Bulan</td>
+                                <td id="out-bln-laba-buah">0</td>
+                            </tr>
+                        </table>
+                    </section>
+                </div>
+            </section>
+
+            <!-- ===== MODUL 03: BURUH BANGUNAN ===== -->
+            <section id="view-bgn" class="view module-bgn">
+                <div class="card">
+                    <button type="button" class="back-link" data-goto="beranda">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
+                        Kembali ke Beranda
+                    </button>
+                    <span class="eyebrow">Sensus Ekonomi 2026 &middot; Instrumen 03</span>
+                    <div class="doc-head">
+                        <div>
+                            <h1>Kalkulator Buruh Bangunan</h1>
+                            <p class="doc-sub">Estimasi rata-rata pendapatan bulanan buruh bangunan (kenek, tukang,
+                                mandor).</p>
+                        </div>
+                        <div class="doc-head__icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 21h18" />
+                                <path d="M6 21V10l6-5 6 5v11" />
+                                <path d="M10 21v-6h4v6" />
+                                <path d="M4 10 12 4l8 6" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="callout info">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8 12h8M8 16h5M6 4h12a1 1 0 0 1 1 1v14l-4-3H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" />
+                        </svg>
+                        <div><b>Tips probing:</b> Tanyakan, &ldquo;Dalam setahun terakhir, kira-kira berapa bulan Bapak
+                            nganggur nunggu proyek/borongan?&rdquo; Lalu kurangi dari 12 untuk mengisi total bulan
+                            aktif.</div>
+                    </div>
+
+                    <fieldset>
+                        <div class="blok-label"><span class="dot"></span>Blok A — Peran &amp; Upah</div>
+                        <div class="field">
+                            <label class="field-label" for="role-bgn">Peran pekerja (otomatis atur upah standar)</label>
+                            <div class="csel">
+                                <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                    <span class="csel-value">Tukang (Standar Rp 130.000)</span>
+                                    <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                                </button>
+                                <ul class="csel-panel" role="listbox" tabindex="-1">
+                                    <li class="csel-opt" role="option" data-value="Kenek">Laden (Standar Rp 90.000)</li>
+                                    <li class="csel-opt" role="option" data-value="Tukang" aria-selected="true">Tukang (Standar Rp 130.000)</li>
+                                    <li class="csel-opt" role="option" data-value="Mandor">Mandor (Standar Rp 180.000)</li>
+                                    <li class="csel-opt" role="option" data-value="Custom">Lainnya (Ketik Manual)</li>
+                                </ul>
+                                <input type="hidden" id="role-bgn" value="Tukang">
+                            </div>
+                        </div>
+                        <div class="field hide" id="field-wage-bgn">
+                            <label class="field-label" for="wage-bgn">Upah kerja per hari</label>
+                            <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="wage-bgn"
+                                    inputmode="numeric" value="130.000"></div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <div class="blok-label"><span class="dot"></span>Blok B — Intensitas Kerja</div>
+                        <div class="field">
+                            <div class="slider-card">
+                                <div class="slider-top"><label for="daysPerWeek-bgn">Hari kerja / minggu (saat
+                                        proyek)</label><span class="slider-value" id="daysValue-bgn">6 Hari</span></div>
+                                <input type="range" id="daysPerWeek-bgn" min="1" max="7" value="6">
+                                <div class="slider-scale"><span>1</span><span>7 hari</span></div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="slider-card">
+                                <div class="slider-top"><label for="monthsPerYear-bgn">Bulan aktif (ada proyek) /
+                                        tahun</label><span class="slider-value" id="monthsValue-bgn">9 Bulan</span>
+                                </div>
+                                <input type="range" id="monthsPerYear-bgn" min="1" max="12" value="9">
+                                <div class="slider-scale"><span>1</span><span>12 bulan</span></div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="result-container">
+                        <div class="result-title">Estimasi Pendapatan Tahunan</div>
+                        <div class="result-value" id="annualResult-bgn">Rp 0</div>
+                        <div class="divider-dash">
+                            <div class="result-title">Rata-rata Pendapatan per Bulan (Nilai Sensus)</div>
+                            <div class="result-value monthly" id="monthlyResult-bgn">Rp 0</div>
+                        </div>
+                    </div>
+
+                    <div class="formula-note">Rumus:
+                        <code>Upah Harian &times; Hari Kerja/Minggu &times; 4 Minggu &times; Bulan Aktif Proyek &divide; 12 Bulan</code>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== MODUL 04: BURUH TANI ===== -->
+            <section id="view-tani" class="view module-tani">
+                <div class="card">
+                    <button type="button" class="back-link" data-goto="beranda">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
+                        Kembali ke Beranda
+                    </button>
+                    <span class="eyebrow">Sensus Ekonomi 2026 &middot; Instrumen 04</span>
+                    <div class="doc-head">
+                        <div>
+                            <h1>Kalkulator Buruh Tani Musiman</h1>
+                            <p class="doc-sub">Estimasi rata-rata pendapatan bulanan buruh tani musiman berbasis upah
+                                harian.</p>
+                        </div>
+                        <div class="doc-head__icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 21c-4-1-7-4-7-9 3 0 5 1 6 3" />
+                                <path d="M12 21c4-1 7-4 7-9-3 0-5 1-6 3" />
+                                <path d="M12 21V9" />
+                                <path d="M12 9c0-3 1.5-5 4-6-.5 3-2 5-4 6Z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <fieldset>
+                        <div class="blok-label"><span class="dot"></span>Blok A — Responden &amp; Upah</div>
+                        <div class="field">
+                            <label class="field-label" for="gender-tani">Jenis kelamin responden</label>
+                            <div class="csel">
+                                <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                    <span class="csel-value">Laki-laki (Standar Rp100.000/hari)</span>
+                                    <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                                </button>
+                                <ul class="csel-panel" role="listbox" tabindex="-1">
+                                    <li class="csel-opt" role="option" data-value="Laki-laki" aria-selected="true">Laki-laki (Standar Rp100.000/hari)</li>
+                                    <li class="csel-opt" role="option" data-value="Perempuan">Perempuan (Standar Rp85.000/hari)</li>
+                                    <li class="csel-opt" role="option" data-value="Custom">Lainnya (Ketik Manual)</li>
+                                </ul>
+                                <input type="hidden" id="gender-tani" value="Laki-laki">
+                            </div>
+                        </div>
+                        <div class="field hide" id="field-wage-tani">
+                            <label class="field-label" for="wage-tani">Upah kerja per hari</label>
+                            <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="wage-tani"
+                                    inputmode="numeric" value="100.000"></div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <div class="blok-label"><span class="dot"></span>Blok B — Intensitas Kerja</div>
+                        <div class="field">
+                            <div class="slider-card">
+                                <div class="slider-top"><label for="daysPerWeek-tani">Hari kerja / minggu (saat
+                                        musim)</label><span class="slider-value" id="daysValue-tani">4 Hari</span></div>
+                                <input type="range" id="daysPerWeek-tani" min="1" max="7" value="4">
+                                <div class="slider-scale"><span>1</span><span>7 hari</span></div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="slider-card">
+                                <div class="slider-top"><label for="monthsPerYear-tani">Bulan aktif bekerja /
+                                        tahun</label><span class="slider-value" id="monthsValue-tani">6 Bulan</span>
+                                </div>
+                                <input type="range" id="monthsPerYear-tani" min="1" max="12" value="6">
+                                <div class="slider-scale"><span>1</span><span>12 bulan</span></div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="result-container">
+                        <div class="result-title">Estimasi Pendapatan Tahunan</div>
+                        <div class="result-value" id="annualResult-tani">Rp 0</div>
+                        <div class="divider-dash">
+                            <div class="result-title">Rata-rata Pendapatan per Bulan (Nilai Sensus)</div>
+                            <div class="result-value monthly" id="monthlyResult-tani">Rp 0</div>
+                        </div>
+                    </div>
+
+                    <div class="formula-note">Rumus:
+                        <code>Upah Harian &times; Hari Kerja/Minggu &times; 4 Minggu &times; Bulan Aktif/Tahun &divide; 12 Bulan</code>
+                    </div>
+                </div>
+            </section>
+
+            <div class="foot-note">Dasbor Instrumen Enumerator SE2026 &middot; Empat kalkulator dalam satu berkas, dapat
+                diakses tanpa koneksi internet.</div>
+        </main>
+    </div>
+
+    <script>
+        /* ===================== UTILITAS ANGKA BERSAMA ===================== */
+        function formatRp(angka) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+        }
+        function bulatkanRibuan(angka) { return Math.round(angka / 1000) * 1000; }
+        function getRawNumber(formattedString) {
+            if (!formattedString) return 0;
+            return parseInt(String(formattedString).replace(/[^0-9]/g, '')) || 0;
+        }
+        function formatInputRibuan(input) {
+            let value = input.value.replace(/[^,\d]/g, '').toString();
+            let split = value.split(',');
+            let sisa = split[0].length % 3;
+            let angka = split[0].substr(0, sisa);
+            let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+            if (ribuan) { let separator = sisa ? '.' : ''; angka += separator + ribuan.join('.'); }
+            input.value = angka;
+        }
+        function formatInputRupiah(input) {
+            let value = input.value.replace(/[^,\d]/g, '').toString();
+            let split = value.split(',');
+            let sisa = split[0].length % 3;
+            let rupiah = split[0].substr(0, sisa);
+            let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+            if (ribuan) { let separator = sisa ? '.' : ''; rupiah += separator + ribuan.join('.'); }
+            input.value = rupiah ? rupiah : '';
+        }
+
+        /* ===================== DROPDOWN KUSTOM (PENGGANTI <select> SISTEM) ===================== */
+        (function () {
+            function closeAllCsel(except) {
+                document.querySelectorAll('.csel.open').forEach(function (w) {
+                    if (w !== except) {
+                        w.classList.remove('open');
+                        var t = w.querySelector('.csel-trigger');
+                        if (t) t.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+
+            document.querySelectorAll('.csel').forEach(function (wrap) {
+                var trigger = wrap.querySelector('.csel-trigger');
+                var panel = wrap.querySelector('.csel-panel');
+                var hidden = wrap.querySelector('input[type="hidden"]');
+                var valueEl = wrap.querySelector('.csel-value');
+                var opts = wrap.querySelectorAll('.csel-opt');
+                if (!trigger || !panel || !hidden) return;
+
+                function selectOpt(opt, silent) {
+                    opts.forEach(function (o) { o.setAttribute('aria-selected', 'false'); });
+                    opt.setAttribute('aria-selected', 'true');
+                    hidden.value = opt.getAttribute('data-value');
+                    valueEl.textContent = opt.textContent;
+                    if (!silent) { hidden.dispatchEvent(new Event('change', { bubbles: true })); }
+                }
+                function openPanel() {
+                    closeAllCsel(wrap);
+                    wrap.classList.add('open');
+                    trigger.setAttribute('aria-expanded', 'true');
+                }
+                function closePanel() {
+                    wrap.classList.remove('open');
+                    trigger.setAttribute('aria-expanded', 'false');
+                }
+
+                trigger.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    if (wrap.classList.contains('open')) closePanel(); else openPanel();
+                });
+
+                opts.forEach(function (opt) {
+                    opt.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        selectOpt(opt);
+                        closePanel();
+                        trigger.focus();
+                    });
+                });
+
+                trigger.addEventListener('keydown', function (e) {
+                    var arr = Array.prototype.slice.call(opts);
+                    var idx = arr.findIndex(function (o) { return o.getAttribute('aria-selected') === 'true'; });
+                    if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        if (!wrap.classList.contains('open')) { openPanel(); return; }
+                        idx = Math.min(arr.length - 1, idx + 1);
+                        selectOpt(arr[idx]);
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        if (!wrap.classList.contains('open')) { openPanel(); return; }
+                        idx = Math.max(0, idx - 1);
+                        selectOpt(arr[idx]);
+                    } else if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        if (wrap.classList.contains('open')) closePanel(); else openPanel();
+                    } else if (e.key === 'Escape') {
+                        closePanel();
+                    } else if (e.key === 'Tab') {
+                        closePanel();
+                    }
+                });
+            });
+
+            document.addEventListener('click', function () { closeAllCsel(); });
+        })();
+
+        /* ===================== ROUTER NAVIGASI ===================== */
+        (function () {
+            var MOBILE_QUERY = window.matchMedia('(max-width: 860px)');
+
+            function switchView(name, opts) {
+                opts = opts || {};
+                document.querySelectorAll('.view').forEach(function (v) { v.classList.remove('active'); });
+                document.querySelectorAll('.nav-item').forEach(function (b) { b.classList.remove('active'); });
+                var view = document.getElementById('view-' + name);
+                var nav = document.querySelector('.nav-item[data-view="' + name + '"]');
+                if (view) view.classList.add('active');
+                if (nav) nav.classList.add('active');
+                var topbarTitle = document.getElementById('topbar-title');
+                if (topbarTitle && nav) {
+                    var label = nav.querySelector('.nav-label');
+                    topbarTitle.textContent = label ? label.textContent : 'Beranda';
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                if (MOBILE_QUERY.matches) { closeMobileSidebar(); }
+
+                /* Catat riwayat navigasi agar tombol/gesture "back" perangkat kembali
+                   ke halaman sebelumnya di dalam dasbor, bukan langsung menutup browser. */
+                if (!opts.fromPopstate) {
+                    try {
+                        if (opts.replace) { history.replaceState({ scView: name }, '', location.href); }
+                        else { history.pushState({ scView: name }, '', location.href); }
+                    } catch (e) { /* abaikan jika origin tidak mendukung History API (mis. content://) */ }
+                }
+            }
+            window.switchView = switchView;
+
+            document.querySelectorAll('.nav-item').forEach(function (b) {
+                b.addEventListener('click', function () { switchView(b.getAttribute('data-view')); });
+            });
+            document.querySelectorAll('[data-goto]').forEach(function (b) {
+                b.addEventListener('click', function () { switchView(b.getAttribute('data-goto')); });
+            });
+
+            window.addEventListener('popstate', function (e) {
+                var name = (e.state && e.state.scView) || 'beranda';
+                switchView(name, { fromPopstate: true });
+            });
+            try { history.replaceState({ scView: 'beranda' }, '', location.href); } catch (e) { }
+
+            /* ===================== SIDEBAR: CIUTKAN (DESKTOP) & DRAWER (MOBILE) ===================== */
+            var shell = document.getElementById('app-shell');
+            var sidebar = document.getElementById('app-sidebar');
+            var backdrop = document.getElementById('sidebar-backdrop');
+            var btnCollapse = document.getElementById('btn-collapse-sidebar');
+            var btnOpen = document.getElementById('btn-open-sidebar');
+            var STORAGE_KEY = 'se2026-sidebar-collapsed';
+
+            function applyStoredCollapseState() {
+                if (MOBILE_QUERY.matches) return;
+                var stored = null;
+                try { stored = localStorage.getItem(STORAGE_KEY); } catch (e) { stored = null; }
+                if (stored === '1') { shell.classList.add('is-collapsed'); }
+            }
+
+            function toggleDesktopCollapse() {
+                shell.classList.toggle('is-collapsed');
+                try { localStorage.setItem(STORAGE_KEY, shell.classList.contains('is-collapsed') ? '1' : '0'); } catch (e) { }
+            }
+
+            function openMobileSidebar() {
+                sidebar.classList.add('is-open');
+                backdrop.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+            function closeMobileSidebar() {
+                sidebar.classList.remove('is-open');
+                backdrop.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+
+            if (btnCollapse) {
+                btnCollapse.addEventListener('click', function () {
+                    if (MOBILE_QUERY.matches) { closeMobileSidebar(); }
+                    else { toggleDesktopCollapse(); }
+                });
+            }
+            if (btnOpen) { btnOpen.addEventListener('click', openMobileSidebar); }
+            if (backdrop) { backdrop.addEventListener('click', closeMobileSidebar); }
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') { closeMobileSidebar(); }
+            });
+
+            MOBILE_QUERY.addEventListener('change', function () {
+                closeMobileSidebar();
+                shell.classList.remove('is-collapsed');
+                applyStoredCollapseState();
+            });
+
+            applyStoredCollapseState();
+        })();
+
+        /* ===================== MODUL 01: PERTANIAN ===================== */
+        (function () {
+            function formatRp(angka) {
+                return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+            }
+            function bulatkanRibuan(angka) { return Math.round(angka / 1000) * 1000; }
+            function getRawNumber(formattedString) {
+                if (!formattedString) return 0;
+                return parseInt(formattedString.replace(/[^0-9]/g, '')) || 0;
+            }
+            function formatInputRibuan(input) {
+                let value = input.value.replace(/[^,\d]/g, '').toString();
+                let split = value.split(',');
+                let sisa = split[0].length % 3;
+                let angka = split[0].substr(0, sisa);
+                let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+                if (ribuan) { let separator = sisa ? '.' : ''; angka += separator + ribuan.join('.'); }
+                input.value = angka;
+            }
+            function formatInputRupiah(input) {
+                let value = input.value.replace(/[^,\d]/g, '').toString();
+                let split = value.split(',');
+                let sisa = split[0].length % 3;
+                let rupiah = split[0].substr(0, sisa);
+                let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+                if (ribuan) { let separator = sisa ? '.' : ''; rupiah += separator + ribuan.join('.'); }
+                input.value = rupiah ? rupiah : '';
+            }
+            const el = (id) => document.getElementById(id);
+
+            function toggleForm() {
+                let komoditas = el("komoditas-utp").value;
+                let sistemEl = document.querySelector('input[name="sistem_usaha_utp"]:checked');
+                let sistem = sistemEl ? sistemEl.value : "hamparan";
+                let statusLahan = el("status-lahan-utp").value;
+
+                let grupSistem = el("grup-sistem-utp");
+                let labelInputUtama = el("label-input-utama-utp");
+                let grupStatus = el("grup-status-utp");
+                let grupBiayaSewa = el("grup-biaya-sewa-utp");
+                let labelSewa = el("label-sewa-utp");
+
+                if (komoditas === "mangga") {
+                    grupSistem.classList.remove("hide");
+                    labelInputUtama.innerText = "Jumlah Pohon Mangga (Batang)";
+                    if (sistem === "melanja") {
+                        grupStatus.classList.add("hide");
+                        grupBiayaSewa.classList.remove("hide");
+                        labelSewa.innerText = "Total Biaya Melanja / Sewa Pohon per Tahun";
+                    } else {
+                        grupStatus.classList.remove("hide");
+                        if (statusLahan === "sewa") { grupBiayaSewa.classList.remove("hide"); labelSewa.innerText = "Total Biaya Sewa Lahan per Tahun"; }
+                        else { grupBiayaSewa.classList.add("hide"); }
+                    }
+                } else {
+                    grupSistem.classList.add("hide");
+                    let radioHamparan = document.querySelector('input[name="sistem_usaha_utp"][value="hamparan"]');
+                    if (radioHamparan) radioHamparan.checked = true;
+                    sistem = "hamparan";
+                    labelInputUtama.innerText = "Total Luas Lahan (m²)";
+                    grupStatus.classList.remove("hide");
+                    if (statusLahan === "sewa") { grupBiayaSewa.classList.remove("hide"); labelSewa.innerText = "Total Biaya Sewa Lahan per Tahun"; }
+                    else { grupBiayaSewa.classList.add("hide"); }
+                }
+            }
+
+            function showError(msg) {
+                let box = el("banner-error-utp");
+                box.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12.5"/><circle cx="12" cy="15.5" r=".4" fill="currentColor"/></svg><span>' + msg + '</span>';
+                box.classList.add("show");
+                el("hasil-utp").classList.remove("show");
+            }
+            function clearError() { el("banner-error-utp").classList.remove("show"); }
+
+            function kalkulasiOtomatis() {
+                clearError();
+                let komoditas = el("komoditas-utp").value;
+                let sistem = document.querySelector('input[name="sistem_usaha_utp"]:checked').value;
+                let statusLahan = el("status-lahan-utp").value;
+
+                let inputVal = getRawNumber(el("input-nilai-utp").value);
+                let biayaSewa = getRawNumber(el("biaya-sewa-utp").value);
+
+                if (inputVal <= 0) {
+                    let labelSekarang = el("label-input-utama-utp").innerText;
+                    showError("Mohon isi \"" + labelSekarang + "\" terlebih dahulu!");
+                    return;
+                }
+
+                let hargaTanahDefault = 50000;
+                let hargaJual = 0;
+                let luasSetara = 0;
+                let totalPanenKg = 0;
+                let biayaProduksi = 0;
+                let biayaOpsDasar = 0;
+                let biayaBuruh = 0;
+                let asetAlat = 0;
+                let pesanValidasi = "";
+
+                if (komoditas === "padi") {
+                    luasSetara = inputVal;
+                    hargaJual = 7000;
+                    let rasioPanen = (1000 / 825);
+                    if (inputVal > 1650) rasioPanen = (8200 / 6600);
+                    totalPanenKg = Math.round(inputVal * rasioPanen);
+                    biayaProduksi = bulatkanRibuan(inputVal * 1100);
+                    biayaOpsDasar = bulatkanRibuan(inputVal * 500);
+                    asetAlat = bulatkanRibuan(350000 + (inputVal * 50));
+                    if (inputVal <= 825) { biayaBuruh = 0; pesanValidasi = "✅ [PADI] Lahan &le; 825 m². Biaya buruh otomatis Rp0 (Mandiri)."; }
+                    else { biayaBuruh = bulatkanRibuan(inputVal * 650); pesanValidasi = "⚠️ [PADI] Lahan > 825 m². Opsi Dengan Buruh diterapkan."; }
+                }
+                else if (komoditas === "umbi") {
+                    luasSetara = inputVal;
+                    hargaJual = 2500;
+                    let rasioPanen = 3;
+                    totalPanenKg = Math.round(inputVal * rasioPanen);
+                    biayaProduksi = bulatkanRibuan(inputVal * 800);
+                    biayaOpsDasar = bulatkanRibuan(inputVal * 300);
+                    asetAlat = bulatkanRibuan(200000 + (inputVal * 40));
+                    if (inputVal <= 825) { biayaBuruh = 0; pesanValidasi = "✅ [UMBI-UMBIAN] Lahan &le; 825 m². Biaya buruh otomatis Rp0."; }
+                    else { biayaBuruh = bulatkanRibuan(inputVal * 450); pesanValidasi = "⚠️ [UMBI-UMBIAN] Lahan > 825 m². Opsi Dengan Buruh diterapkan."; }
+                }
+                else if (komoditas === "jambu_merah") {
+                    luasSetara = inputVal;
+                    hargaJual = 3500;
+                    let rasioPanen = (1750 / 825);
+                    totalPanenKg = Math.round(inputVal * rasioPanen);
+                    let estimasiPohon = Math.round(inputVal / 25);
+                    biayaProduksi = bulatkanRibuan(inputVal * 2000);
+                    biayaOpsDasar = bulatkanRibuan(inputVal * 600);
+                    asetAlat = bulatkanRibuan(450000 + (inputVal * 100));
+                    pesanValidasi = '🌳 <strong>Estimasi Sistem:</strong> Terdapat &plusmn; ' + estimasiPohon + ' Pohon Jambu di lahan ' + inputVal.toLocaleString('id-ID') + ' m².<br>';
+                    if (inputVal <= 1700) { biayaBuruh = 0; pesanValidasi += "✅ [JAMBU MERAH] Lahan &le; 1.700 m². Biaya buruh otomatis Rp0."; }
+                    else { biayaBuruh = bulatkanRibuan(inputVal * 900); pesanValidasi += "⚠️ [JAMBU MERAH] Lahan > 1.700 m². Menggunakan Opsi Dengan Buruh."; }
+                }
+                else if (komoditas === "pisang") {
+                    luasSetara = inputVal;
+                    hargaJual = 5000;
+                    let rasioPanen = 2.5;
+                    totalPanenKg = Math.round(inputVal * rasioPanen);
+                    let estimasiRumpun = Math.round(inputVal / 9);
+                    biayaProduksi = bulatkanRibuan(inputVal * 1200);
+                    biayaOpsDasar = bulatkanRibuan(inputVal * 400);
+                    asetAlat = bulatkanRibuan(300000 + (inputVal * 60));
+                    pesanValidasi = '🍌 <strong>Estimasi Sistem:</strong> Terdapat &plusmn; ' + estimasiRumpun + ' Rumpun Pisang di lahan ' + inputVal.toLocaleString('id-ID') + ' m².<br>';
+                    if (inputVal <= 1700) { biayaBuruh = 0; pesanValidasi += "✅ [PISANG] Lahan &le; 1.700 m². Biaya buruh otomatis Rp0."; }
+                    else { biayaBuruh = bulatkanRibuan(inputVal * 700); pesanValidasi += "⚠️ [PISANG] Lahan > 1.700 m². Menggunakan Opsi Dengan Buruh."; }
+                }
+                else if (komoditas === "pepaya") {
+                    luasSetara = inputVal;
+                    hargaJual = 4000;
+                    let rasioPanen = 4;
+                    totalPanenKg = Math.round(inputVal * rasioPanen);
+                    let estimasiPohon = Math.round(inputVal / 4);
+                    biayaProduksi = bulatkanRibuan(inputVal * 1800);
+                    biayaOpsDasar = bulatkanRibuan(inputVal * 500);
+                    asetAlat = bulatkanRibuan(350000 + (inputVal * 80));
+                    pesanValidasi = '🌴 <strong>Estimasi Sistem:</strong> Terdapat &plusmn; ' + estimasiPohon + ' Pohon Pepaya di lahan ' + inputVal.toLocaleString('id-ID') + ' m².<br>';
+                    if (inputVal <= 1700) { biayaBuruh = 0; pesanValidasi += "✅ [PEPAYA] Lahan &le; 1.700 m². Biaya buruh otomatis Rp0."; }
+                    else { biayaBuruh = bulatkanRibuan(inputVal * 850); pesanValidasi += "⚠️ [PEPAYA] Lahan > 1.700 m². Menggunakan Opsi Dengan Buruh."; }
+                }
+                else if (komoditas === "mangga") {
+                    hargaJual = 8000;
+                    luasSetara = inputVal * 100;
+                    totalPanenKg = Math.round(inputVal * 120);
+                    if (sistem === "melanja") {
+                        statusLahan = "sewa";
+                        biayaProduksi = bulatkanRibuan(inputVal * 135000);
+                        biayaOpsDasar = bulatkanRibuan(inputVal * 95000);
+                        asetAlat = 2500000;
+                        pesanValidasi = '🌳 <strong>Sistem Melanja:</strong> ' + inputVal.toLocaleString('id-ID') + ' Pohon disetarakan dengan ' + luasSetara.toLocaleString('id-ID') + ' m² lahan.<br>';
+                    } else {
+                        biayaProduksi = bulatkanRibuan(inputVal * 125000);
+                        biayaOpsDasar = bulatkanRibuan(inputVal * 80000);
+                        asetAlat = bulatkanRibuan(800000 + (inputVal * 15000));
+                        pesanValidasi = '🌳 <strong>Hamparan Mangga:</strong> ' + inputVal.toLocaleString('id-ID') + ' Pohon disetarakan dengan ' + luasSetara.toLocaleString('id-ID') + ' m² lahan.<br>';
+                    }
+                    biayaBuruh = bulatkanRibuan(inputVal * 110000);
+                    pesanValidasi += "⚠️ Logika Buruh Mangga: Dihitung proporsional berdasarkan jumlah pohon.";
+                }
+
+                let nilaiAsetTanah = 0;
+                let bebanSewaFinal = 0;
+                if (statusLahan === "milik" && sistem !== "melanja") { nilaiAsetTanah = bulatkanRibuan(luasSetara * hargaTanahDefault); }
+                else { nilaiAsetTanah = 0; bebanSewaFinal = bulatkanRibuan(biayaSewa); }
+
+                let totalPengeluaran = biayaProduksi + biayaOpsDasar + bebanSewaFinal + biayaBuruh;
+                let omset = bulatkanRibuan(totalPanenKg * hargaJual);
+                let pendapatanBersih = omset - totalPengeluaran;
+                let totalAset = nilaiAsetTanah + asetAlat;
+
+                el("banner-info-utp").innerHTML = pesanValidasi;
+                el("banner-info-utp").classList.add("show");
+
+                el("out-produksi-utp").innerText = formatRp(biayaProduksi);
+                el("out-ops-dasar-utp").innerText = formatRp(biayaOpsDasar);
+                el("out-ops-sewa-utp").innerText = formatRp(bebanSewaFinal);
+                el("out-buruh-utp").innerText = formatRp(biayaBuruh);
+                el("out-total-pengeluaran-utp").innerText = formatRp(totalPengeluaran);
+                el("out-panen-utp").innerText = totalPanenKg.toLocaleString('id-ID') + " kg";
+                el("out-harga-jual-utp").innerText = formatRp(hargaJual) + " / kg";
+                el("out-omset-utp").innerText = formatRp(omset);
+                el("out-minus-pengeluaran-utp").innerText = "- " + formatRp(totalPengeluaran);
+                el("out-bersih-detail-utp").innerText = formatRp(pendapatanBersih);
+                el("out-aset-tanah-utp").innerText = formatRp(nilaiAsetTanah);
+                el("out-aset-alat-utp").innerText = formatRp(asetAlat);
+                el("out-total-aset-utp").innerText = formatRp(totalAset);
+                el("out-bersih-utp").innerHTML = formatRp(pendapatanBersih) + (pendapatanBersih < 0 ? '<span class="loss-tag">Rugi</span>' : '');
+                el("out-headline-sub-utp").innerText = "Omset " + formatRp(omset) + " dikurangi total pengeluaran " + formatRp(totalPengeluaran);
+
+                el("out-bersih-utp").closest(".headline").classList.toggle("is-loss", pendapatanBersih < 0);
+                el("out-bersih-detail-utp").classList.toggle("value-loss", pendapatanBersih < 0);
+
+                el("hasil-utp").classList.add("show");
+            }
+
+            el("komoditas-utp").addEventListener("change", toggleForm);
+            el("status-lahan-utp").addEventListener("change", toggleForm);
+            document.querySelectorAll('input[name="sistem_usaha_utp"]').forEach(function (r) { r.addEventListener("change", toggleForm); });
+            el("input-nilai-utp").addEventListener("keyup", function () { formatInputRibuan(this); });
+            el("biaya-sewa-utp").addEventListener("keyup", function () { formatInputRupiah(this); });
+            el("btn-hitung-utp").addEventListener("click", kalkulasiOtomatis);
+            toggleForm();
+        })();
+
+        /* ===================== MODUL 02: PEDAGANG BUAH ===================== */
+        (function () {
+            function formatRp(angka) {
+                return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+            }
+            function bulatkanRibuan(angka) { return Math.round(angka / 1000) * 1000; }
+            function getRawNumber(formattedString) {
+                if (!formattedString) return 0;
+                return parseInt(formattedString.replace(/[^0-9]/g, '')) || 0;
+            }
+            function formatInputRibuan(input) {
+                let value = input.value.replace(/[^,\d]/g, '').toString();
+                let split = value.split(',');
+                let sisa = split[0].length % 3;
+                let angka = split[0].substr(0, sisa);
+                let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+                if (ribuan) { let separator = sisa ? '.' : ''; angka += separator + ribuan.join('.'); }
+                input.value = angka;
+            }
+            function formatInputRupiah(input) {
+                let value = input.value.replace(/[^,\d]/g, '').toString();
+                let split = value.split(',');
+                let sisa = split[0].length % 3;
+                let rupiah = split[0].substr(0, sisa);
+                let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+                if (ribuan) { let separator = sisa ? '.' : ''; rupiah += separator + ribuan.join('.'); }
+                input.value = rupiah ? rupiah : '';
+            }
+            const el = (id) => document.getElementById(id);
+
+            function showError(msg) {
+                let box = el("banner-error-buah");
+                box.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12.5"/><circle cx="12" cy="15.5" r=".4" fill="currentColor"/></svg><span>' + msg + '</span>';
+                box.classList.add("show");
+            }
+            function clearError() { el("banner-error-buah").classList.remove("show"); }
+
+            function toggleForm() {
+                let komoditas = el("komoditas-buah").value;
+                let sumberEl = document.querySelector('input[name="sumber_buah_buah"]:checked');
+                let sumber = sumberEl ? sumberEl.value : "beli_semua";
+                let grupOps = el("grup-ops-buah");
+                let grupBuahSendiri = el("grup-buah-sendiri-buah");
+
+                if (komoditas === "mangga") { grupOps.classList.remove("hide"); }
+                else { grupOps.classList.add("hide"); el("biaya-ops-manual-buah").value = ""; }
+
+                if (sumber === "campur") { grupBuahSendiri.classList.remove("hide"); }
+                else { grupBuahSendiri.classList.add("hide"); el("buah-sendiri-buah").value = ""; }
+            }
+
+            function kalkulasiPedagang() {
+                clearError();
+                let komoditas = el("komoditas-buah").value;
+                let muatanTotal = getRawNumber(el("muatan-total-buah").value);
+                let sumber = document.querySelector('input[name="sumber_buah_buah"]:checked').value;
+
+                if (muatanTotal <= 0) {
+                    showError("Mohon isi Total Muatan Sekali Berangkat (Kg) terlebih dahulu!");
+                    el("hasil-buah").classList.remove("show");
+                    return;
+                }
+
+                let buahSendiri = 0;
+                if (sumber === "campur") { buahSendiri = getRawNumber(el("buah-sendiri-buah").value); }
+
+                if (buahSendiri > muatanTotal) {
+                    showError("Jumlah buah dari lahan sendiri tidak boleh lebih besar dari Total Muatan!");
+                    el("hasil-buah").classList.remove("show");
+                    return;
+                }
+
+                let buahBeli = muatanTotal - buahSendiri;
+                let hargaBeli = 0, hargaJual = 0, transportTrip = 0;
+                let frekuensiBulan = 4;
+                let namaBuah = (komoditas === "jambu") ? "Jambu" : "Mangga";
+
+                if (komoditas === "jambu") {
+                    hargaBeli = 3500; hargaJual = 13000; transportTrip = 230000;
+                } else if (komoditas === "mangga") {
+                    hargaBeli = 8000; hargaJual = 15000;
+                    transportTrip = getRawNumber(el("biaya-ops-manual-buah").value);
+                    if (transportTrip === 0) {
+                        showError("Mohon masukkan estimasi Biaya Operasional untuk Mangga terlebih dahulu!");
+                        el("hasil-buah").classList.remove("show");
+                        return;
+                    }
+                }
+
+                let modalBuahTrip = bulatkanRibuan(buahBeli * hargaBeli);
+                let pengeluaranTrip = modalBuahTrip + transportTrip;
+                let omsetTrip = bulatkanRibuan(muatanTotal * hargaJual);
+                let labaTrip = omsetTrip - pengeluaranTrip;
+
+                let modalBuahBulan = modalBuahTrip * frekuensiBulan;
+                let transportBulan = transportTrip * frekuensiBulan;
+                let pengeluaranBulan = pengeluaranTrip * frekuensiBulan;
+                let omsetBulan = omsetTrip * frekuensiBulan;
+                let labaBulan = labaTrip * frekuensiBulan;
+
+                let omsetTahun = omsetBulan * 12;
+                let pengeluaranTahun = pengeluaranBulan * 12;
+                let labaTahun = labaBulan * 12;
+
+                let pesanValidasi = '✅ <strong>' + namaBuah + ':</strong> Muatan ' + muatanTotal.toLocaleString('id-ID') + ' Kg &middot; Beli ' + buahBeli.toLocaleString('id-ID') + ' Kg &middot; Sendiri ' + buahSendiri.toLocaleString('id-ID') + ' Kg';
+
+                el("banner-info-buah").innerHTML = pesanValidasi;
+                el("banner-info-buah").classList.add("show");
+
+                el("out-tahun-laba-buah").innerHTML = formatRp(labaTahun) + (labaTahun < 0 ? '<span class="loss-tag">Rugi</span>' : '');
+                el("out-headline-sub-buah").innerText = "Omset " + formatRp(omsetTahun) + " dikurangi total pengeluaran " + formatRp(pengeluaranTahun);
+                el("out-tahun-laba-buah").closest(".headline").classList.toggle("is-loss", labaTahun < 0);
+
+                el("out-trip-muatan-buah").innerText = muatanTotal.toLocaleString('id-ID') + " kg";
+                el("label-out-beli-buah").innerText = "Buah Kulakan / Beli (@ " + formatRp(hargaBeli) + ")";
+                el("out-trip-beli-kg-buah").innerText = buahBeli.toLocaleString('id-ID') + " kg";
+                el("out-trip-sendiri-kg-buah").innerText = buahSendiri.toLocaleString('id-ID') + " kg";
+                el("out-trip-modal-buah-buah").innerText = formatRp(modalBuahTrip);
+                el("out-trip-ops-buah").innerText = formatRp(transportTrip);
+                el("out-trip-total-modal-detail-buah").innerText = formatRp(pengeluaranTrip);
+                el("label-out-omset-buah").innerText = "Omset Kotor (Terjual Semua @ " + formatRp(hargaJual) + ")";
+                el("out-trip-omset-buah").innerText = formatRp(omsetTrip);
+                el("out-trip-laba-detail-buah").innerText = formatRp(labaTrip);
+                el("out-bln-modal-buah-buah").innerText = formatRp(modalBuahBulan);
+                el("out-bln-ops-buah").innerText = formatRp(transportBulan);
+                el("out-bln-total-modal-buah").innerText = formatRp(pengeluaranBulan);
+                el("out-bln-omset-buah").innerText = formatRp(omsetBulan);
+                el("out-bln-laba-buah").innerText = formatRp(labaBulan);
+
+                el("out-trip-laba-detail-buah").classList.toggle("value-loss", labaTrip < 0);
+                el("out-bln-laba-buah").classList.toggle("value-loss", labaBulan < 0);
+
+                el("hasil-buah").classList.add("show");
+            }
+
+            el("komoditas-buah").addEventListener("change", toggleForm);
+            document.querySelectorAll('input[name="sumber_buah_buah"]').forEach(function (r) { r.addEventListener("change", toggleForm); });
+            el("muatan-total-buah").addEventListener("keyup", function () { formatInputRibuan(this); });
+            el("biaya-ops-manual-buah").addEventListener("keyup", function () { formatInputRupiah(this); });
+            el("buah-sendiri-buah").addEventListener("keyup", function () { formatInputRibuan(this); });
+            el("btn-hitung-buah").addEventListener("click", kalkulasiPedagang);
+            toggleForm();
+        })();
+
+        /* ===================== MODUL 03: BURUH BANGUNAN ===================== */
+        (function () {
+            const el = (id) => document.getElementById(id);
+
+            function updateRoleWage() {
+                const role = el('role-bgn').value;
+                const wageInput = el('wage-bgn');
+                const wageField = el('field-wage-bgn');
+                if (role === 'Kenek') { wageInput.value = '90.000'; wageField.classList.add('hide'); }
+                else if (role === 'Tukang') { wageInput.value = '130.000'; wageField.classList.add('hide'); }
+                else if (role === 'Mandor') { wageInput.value = '180.000'; wageField.classList.add('hide'); }
+                else { wageInput.value = ''; wageField.classList.remove('hide'); wageInput.focus(); }
+                calculateIncome();
+            }
+
+            function updateSliderValue(sliderId, valueId) {
+                const slider = el(sliderId);
+                const output = el(valueId);
+                const unit = sliderId === 'daysPerWeek-bgn' ? ' Hari' : ' Bulan';
+                output.innerHTML = slider.value + unit;
+                const pct = (slider.value - slider.min) / (slider.max - slider.min) * 100;
+                slider.style.setProperty('--fill', pct + '%');
+            }
+
+            function formatRupiah(angka) { return 'Rp ' + angka.toLocaleString('id-ID'); }
+
+            function calculateIncome() {
+                const wage = getRawNumber(el('wage-bgn').value);
+                const daysPerWeek = parseInt(el('daysPerWeek-bgn').value);
+                const monthsPerYear = parseInt(el('monthsPerYear-bgn').value);
+                const totalAnnual = wage * daysPerWeek * 4 * monthsPerYear;
+                const averageMonthly = totalAnnual / 12;
+                el('annualResult-bgn').innerHTML = formatRupiah(totalAnnual);
+                el('monthlyResult-bgn').innerHTML = formatRupiah(Math.round(averageMonthly));
+            }
+
+            el('role-bgn').addEventListener('change', updateRoleWage);
+            el('wage-bgn').addEventListener('keyup', function () { formatInputRibuan(this); calculateIncome(); });
+            el('daysPerWeek-bgn').addEventListener('input', function () { updateSliderValue('daysPerWeek-bgn', 'daysValue-bgn'); calculateIncome(); });
+            el('monthsPerYear-bgn').addEventListener('input', function () { updateSliderValue('monthsPerYear-bgn', 'monthsValue-bgn'); calculateIncome(); });
+            updateSliderValue('daysPerWeek-bgn', 'daysValue-bgn');
+            updateSliderValue('monthsPerYear-bgn', 'monthsValue-bgn');
+            calculateIncome();
+        })();
+
+        /* ===================== MODUL 04: BURUH TANI ===================== */
+        (function () {
+            const el = (id) => document.getElementById(id);
+
+            function updateGenderWage() {
+                const gender = el('gender-tani').value;
+                const wageInput = el('wage-tani');
+                const wageField = el('field-wage-tani');
+                if (gender === 'Laki-laki') { wageInput.value = '100.000'; wageField.classList.add('hide'); }
+                else if (gender === 'Perempuan') { wageInput.value = '85.000'; wageField.classList.add('hide'); }
+                else { wageInput.value = ''; wageField.classList.remove('hide'); wageInput.focus(); }
+                calculateIncome();
+            }
+
+            function updateSliderValue(sliderId, valueId) {
+                const slider = el(sliderId);
+                const output = el(valueId);
+                const unit = sliderId === 'daysPerWeek-tani' ? ' Hari' : ' Bulan';
+                output.innerHTML = slider.value + unit;
+                const pct = (slider.value - slider.min) / (slider.max - slider.min) * 100;
+                slider.style.setProperty('--fill', pct + '%');
+            }
+
+            function formatRupiah(angka) { return 'Rp ' + angka.toLocaleString('id-ID'); }
+
+            function calculateIncome() {
+                const wage = getRawNumber(el('wage-tani').value);
+                const daysPerWeek = parseInt(el('daysPerWeek-tani').value);
+                const monthsPerYear = parseInt(el('monthsPerYear-tani').value);
+                const totalAnnual = wage * daysPerWeek * 4 * monthsPerYear;
+                const averageMonthly = totalAnnual / 12;
+                el('annualResult-tani').innerHTML = formatRupiah(totalAnnual);
+                el('monthlyResult-tani').innerHTML = formatRupiah(Math.round(averageMonthly));
+            }
+
+            el('gender-tani').addEventListener('change', updateGenderWage);
+            el('wage-tani').addEventListener('keyup', function () { formatInputRibuan(this); calculateIncome(); });
+            el('daysPerWeek-tani').addEventListener('input', function () { updateSliderValue('daysPerWeek-tani', 'daysValue-tani'); calculateIncome(); });
+            el('monthsPerYear-tani').addEventListener('input', function () { updateSliderValue('monthsPerYear-tani', 'monthsValue-tani'); calculateIncome(); });
+            updateSliderValue('daysPerWeek-tani', 'daysValue-tani');
+            updateSliderValue('monthsPerYear-tani', 'monthsValue-tani');
+            calculateIncome();
+        })();
+    </script>
+
+</body>
+
+</html>
