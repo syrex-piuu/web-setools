@@ -25,6 +25,8 @@
             --info-soft: #e3f2fd;
             --danger: #c0392b;
             --danger-soft: #fbe9e7;
+            --warn: #9a6400;
+            --warn-soft: #fdf1da;
             --radius-sm: 7px;
             --radius-md: 11px;
             --radius-lg: 18px;
@@ -60,6 +62,12 @@
             --accent: #3f7a44;
             --accent-deep: #2b5730;
             --accent-soft: #e5f0e3;
+        }
+
+        .module-sosek {
+            --accent: #5b4b8a;
+            --accent-deep: #3e3363;
+            --accent-soft: #ece8f5;
         }
 
         * {
@@ -244,6 +252,24 @@
             overflow-x: hidden;
         }
 
+        .nav-group-label {
+            padding: 16px 12px 5px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .38);
+            white-space: nowrap;
+        }
+
+        .app-nav>.nav-group-label:first-child {
+            padding-top: 4px;
+        }
+
+        .app-shell.is-collapsed .nav-group-label {
+            display: none;
+        }
+
         .nav-item {
             display: flex;
             align-items: center;
@@ -382,8 +408,66 @@
         .view.module-utp .card,
         .view.module-buah .card,
         .view.module-bgn .card,
-        .view.module-tani .card {
+        .view.module-tani .card,
+        .view.module-sosek .card {
             max-width: 880px;
+        }
+
+        /* ===== layout 2 kolom khusus halaman sosek: input kiri, rincian kanan ===== */
+        .view.module-sosek .card {
+            max-width: 1360px;
+        }
+
+        .sosek-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+            gap: 32px;
+            align-items: start;
+        }
+
+        .sosek-col-result {
+            position: sticky;
+            top: 20px;
+            align-self: start;
+        }
+
+        .sosek-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 14px;
+            min-height: 260px;
+            padding: 32px 24px;
+            border: 1.5px dashed var(--line);
+            border-radius: var(--radius-lg);
+            color: var(--ink-faint);
+            background: var(--surface-alt);
+        }
+
+        .sosek-placeholder svg {
+            width: 34px;
+            height: 34px;
+            color: var(--accent);
+            opacity: .8;
+        }
+
+        .sosek-placeholder p {
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.6;
+            max-width: 34ch;
+        }
+
+        @media (max-width: 1300px) {
+            .sosek-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sosek-col-result {
+                position: static;
+            }
         }
 
         .view {
@@ -719,6 +803,20 @@
             text-transform: uppercase;
             color: var(--ink-faint);
             margin-bottom: 13px;
+        }
+
+        .sub-label {
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            color: var(--accent-deep);
+            margin: 22px 0 11px;
+        }
+
+        .field:first-child .sub-label,
+        fieldset .sub-label:first-child {
+            margin-top: 2px;
         }
 
         .blok-label .dot {
@@ -1184,6 +1282,12 @@
             border-color: #bfe3cd;
         }
 
+        .banner-warning {
+            background: var(--warn-soft);
+            color: #7a4d02;
+            border-color: #f0d38a;
+        }
+
         .result {
             margin-top: 8px;
             display: none;
@@ -1278,6 +1382,22 @@
             grid-template-columns: 1fr 1fr;
             gap: 12px;
             margin-bottom: 6px;
+        }
+
+        .headline-grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 6px;
+        }
+
+        .headline-grid-3 .headline {
+            padding: 18px;
+        }
+
+        .headline-grid-3 .headline-value {
+            font-size: 20px;
+            margin-top: 6px;
         }
 
         .musim-grid {
@@ -1591,6 +1711,10 @@
                 grid-template-columns: 1fr;
             }
 
+            .headline-grid-3 {
+                grid-template-columns: 1fr;
+            }
+
             .musim-grid {
                 grid-template-columns: 1fr;
             }
@@ -1667,6 +1791,8 @@
                         </svg></span>
                     <span class="nav-label">Beranda</span>
                 </button>
+
+                <div class="nav-group-label">UTP &middot; Pertanian</div>
                 <button class="nav-item module-utp" data-view="utp" type="button" title="Pertanian">
                     <span class="nav-num">01</span>
                     <span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
@@ -1675,6 +1801,8 @@
                         </svg></span>
                     <span class="nav-label">Pertanian</span>
                 </button>
+
+                <div class="nav-group-label">Perdagangan</div>
                 <button class="nav-item module-buah" data-view="buah" type="button" title="Pedagang Buah">
                     <span class="nav-num">02</span>
                     <span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
@@ -1684,6 +1812,8 @@
                         </svg></span>
                     <span class="nav-label">Pedagang Buah</span>
                 </button>
+
+                <div class="nav-group-label">Buruh Harian Lepas</div>
                 <button class="nav-item module-bgn" data-view="bgn" type="button" title="Buruh Bangunan">
                     <span class="nav-num">03</span>
                     <span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
@@ -1703,6 +1833,16 @@
                             <path d="M12 21V9" />
                         </svg></span>
                     <span class="nav-label">Buruh Tani</span>
+                </button>
+
+                <div class="nav-group-label">Sosial Ekonomi</div>
+                <button class="nav-item module-sosek" data-view="sosek" type="button" title="Sosial Ekonomi">
+                    <span class="nav-num">SE</span>
+                    <span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 12h4l3 8 4-16 3 8h4" />
+                        </svg></span>
+                    <span class="nav-label">Sosial Ekonomi</span>
                 </button>
             </nav>
             <div class="sidebar-foot">Satu berkas HTML &middot; berjalan penuh tanpa koneksi internet di lapangan.</div>
@@ -1809,6 +1949,23 @@
                         <p>Estimasi pendapatan bulanan buruh tani berdasarkan gender, upah harian, dan bulan aktif
                             kerja.</p>
                         <span class="go">Buka instrumen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14M13 6l6 6-6 6" />
+                            </svg></span>
+                    </button>
+
+                    <button class="instr-card module-sosek" data-goto="sosek" type="button">
+                        <div class="top">
+                            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 12h4l3 8 4-16 3 8h4" />
+                                </svg></div>
+                            <span class="tag">SOSIAL EKONOMI</span>
+                        </div>
+                        <h3>Pengeluaran Sosial Ekonomi Rumah Tangga</h3>
+                        <p>Estimasi pengeluaran pangan mingguan, non-pangan bulanan, dan non-pangan rutin tahunan
+                            rumah tangga.</p>
+                        <span class="go">Buka halaman <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M5 12h14M13 6l6 6-6 6" />
                             </svg></span>
@@ -2456,7 +2613,331 @@
                 </div>
             </section>
 
-            <div class="foot-note">Dasbor Instrumen Enumerator SE2026 &middot; Empat kalkulator dalam satu berkas, dapat
+            <!-- ===== HALAMAN SOSIAL EKONOMI ===== -->
+            <section id="view-sosek" class="view module-sosek">
+                <div class="card">
+                    <button type="button" class="back-link" data-goto="beranda">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
+                        Kembali ke Beranda
+                    </button>
+                    <span class="eyebrow">Sensus Ekonomi 2026 &middot; Sosial Ekonomi Rumah Tangga</span>
+                    <div class="doc-head">
+                        <div>
+                            <h1>Kalkulator Pengeluaran Sosial Ekonomi</h1>
+                            <p class="doc-sub">Estimasi pengeluaran pangan mingguan, non-pangan bulanan, dan
+                                non-pangan rutin tahunan rumah tangga.</p>
+                        </div>
+                        <div class="doc-head__icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 12h4l3 8 4-16 3 8h4" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="callout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="9" />
+                            <line x1="12" y1="8" x2="12" y2="13" />
+                            <circle cx="12" cy="16.2" r=".4" fill="currentColor" />
+                        </svg>
+                        <div>
+                            <div class="row"><b>Asumsi Waktu:</b>&nbsp;1 Minggu = 7 Hari &middot; 1 Bulan = 30 Hari
+                                &middot; 1 Tahun = 2 Semester.</div>
+                            <div class="row"><em>Kolom yang tidak berlaku untuk rumah tangga responden boleh
+                                    dikosongkan / diisi 0.</em></div>
+                        </div>
+                    </div>
+
+                    <div class="sosek-grid">
+                    <div class="sosek-col-form">
+                    <form id="form-sosek" novalidate>
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok A &mdash; Pengeluaran Pangan per
+                                Hari</div>
+                            <div class="field">
+                                <label class="field-label" for="pangan-harian-sosek">Biaya Pangan per Hari (termasuk
+                                    bekal, jajan, rokok)</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="pangan-harian-sosek" inputmode="numeric" placeholder="Contoh: 45.000"></div>
+                                <small class="hint">Nilai ini akan dikalikan 7 hari untuk estimasi seminggu, dan 30
+                                    hari untuk estimasi sebulan.</small>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok B &mdash; Pengeluaran Non-Pangan per
+                                Bulan</div>
+
+                            <div class="field">
+                                <label class="field-label" for="listrik-sosek">Listrik per Bulan</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="listrik-sosek" inputmode="numeric" placeholder="Contoh: 150.000"></div>
+                            </div>
+
+                            <div class="sub-label">LPG (Gas)</div>
+                            <div class="field">
+                                <label class="field-label" for="lpg-hari-sosek">1 Tabung Gas Habis dalam Berapa
+                                    Hari</label>
+                                <input type="text" id="lpg-hari-sosek" inputmode="numeric" placeholder="Contoh: 7">
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="lpg-harga-sosek">Harga 1 Tabung Gas</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="lpg-harga-sosek" inputmode="numeric" placeholder="Contoh: 22.000"></div>
+                            </div>
+
+                            <div class="sub-label">Bensin / BBM</div>
+                            <div class="field">
+                                <label class="field-label" for="bensin-hari-sosek">1x Isi Bensin Habis dalam Berapa
+                                    Hari</label>
+                                <input type="text" id="bensin-hari-sosek" inputmode="numeric" placeholder="Contoh: 5">
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="bensin-harga-sosek">Biaya Sekali Isi Bensin</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="bensin-harga-sosek" inputmode="numeric" placeholder="Contoh: 25.000"></div>
+                            </div>
+
+                            <div class="sub-label">Sabun Mandi</div>
+                            <div class="field">
+                                <label class="field-label" for="sabunmandi-hari-sosek">1 Buah Sabun Mandi Habis dalam
+                                    Berapa Hari</label>
+                                <input type="text" id="sabunmandi-hari-sosek" inputmode="numeric"
+                                    placeholder="Contoh: 20">
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="sabunmandi-harga-sosek">Harga 1 Buah Sabun Mandi</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="sabunmandi-harga-sosek" inputmode="numeric" placeholder="Contoh: 5.000"></div>
+                            </div>
+
+                            <div class="sub-label">Sabun Cuci</div>
+                            <div class="field">
+                                <label class="field-label" for="sabuncuci-hari-sosek">1 Buah/Bungkus Sabun Cuci Habis
+                                    dalam Berapa Hari</label>
+                                <input type="text" id="sabuncuci-hari-sosek" inputmode="numeric"
+                                    placeholder="Contoh: 15">
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="sabuncuci-harga-sosek">Harga 1 Buah/Bungkus Sabun
+                                    Cuci</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="sabuncuci-harga-sosek" inputmode="numeric" placeholder="Contoh: 12.000"></div>
+                            </div>
+
+                            <div class="sub-label">Arisan</div>
+                            <div class="field">
+                                <label class="field-label" for="arisan-harian-sosek">Biaya Arisan per Hari</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="arisan-harian-sosek" inputmode="numeric" placeholder="Contoh: 5.000"></div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok C &mdash; Non-Pangan Rutin Tahunan</div>
+                            <div class="field">
+                                <label class="field-label" for="pajak-kendaraan-sosek">Pajak Kendaraan per Tahun</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="pajak-kendaraan-sosek" inputmode="numeric" placeholder="Contoh: 350.000"></div>
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="pajak-rumah-sosek">Pajak Rumah (PBB) per Tahun</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="pajak-rumah-sosek" inputmode="numeric" placeholder="Contoh: 150.000"></div>
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="hariraya-sosek">Biaya Hari Raya per Tahun</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="hariraya-sosek" inputmode="numeric" placeholder="Contoh: 1.500.000"></div>
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="ukt-semester-sosek">Uang Gedung / UKT per
+                                    Semester</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="ukt-semester-sosek" inputmode="numeric" placeholder="Contoh: 2.500.000"></div>
+                                <small class="hint">Nilai ini akan dikalikan 2 untuk estimasi setahun (2
+                                    semester).</small>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok D &mdash; Pemasukan Seluruh Keluarga
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="pemasukan-sosek">Total Pemasukan Seluruh Anggota
+                                    Keluarga per Bulan</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="pemasukan-sosek" inputmode="numeric" placeholder="Contoh: 3.000.000"></div>
+                                <small class="hint">Jumlahkan pemasukan seluruh anggota rumah tangga yang bekerja
+                                    (suami, istri, anak, dan anggota lain) dalam sebulan, untuk dibandingkan dengan
+                                    total pengeluaran rumah tangga.</small>
+                            </div>
+                        </fieldset>
+
+                        <button type="button" class="btn-hitung" id="btn-hitung-sosek">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="4" y="3" width="16" height="18" rx="2" />
+                                <line x1="8" y1="8" x2="16" y2="8" />
+                                <line x1="8" y1="12" x2="16" y2="12" />
+                                <line x1="8" y1="16" x2="12" y2="16" />
+                            </svg>
+                            Hitung Rincian Sosial Ekonomi
+                        </button>
+                    </form>
+                    </div>
+
+                    <div class="sosek-col-result">
+                        <div id="sosek-placeholder" class="sosek-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="4" y="3" width="16" height="18" rx="2" />
+                                <line x1="8" y1="8" x2="16" y2="8" />
+                                <line x1="8" y1="12" x2="16" y2="12" />
+                                <line x1="8" y1="16" x2="12" y2="16" />
+                            </svg>
+                            <p>Isi formulir pengeluaran &amp; pemasukan di sebelah kiri, lalu klik <b>Hitung Rincian
+                                    Sosial Ekonomi</b>. Rincian dan perbandingan pemasukan&ndash;pengeluaran akan
+                                tampil di sini.</p>
+                        </div>
+
+                        <div id="banner-error-sosek" class="banner banner-error"></div>
+
+                        <section id="hasil-sosek" class="result">
+                            <div id="banner-info-sosek" class="banner banner-info"></div>
+                            <div id="banner-alert-sosek" class="banner banner-warning"></div>
+
+                            <div class="result-head">
+                                <h3>Ringkasan Pemasukan vs Pengeluaran per Bulan</h3><span>Ringkasan</span>
+                            </div>
+                            <div class="headline-grid-3">
+                                <div class="headline">
+                                    <div class="headline-label">Pemasukan Keluarga / Bulan</div>
+                                    <div class="headline-value" id="out-pemasukan-sosek">Rp 0</div>
+                                </div>
+                                <div class="headline alt">
+                                    <div class="headline-label">Selisih (Surplus/Defisit)</div>
+                                    <div class="headline-value" id="out-selisih-sosek">Rp 0</div>
+                                </div>
+                                <div class="headline">
+                                    <div class="headline-label">Total Pengeluaran / Bulan</div>
+                                    <div class="headline-value" id="out-pengeluaran-total-sosek">Rp 0</div>
+                                </div>
+                            </div>
+
+                            <div class="headline-grid-3">
+                                <div class="headline">
+                                    <div class="headline-label">Pangan / Minggu</div>
+                                    <div class="headline-value" id="out-pangan-minggu-sosek">Rp 0</div>
+                                </div>
+                                <div class="headline alt">
+                                    <div class="headline-label">Non-Pangan / Bulan</div>
+                                    <div class="headline-value" id="out-nonpangan-bulan-sosek">Rp 0</div>
+                                </div>
+                                <div class="headline">
+                                    <div class="headline-label">Non-Pangan Rutin / Tahun</div>
+                                    <div class="headline-value" id="out-rutin-tahun-sosek">Rp 0</div>
+                                </div>
+                            </div>
+
+                        <div class="result-head">
+                            <h3>Rincian Pengeluaran Pangan</h3><span>Blok E</span>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Keterangan</th>
+                                <th>Estimasi</th>
+                            </tr>
+                            <tr>
+                                <td>Biaya Pangan per Hari (Pangan, Jajan, Rokok)</td>
+                                <td id="out-pangan-harian-sosek">0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Total Pengeluaran Pangan / Minggu (&times;7 Hari)</td>
+                                <td id="out-pangan-minggu-detail-sosek">0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Estimasi Pengeluaran Pangan / Bulan (&times;30 Hari)</td>
+                                <td id="out-pangan-bulan-sosek">0</td>
+                            </tr>
+                        </table>
+
+                        <div class="result-head">
+                            <h3>Rincian Pengeluaran Non-Pangan / Bulan</h3><span>Blok F</span>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Kategori / Item</th>
+                                <th>Total / Bulan</th>
+                            </tr>
+                            <tr>
+                                <td>Listrik</td>
+                                <td id="out-listrik-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>LPG (Gas) &mdash; <span id="out-lpg-frek-sosek">0 tabung/bulan</span></td>
+                                <td id="out-lpg-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Bensin / BBM &mdash; <span id="out-bensin-frek-sosek">0x isi/bulan</span></td>
+                                <td id="out-bensin-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Sabun Mandi &mdash; <span id="out-sabunmandi-frek-sosek">0 buah/bulan</span></td>
+                                <td id="out-sabunmandi-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Sabun Cuci &mdash; <span id="out-sabuncuci-frek-sosek">0 buah/bulan</span></td>
+                                <td id="out-sabuncuci-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Arisan (&times;30 Hari)</td>
+                                <td id="out-arisan-sosek">0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Total Pengeluaran Non-Pangan / Bulan</td>
+                                <td id="out-nonpangan-bulan-detail-sosek">0</td>
+                            </tr>
+                        </table>
+
+                        <div class="result-head">
+                            <h3>Rincian Non-Pangan Rutin Tahunan</h3><span>Blok G</span>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Kategori / Item</th>
+                                <th>Total / Tahun</th>
+                            </tr>
+                            <tr>
+                                <td>Pajak Kendaraan</td>
+                                <td id="out-pajak-kendaraan-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Pajak Rumah (PBB)</td>
+                                <td id="out-pajak-rumah-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Biaya Hari Raya</td>
+                                <td id="out-hariraya-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Uang Gedung / UKT (2&times; Semester)</td>
+                                <td id="out-ukt-tahun-sosek">0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Total Non-Pangan Rutin / Tahun</td>
+                                <td id="out-rutin-tahun-detail-sosek">0</td>
+                            </tr>
+                        </table>
+                        </section>
+                    </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="foot-note">Dasbor Instrumen Enumerator SE2026 &middot; Lima kalkulator dalam satu berkas, dapat
                 diakses tanpa koneksi internet.</div>
         </main>
     </div>
@@ -3143,6 +3624,155 @@
             updateSliderValue('musim1-tani', 'musim1Value-tani');
             updateSliderValue('musim2-tani', 'musim2Value-tani');
             calculateIncome();
+        })();
+
+        /* ===================== HALAMAN SOSIAL EKONOMI ===================== */
+        (function () {
+            const el = (id) => document.getElementById(id);
+
+            function showError(msg) {
+                let box = el("banner-error-sosek");
+                box.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12.5"/><circle cx="12" cy="15.5" r=".4" fill="currentColor"/></svg><span>' + msg + '</span>';
+                box.classList.add("show");
+                el("hasil-sosek").classList.remove("show");
+                el("sosek-placeholder").classList.add("hide");
+            }
+            function clearError() { el("banner-error-sosek").classList.remove("show"); }
+
+            function frekuensiBulan(hariPakai) {
+                return hariPakai > 0 ? (30 / hariPakai) : 0;
+            }
+            function formatFrekuensi(angka) {
+                return (Math.round(angka * 10) / 10).toLocaleString('id-ID');
+            }
+
+            function hitungSosek() {
+                clearError();
+                el("sosek-placeholder").classList.add("hide");
+
+                let panganHarian = getRawNumber(el("pangan-harian-sosek").value);
+                if (panganHarian <= 0) {
+                    showError("Mohon isi \"Biaya Pangan per Hari\" pada Blok A terlebih dahulu!");
+                    return;
+                }
+
+                /* Blok A — Pangan */
+                let panganMinggu = panganHarian * 7;
+                let panganBulan = panganHarian * 30;
+
+                /* Blok B — Non-Pangan per Bulan */
+                let listrik = getRawNumber(el("listrik-sosek").value);
+
+                let lpgHari = getRawNumber(el("lpg-hari-sosek").value);
+                let lpgHarga = getRawNumber(el("lpg-harga-sosek").value);
+                let lpgFrek = frekuensiBulan(lpgHari);
+                let lpgBulan = bulatkanRibuan(lpgFrek * lpgHarga);
+
+                let bensinHari = getRawNumber(el("bensin-hari-sosek").value);
+                let bensinHarga = getRawNumber(el("bensin-harga-sosek").value);
+                let bensinFrek = frekuensiBulan(bensinHari);
+                let bensinBulan = bulatkanRibuan(bensinFrek * bensinHarga);
+
+                let sabunMandiHari = getRawNumber(el("sabunmandi-hari-sosek").value);
+                let sabunMandiHarga = getRawNumber(el("sabunmandi-harga-sosek").value);
+                let sabunMandiFrek = frekuensiBulan(sabunMandiHari);
+                let sabunMandiBulan = bulatkanRibuan(sabunMandiFrek * sabunMandiHarga);
+
+                let sabunCuciHari = getRawNumber(el("sabuncuci-hari-sosek").value);
+                let sabunCuciHarga = getRawNumber(el("sabuncuci-harga-sosek").value);
+                let sabunCuciFrek = frekuensiBulan(sabunCuciHari);
+                let sabunCuciBulan = bulatkanRibuan(sabunCuciFrek * sabunCuciHarga);
+
+                let arisanHarian = getRawNumber(el("arisan-harian-sosek").value);
+                let arisanBulan = arisanHarian * 30;
+
+                let totalNonPanganBulan = listrik + lpgBulan + bensinBulan + sabunMandiBulan + sabunCuciBulan + arisanBulan;
+
+                /* Blok C — Non-Pangan Rutin Tahunan */
+                let pajakKendaraan = getRawNumber(el("pajak-kendaraan-sosek").value);
+                let pajakRumah = getRawNumber(el("pajak-rumah-sosek").value);
+                let hariRaya = getRawNumber(el("hariraya-sosek").value);
+                let uktSemester = getRawNumber(el("ukt-semester-sosek").value);
+                let uktTahun = uktSemester * 2;
+                let totalRutinTahun = pajakKendaraan + pajakRumah + hariRaya + uktTahun;
+
+                /* Headline 3 output utama */
+                el("out-pangan-minggu-sosek").innerText = formatRp(panganMinggu);
+                el("out-nonpangan-bulan-sosek").innerText = formatRp(totalNonPanganBulan);
+                el("out-rutin-tahun-sosek").innerText = formatRp(totalRutinTahun);
+
+                /* Blok D — Ringkasan Pemasukan vs Total Pengeluaran per Bulan */
+                let pemasukanBulan = getRawNumber(el("pemasukan-sosek").value);
+                let totalPengeluaranBulan = bulatkanRibuan(panganBulan + totalNonPanganBulan + (totalRutinTahun / 12));
+                let headlineSelisih = el("out-selisih-sosek").closest(".headline");
+                let bannerAlert = el("banner-alert-sosek");
+
+                el("out-pemasukan-sosek").innerText = formatRp(pemasukanBulan);
+                el("out-pengeluaran-total-sosek").innerText = formatRp(totalPengeluaranBulan);
+
+                if (pemasukanBulan > 0) {
+                    let selisihBulan = pemasukanBulan - totalPengeluaranBulan;
+                    el("out-selisih-sosek").innerHTML = formatRp(selisihBulan) + (selisihBulan < 0 ? '<span class="loss-tag">Defisit</span>' : '');
+                    headlineSelisih.classList.toggle("is-loss", selisihBulan < 0);
+
+                    if (selisihBulan < 0) {
+                        bannerAlert.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><circle cx="12" cy="17" r=".4" fill="currentColor"/></svg><span><b>Perhatian:</b> Total pengeluaran rumah tangga (' + formatRp(totalPengeluaranBulan) + '/bulan) lebih besar daripada total pemasukan seluruh keluarga (' + formatRp(pemasukanBulan) + '/bulan). Estimasi rumah tangga mengalami <b>defisit ' + formatRp(Math.abs(selisihBulan)) + ' per bulan</b>.</span>';
+                        bannerAlert.classList.add("show");
+                    } else {
+                        bannerAlert.classList.remove("show");
+                    }
+                } else {
+                    el("out-selisih-sosek").innerText = "—";
+                    headlineSelisih.classList.remove("is-loss");
+                    bannerAlert.classList.remove("show");
+                }
+
+                /* Blok E — Rincian Pangan */
+                el("out-pangan-harian-sosek").innerText = formatRp(panganHarian);
+                el("out-pangan-minggu-detail-sosek").innerText = formatRp(panganMinggu);
+                el("out-pangan-bulan-sosek").innerText = formatRp(panganBulan);
+
+                /* Blok F — Rincian Non-Pangan Bulanan */
+                el("out-listrik-sosek").innerText = formatRp(listrik);
+                el("out-lpg-frek-sosek").innerText = formatFrekuensi(lpgFrek) + " tabung/bulan";
+                el("out-lpg-sosek").innerText = formatRp(lpgBulan);
+                el("out-bensin-frek-sosek").innerText = formatFrekuensi(bensinFrek) + "x isi/bulan";
+                el("out-bensin-sosek").innerText = formatRp(bensinBulan);
+                el("out-sabunmandi-frek-sosek").innerText = formatFrekuensi(sabunMandiFrek) + " buah/bulan";
+                el("out-sabunmandi-sosek").innerText = formatRp(sabunMandiBulan);
+                el("out-sabuncuci-frek-sosek").innerText = formatFrekuensi(sabunCuciFrek) + " buah/bulan";
+                el("out-sabuncuci-sosek").innerText = formatRp(sabunCuciBulan);
+                el("out-arisan-sosek").innerText = formatRp(arisanBulan);
+                el("out-nonpangan-bulan-detail-sosek").innerText = formatRp(totalNonPanganBulan);
+
+                /* Blok G — Rincian Non-Pangan Rutin Tahunan */
+                el("out-pajak-kendaraan-sosek").innerText = formatRp(pajakKendaraan);
+                el("out-pajak-rumah-sosek").innerText = formatRp(pajakRumah);
+                el("out-hariraya-sosek").innerText = formatRp(hariRaya);
+                el("out-ukt-tahun-sosek").innerText = formatRp(uktTahun);
+                el("out-rutin-tahun-detail-sosek").innerText = formatRp(totalRutinTahun);
+
+                el("banner-info-sosek").innerHTML = "✅ Estimasi pengeluaran pangan, non-pangan bulanan, dan non-pangan rutin tahunan berhasil dihitung.";
+                el("banner-info-sosek").classList.add("show");
+
+                el("hasil-sosek").classList.add("show");
+            }
+
+            /* Kolom nominal Rupiah: pakai format ribuan otomatis */
+            ["pangan-harian-sosek", "listrik-sosek", "lpg-harga-sosek", "bensin-harga-sosek",
+                "sabunmandi-harga-sosek", "sabuncuci-harga-sosek", "arisan-harian-sosek",
+                "pajak-kendaraan-sosek", "pajak-rumah-sosek", "hariraya-sosek", "ukt-semester-sosek",
+                "pemasukan-sosek"
+            ].forEach(function (id) {
+                el(id).addEventListener("keyup", function () { formatInputRibuan(this); });
+            });
+
+            /* Kolom jumlah hari: angka polos tanpa pemisah ribuan */
+            ["lpg-hari-sosek", "bensin-hari-sosek", "sabunmandi-hari-sosek", "sabuncuci-hari-sosek"].forEach(function (id) {
+                el(id).addEventListener("keyup", function () { this.value = this.value.replace(/[^0-9]/g, ''); });
+            });
+
+            el("btn-hitung-sosek").addEventListener("click", hitungSosek);
         })();
     </script>
 
