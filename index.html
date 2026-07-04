@@ -1280,6 +1280,12 @@
             margin-bottom: 6px;
         }
 
+        .musim-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
         .headline-grid .headline {
             padding: 18px;
         }
@@ -1582,6 +1588,10 @@
             }
 
             .headline-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .musim-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -2330,7 +2340,7 @@
                                 </button>
                                 <ul class="csel-panel" role="listbox" tabindex="-1">
                                     <li class="csel-opt" role="option" data-value="Laki-laki" aria-selected="true">Laki-laki (Standar Rp100.000/hari)</li>
-                                    <li class="csel-opt" role="option" data-value="Perempuan">Perempuan (Standar Rp85.000/hari)</li>
+                                    <li class="csel-opt" role="option" data-value="Perempuan">Perempuan (Standar Rp70.000/hari)</li>
                                     <li class="csel-opt" role="option" data-value="Custom">Lainnya (Ketik Manual)</li>
                                 </ul>
                                 <input type="hidden" id="gender-tani" value="Laki-laki">
@@ -2344,22 +2354,21 @@
                     </fieldset>
 
                     <fieldset>
-                        <div class="blok-label"><span class="dot"></span>Blok B — Intensitas Kerja</div>
-                        <div class="field">
-                            <div class="slider-card">
-                                <div class="slider-top"><label for="daysPerWeek-tani">Hari kerja / minggu (saat
-                                        musim)</label><span class="slider-value" id="daysValue-tani">4 Hari</span></div>
-                                <input type="range" id="daysPerWeek-tani" min="1" max="7" value="4">
-                                <div class="slider-scale"><span>1</span><span>7 hari</span></div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="slider-card">
-                                <div class="slider-top"><label for="monthsPerYear-tani">Bulan aktif bekerja /
-                                        tahun</label><span class="slider-value" id="monthsValue-tani">6 Bulan</span>
+                        <div class="blok-label"><span class="dot"></span>Blok B — Hari Kerja per Musim</div>
+                        <div class="musim-grid">
+                            <div class="field">
+                                <div class="slider-card">
+                                    <div class="slider-top"><label for="musim1-tani">Musim 1 — Total Hari Kerja</label><span class="slider-value" id="musim1Value-tani">13 Hari</span></div>
+                                    <input type="range" id="musim1-tani" min="1" max="25" value="13">
+                                    <div class="slider-scale"><span>1 hari</span><span>25 hari</span></div>
                                 </div>
-                                <input type="range" id="monthsPerYear-tani" min="1" max="12" value="6">
-                                <div class="slider-scale"><span>1</span><span>12 bulan</span></div>
+                            </div>
+                            <div class="field">
+                                <div class="slider-card">
+                                    <div class="slider-top"><label for="musim2-tani">Musim 2 — Total Hari Kerja</label><span class="slider-value" id="musim2Value-tani">13 Hari</span></div>
+                                    <input type="range" id="musim2-tani" min="1" max="25" value="13">
+                                    <div class="slider-scale"><span>1 hari</span><span>25 hari</span></div>
+                                </div>
                             </div>
                         </div>
                     </fieldset>
@@ -2374,7 +2383,7 @@
                     </div>
 
                     <div class="formula-note">Rumus:
-                        <code>Upah Harian &times; Hari Kerja/Minggu &times; 4 Minggu &times; Bulan Aktif/Tahun &divide; 12 Bulan</code>
+                        <code>(Hari Kerja Musim 1 + Hari Kerja Musim 2) &times; Upah Harian &divide; 12 Bulan</code>
                     </div>
                 </div>
             </section>
@@ -3011,7 +3020,7 @@
                 const wageInput = el('wage-tani');
                 const wageField = el('field-wage-tani');
                 if (gender === 'Laki-laki') { wageInput.value = '100.000'; wageField.classList.add('hide'); }
-                else if (gender === 'Perempuan') { wageInput.value = '85.000'; wageField.classList.add('hide'); }
+                else if (gender === 'Perempuan') { wageInput.value = '70.000'; wageField.classList.add('hide'); }
                 else { wageInput.value = ''; wageField.classList.remove('hide'); wageInput.focus(); }
                 calculateIncome();
             }
@@ -3019,8 +3028,7 @@
             function updateSliderValue(sliderId, valueId) {
                 const slider = el(sliderId);
                 const output = el(valueId);
-                const unit = sliderId === 'daysPerWeek-tani' ? ' Hari' : ' Bulan';
-                output.innerHTML = slider.value + unit;
+                output.innerHTML = slider.value + ' Hari';
                 const pct = (slider.value - slider.min) / (slider.max - slider.min) * 100;
                 slider.style.setProperty('--fill', pct + '%');
             }
@@ -3029,9 +3037,10 @@
 
             function calculateIncome() {
                 const wage = getRawNumber(el('wage-tani').value);
-                const daysPerWeek = parseInt(el('daysPerWeek-tani').value);
-                const monthsPerYear = parseInt(el('monthsPerYear-tani').value);
-                const totalAnnual = wage * daysPerWeek * 4 * monthsPerYear;
+                const musim1 = parseInt(el('musim1-tani').value);
+                const musim2 = parseInt(el('musim2-tani').value);
+                const totalHari = musim1 + musim2;
+                const totalAnnual = totalHari * wage;
                 const averageMonthly = totalAnnual / 12;
                 el('annualResult-tani').innerHTML = formatRupiah(totalAnnual);
                 el('monthlyResult-tani').innerHTML = formatRupiah(Math.round(averageMonthly));
@@ -3039,10 +3048,10 @@
 
             el('gender-tani').addEventListener('change', updateGenderWage);
             el('wage-tani').addEventListener('keyup', function () { formatInputRibuan(this); calculateIncome(); });
-            el('daysPerWeek-tani').addEventListener('input', function () { updateSliderValue('daysPerWeek-tani', 'daysValue-tani'); calculateIncome(); });
-            el('monthsPerYear-tani').addEventListener('input', function () { updateSliderValue('monthsPerYear-tani', 'monthsValue-tani'); calculateIncome(); });
-            updateSliderValue('daysPerWeek-tani', 'daysValue-tani');
-            updateSliderValue('monthsPerYear-tani', 'monthsValue-tani');
+            el('musim1-tani').addEventListener('input', function () { updateSliderValue('musim1-tani', 'musim1Value-tani'); calculateIncome(); });
+            el('musim2-tani').addEventListener('input', function () { updateSliderValue('musim2-tani', 'musim2Value-tani'); calculateIncome(); });
+            updateSliderValue('musim1-tani', 'musim1Value-tani');
+            updateSliderValue('musim2-tani', 'musim2Value-tani');
             calculateIncome();
         })();
     </script>
