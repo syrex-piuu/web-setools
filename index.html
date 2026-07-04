@@ -1212,6 +1212,55 @@
             transform: translateX(-3px);
         }
 
+        .page-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .page-actions .back-link {
+            margin-bottom: 0;
+        }
+
+        .reload-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: none;
+            padding: 6px 2px;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--ink-soft);
+            cursor: pointer;
+            font-family: var(--font-ui);
+            transition: color .15s;
+            flex: 0 0 auto;
+        }
+
+        .reload-link:hover {
+            color: var(--accent-deep);
+        }
+
+        .reload-link svg {
+            width: 14px;
+            height: 14px;
+            flex: 0 0 auto;
+            transition: transform .4s var(--ease);
+        }
+
+        .reload-link:hover svg {
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 480px) {
+            .page-actions {
+                flex-wrap: wrap;
+            }
+        }
+
         .btn-hitung {
             width: 100%;
             background: linear-gradient(180deg, var(--accent), var(--accent-deep));
@@ -1977,10 +2026,16 @@
             <!-- ===== MODUL 01: PERTANIAN ===== -->
             <section id="view-utp" class="view module-utp">
                 <div class="card">
-                    <button type="button" class="back-link" data-goto="beranda">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
-                        Kembali ke Beranda
-                    </button>
+                    <div class="page-actions">
+                        <button type="button" class="back-link" data-goto="beranda">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
+                            Kembali ke Beranda
+                        </button>
+                        <button type="button" class="reload-link" data-reload="utp">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" /></svg>
+                            Reload Halaman
+                        </button>
+                    </div>
                     <span class="eyebrow">Sensus Ekonomi 2026 &middot; Instrumen 01</span>
                     <div class="doc-head">
                         <div>
@@ -2213,10 +2268,16 @@
             <!-- ===== MODUL 02: PEDAGANG BUAH ===== -->
             <section id="view-buah" class="view module-buah">
                 <div class="card">
-                    <button type="button" class="back-link" data-goto="beranda">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
-                        Kembali ke Beranda
-                    </button>
+                    <div class="page-actions">
+                        <button type="button" class="back-link" data-goto="beranda">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
+                            Kembali ke Beranda
+                        </button>
+                        <button type="button" class="reload-link" data-reload="buah">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" /></svg>
+                            Reload Halaman
+                        </button>
+                    </div>
                     <span class="eyebrow">Sensus Ekonomi 2026 &middot; Instrumen 02</span>
                     <div class="doc-head">
                         <div>
@@ -2439,10 +2500,16 @@
             <!-- ===== MODUL 03: BURUH BANGUNAN ===== -->
             <section id="view-bgn" class="view module-bgn">
                 <div class="card">
-                    <button type="button" class="back-link" data-goto="beranda">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
-                        Kembali ke Beranda
-                    </button>
+                    <div class="page-actions">
+                        <button type="button" class="back-link" data-goto="beranda">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
+                            Kembali ke Beranda
+                        </button>
+                        <button type="button" class="reload-link" data-reload="bgn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" /></svg>
+                            Reload Halaman
+                        </button>
+                    </div>
                     <span class="eyebrow">Sensus Ekonomi 2026 &middot; Instrumen 03</span>
                     <div class="doc-head">
                         <div>
@@ -2535,10 +2602,16 @@
             <!-- ===== MODUL 04: BURUH TANI ===== -->
             <section id="view-tani" class="view module-tani">
                 <div class="card">
-                    <button type="button" class="back-link" data-goto="beranda">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
-                        Kembali ke Beranda
-                    </button>
+                    <div class="page-actions">
+                        <button type="button" class="back-link" data-goto="beranda">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
+                            Kembali ke Beranda
+                        </button>
+                        <button type="button" class="reload-link" data-reload="tani">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" /></svg>
+                            Reload Halaman
+                        </button>
+                    </div>
                     <span class="eyebrow">Sensus Ekonomi 2026 &middot; Instrumen 04</span>
                     <div class="doc-head">
                         <div>
@@ -2619,10 +2692,16 @@
             <!-- ===== HALAMAN SOSIAL EKONOMI ===== -->
             <section id="view-sosek" class="view module-sosek">
                 <div class="card">
-                    <button type="button" class="back-link" data-goto="beranda">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
-                        Kembali ke Beranda
-                    </button>
+                    <div class="page-actions">
+                        <button type="button" class="back-link" data-goto="beranda">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
+                            Kembali ke Beranda
+                        </button>
+                        <button type="button" class="reload-link" data-reload="sosek">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" /></svg>
+                            Reload Halaman
+                        </button>
+                    </div>
                     <span class="eyebrow">Sensus Ekonomi 2026 &middot; Sosial Ekonomi Rumah Tangga</span>
                     <div class="doc-head">
                         <div>
@@ -2735,6 +2814,19 @@
                                 <label class="field-label" for="arisan-harian-sosek">Biaya Arisan per Hari</label>
                                 <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
                                         id="arisan-harian-sosek" inputmode="numeric" placeholder="Contoh: 5.000"></div>
+                            </div>
+
+                            <div class="field">
+                                <label class="field-label" for="internet-sosek">Internet per Bulan</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="internet-sosek" inputmode="numeric" placeholder="Contoh: 100.000"></div>
+                            </div>
+
+                            <div class="field">
+                                <label class="field-label" for="lainnya-sosek">Pengeluaran Lainnya per Bulan (Transfer
+                                    ke Orang Tua, dll)</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="lainnya-sosek" inputmode="numeric" placeholder="Contoh: 200.000"></div>
                             </div>
                         </fieldset>
 
@@ -2904,6 +2996,14 @@
                             <tr>
                                 <td>Arisan (&times;30 Hari)</td>
                                 <td id="out-arisan-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Internet</td>
+                                <td id="out-internet-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Lainnya (Transfer ke Orang Tua, dll)</td>
+                                <td id="out-lainnya-sosek">0</td>
                             </tr>
                             <tr class="total-row">
                                 <td>Total Pengeluaran Non-Pangan / Bulan</td>
@@ -3101,6 +3201,26 @@
                 switchView(name, { fromPopstate: true });
             });
             try { history.replaceState({ scView: 'beranda' }, '', location.href); } catch (e) { }
+
+            /* ===================== TOMBOL RELOAD HALAMAN ===================== */
+            /* Reload penuh (bukan sekadar reset form) supaya semua state JS di halaman
+               benar-benar kembali ke kondisi awal, seperti menekan reload di browser —
+               tapi tetap berada di halaman/instrumen yang sama setelah reload selesai. */
+            document.querySelectorAll('[data-reload]').forEach(function (b) {
+                b.addEventListener('click', function () {
+                    var ok = window.confirm('Muat ulang halaman ini? Semua data yang sudah diisi pada formulir akan dikosongkan kembali.');
+                    if (!ok) return;
+                    try { sessionStorage.setItem('scReloadView', b.getAttribute('data-reload')); } catch (e) { }
+                    location.reload();
+                });
+            });
+            try {
+                var scReloadView = sessionStorage.getItem('scReloadView');
+                if (scReloadView) {
+                    sessionStorage.removeItem('scReloadView');
+                    switchView(scReloadView, { replace: true });
+                }
+            } catch (e) { }
 
             /* ===================== SIDEBAR: CIUTKAN (DESKTOP) & DRAWER (MOBILE) ===================== */
             var shell = document.getElementById('app-shell');
@@ -3699,7 +3819,10 @@
                 let arisanHarian = getRawNumber(el("arisan-harian-sosek").value);
                 let arisanBulan = arisanHarian * 30;
 
-                let totalNonPanganBulan = listrik + lpgBulan + bensinBulan + sabunMandiBulan + sabunCuciBulan + arisanBulan;
+                let internet = getRawNumber(el("internet-sosek").value);
+                let lainnya = getRawNumber(el("lainnya-sosek").value);
+
+                let totalNonPanganBulan = listrik + lpgBulan + bensinBulan + sabunMandiBulan + sabunCuciBulan + arisanBulan + internet + lainnya;
 
                 /* Blok C — Non-Pangan Rutin Tahunan */
                 let pajakKendaraan = getRawNumber(el("pajak-kendaraan-sosek").value);
@@ -3759,6 +3882,8 @@
                 el("out-sabuncuci-frek-sosek").innerText = formatFrekuensi(sabunCuciFrek) + " buah/bulan";
                 el("out-sabuncuci-sosek").innerText = formatRp(sabunCuciBulan);
                 el("out-arisan-sosek").innerText = formatRp(arisanBulan);
+                el("out-internet-sosek").innerText = formatRp(internet);
+                el("out-lainnya-sosek").innerText = formatRp(lainnya);
                 el("out-nonpangan-bulan-detail-sosek").innerText = formatRp(totalNonPanganBulan);
 
                 /* Blok G — Rincian Non-Pangan Rutin Tahunan */
@@ -3777,6 +3902,7 @@
             /* Kolom nominal Rupiah: pakai format ribuan otomatis */
             ["pangan-harian-sosek", "listrik-sosek", "lpg-harga-sosek", "bensin-harga-sosek",
                 "sabunmandi-harga-sosek", "sabuncuci-harga-sosek", "arisan-harian-sosek",
+                "internet-sosek", "lainnya-sosek",
                 "pajak-kendaraan-sosek", "pajak-rumah-sosek", "hariraya-sosek", "ukt-semester-sosek",
                 "pemasukan-sosek"
             ].forEach(function (id) {
