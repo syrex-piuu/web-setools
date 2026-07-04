@@ -1419,7 +1419,8 @@
             background: linear-gradient(135deg, var(--accent-deep), var(--accent));
         }
 
-        .headline.alt.is-loss {
+        .headline.alt.is-loss,
+        .headline.is-loss {
             background: linear-gradient(135deg, #7a2318, var(--danger));
         }
 
@@ -2087,8 +2088,9 @@
 
                         <div class="headline-grid">
                             <div class="headline">
-                                <div class="headline-label">Pendapatan Kotor / Tahun</div>
+                                <div class="headline-label">Pendapatan Bersih / Bulan</div>
                                 <div class="headline-value" id="out-omset-headline-utp">Rp 0</div>
+                                <div class="headline-sub" id="out-headline-sub-kiri-utp">&nbsp;</div>
                             </div>
                             <div class="headline alt">
                                 <div class="headline-label">Pendapatan Bersih / Tahun</div>
@@ -2318,8 +2320,9 @@
 
                         <div class="headline-grid">
                             <div class="headline">
-                                <div class="headline-label">Omset Kotor / Tahun</div>
+                                <div class="headline-label">Keuntungan Bersih / Bulan</div>
                                 <div class="headline-value" id="out-omset-headline-buah">Rp 0</div>
+                                <div class="headline-sub" id="out-headline-sub-kiri-buah">&nbsp;</div>
                             </div>
                             <div class="headline alt">
                                 <div class="headline-label">Keuntungan Bersih / Tahun</div>
@@ -2842,6 +2845,12 @@
                                 </div>
                             </div>
 
+                            <div class="headline">
+                                <div class="headline-label">Total Pengeluaran / Tahun</div>
+                                <div class="headline-value" id="out-pengeluaran-tahun-sosek">Rp 0</div>
+                                <div class="headline-sub" id="out-headline-sub-tahun-sosek">&nbsp;</div>
+                            </div>
+
                         <div class="result-head">
                             <h3>Rincian Pengeluaran Pangan</h3><span>Blok E</span>
                         </div>
@@ -3359,7 +3368,8 @@
                 el("out-aset-alat-utp").innerText = formatRp(asetAlat);
                 el("out-total-aset-utp").innerText = formatRp(totalAset);
                 el("out-bersih-utp").innerHTML = formatRp(pendapatanBersih) + (pendapatanBersih < 0 ? '<span class="loss-tag">Rugi</span>' : '');
-                el("out-omset-headline-utp").innerText = formatRp(omset);
+                el("out-omset-headline-utp").innerText = formatRp(pendapatanBersihBulan);
+                el("out-headline-sub-kiri-utp").innerText = "Omset " + formatRp(omsetBulan) + " dikurangi total pengeluaran " + formatRp(pengeluaranBulan);
                 el("out-headline-sub-utp").innerText = "Omset " + formatRp(omset) + " dikurangi total pengeluaran " + formatRp(totalPengeluaran);
 
                 el("out-panen-bulan-utp").innerText = panenBulan.toLocaleString('id-ID') + " kg";
@@ -3368,6 +3378,7 @@
                 el("out-bersih-bulan-utp").innerHTML = formatRp(pendapatanBersihBulan) + (pendapatanBersihBulan < 0 ? '<span class="loss-tag">Rugi</span>' : '');
 
                 el("out-bersih-utp").closest(".headline").classList.toggle("is-loss", pendapatanBersih < 0);
+                el("out-omset-headline-utp").closest(".headline").classList.toggle("is-loss", pendapatanBersihBulan < 0);
                 el("out-bersih-detail-utp").classList.toggle("value-loss", pendapatanBersih < 0);
                 el("out-bersih-bulan-utp").classList.toggle("value-loss", pendapatanBersihBulan < 0);
 
@@ -3495,9 +3506,11 @@
                 el("banner-info-buah").classList.add("show");
 
                 el("out-tahun-laba-buah").innerHTML = formatRp(labaTahun) + (labaTahun < 0 ? '<span class="loss-tag">Rugi</span>' : '');
-                el("out-omset-headline-buah").innerText = formatRp(omsetTahun);
+                el("out-omset-headline-buah").innerHTML = formatRp(labaBulan) + (labaBulan < 0 ? '<span class="loss-tag">Rugi</span>' : '');
+                el("out-headline-sub-kiri-buah").innerText = "Omset " + formatRp(omsetBulan) + " dikurangi total pengeluaran " + formatRp(pengeluaranBulan);
                 el("out-headline-sub-buah").innerText = "Omset " + formatRp(omsetTahun) + " dikurangi total pengeluaran " + formatRp(pengeluaranTahun);
                 el("out-tahun-laba-buah").closest(".headline").classList.toggle("is-loss", labaTahun < 0);
+                el("out-omset-headline-buah").closest(".headline").classList.toggle("is-loss", labaBulan < 0);
 
                 el("out-trip-muatan-buah").innerText = muatanTotal.toLocaleString('id-ID') + " kg";
                 el("label-out-beli-buah").innerText = "Buah Kulakan / Beli (@ " + formatRp(hargaBeli) + ")";
@@ -3704,11 +3717,15 @@
                 /* Blok D — Ringkasan Pemasukan vs Total Pengeluaran per Bulan */
                 let pemasukanBulan = getRawNumber(el("pemasukan-sosek").value);
                 let totalPengeluaranBulan = bulatkanRibuan(panganBulan + totalNonPanganBulan + (totalRutinTahun / 12));
+                let pengeluaranBulanTanpaRutin = panganBulan + totalNonPanganBulan;
+                let totalPengeluaranTahun = bulatkanRibuan((pengeluaranBulanTanpaRutin * 12) + totalRutinTahun);
                 let headlineSelisih = el("out-selisih-sosek").closest(".headline");
                 let bannerAlert = el("banner-alert-sosek");
 
                 el("out-pemasukan-sosek").innerText = formatRp(pemasukanBulan);
                 el("out-pengeluaran-total-sosek").innerText = formatRp(totalPengeluaranBulan);
+                el("out-pengeluaran-tahun-sosek").innerText = formatRp(totalPengeluaranTahun);
+                el("out-headline-sub-tahun-sosek").innerText = "Pengeluaran Pangan + Non-Pangan " + formatRp(pengeluaranBulanTanpaRutin) + "/bulan \u00d7 12 bulan, ditambah Non-Pangan Rutin " + formatRp(totalRutinTahun) + "/tahun";
 
                 if (pemasukanBulan > 0) {
                     let selisihBulan = pemasukanBulan - totalPengeluaranBulan;
