@@ -885,6 +885,77 @@
             line-height: 1.55;
         }
 
+        /* ===== Blok D sosek: baris pemasukan dinamis (tambah/hapus) ===== */
+        .pemasukan-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pemasukan-row .prefix-wrap {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .btn-hapus-item {
+            flex: 0 0 auto;
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-sm);
+            border: 1.5px solid var(--line);
+            background: var(--surface);
+            color: var(--danger);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .15s, border-color .15s;
+        }
+
+        .btn-hapus-item:hover {
+            background: var(--danger-soft);
+            border-color: var(--danger);
+        }
+
+        .btn-hapus-item svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .btn-tambah-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+            justify-content: center;
+            background: none;
+            border: 1.5px dashed var(--accent);
+            color: var(--accent-deep);
+            border-radius: var(--radius-sm);
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: var(--font-ui);
+            cursor: pointer;
+            margin-top: 4px;
+            transition: background .15s, border-color .15s;
+        }
+
+        .btn-tambah-item:hover {
+            background: var(--accent-soft);
+        }
+
+        .btn-tambah-item svg {
+            width: 15px;
+            height: 15px;
+            flex: 0 0 auto;
+        }
+
+        .pemasukan-item .field-label .idx-pemasukan {
+            color: var(--ink-faint);
+            font-weight: 600;
+        }
+
         select,
         input[type="text"] {
             width: 100%;
@@ -1720,6 +1791,62 @@
             color: var(--accent-soft);
         }
 
+        /* ===== Tombol salin nilai pendapatan bersih/bulan (untuk ditempel di halaman Sosek) ===== */
+        .headline-top-row,
+        .result-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .headline-top-row .headline-label,
+        .result-title-row .result-title {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .btn-copy-nilai {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            flex: 0 0 auto;
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, .16);
+            border: 1px solid rgba(255, 255, 255, .3);
+            color: #fff;
+            font-family: var(--font-ui);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .02em;
+            text-transform: none;
+            padding: 5px 10px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: background .15s, transform .12s;
+            white-space: nowrap;
+        }
+
+        .btn-copy-nilai:hover {
+            background: rgba(255, 255, 255, .3);
+        }
+
+        .btn-copy-nilai:active {
+            transform: scale(.95);
+        }
+
+        .btn-copy-nilai svg {
+            width: 12px;
+            height: 12px;
+            flex: 0 0 auto;
+        }
+
+        .btn-copy-nilai.copied {
+            background: var(--good);
+            border-color: var(--good);
+        }
+
         .divider-dash {
             border-top: 1px dashed rgba(255, 255, 255, .25);
             padding-top: 14px;
@@ -2329,7 +2456,13 @@
 
                         <div class="headline-grid">
                             <div class="headline">
-                                <div class="headline-label">Pendapatan Bersih / Bulan</div>
+                                <div class="headline-top-row">
+                                    <div class="headline-label">Pendapatan Bersih / Bulan</div>
+                                    <button type="button" class="btn-copy-nilai" data-copy-target="out-omset-headline-utp" title="Salin nilai untuk ditempel di halaman Sosek">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                                        Salin
+                                    </button>
+                                </div>
                                 <div class="headline-value" id="out-omset-headline-utp">Rp 0</div>
                                 <div class="headline-sub" id="out-headline-sub-kiri-utp">&nbsp;</div>
                             </div>
@@ -2567,7 +2700,13 @@
 
                         <div class="headline-grid">
                             <div class="headline">
-                                <div class="headline-label">Keuntungan Bersih / Bulan</div>
+                                <div class="headline-top-row">
+                                    <div class="headline-label">Keuntungan Bersih / Bulan</div>
+                                    <button type="button" class="btn-copy-nilai" data-copy-target="out-omset-headline-buah" title="Salin nilai untuk ditempel di halaman Sosek">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                                        Salin
+                                    </button>
+                                </div>
                                 <div class="headline-value" id="out-omset-headline-buah">Rp 0</div>
                                 <div class="headline-sub" id="out-headline-sub-kiri-buah">&nbsp;</div>
                             </div>
@@ -2774,7 +2913,13 @@
                         <div class="result-title">Estimasi Pendapatan Tahunan</div>
                         <div class="result-value" id="annualResult-bgn">Rp 0</div>
                         <div class="divider-dash">
-                            <div class="result-title">Rata-rata Pendapatan per Bulan (Nilai Sensus)</div>
+                            <div class="result-title-row">
+                                <div class="result-title">Rata-rata Pendapatan per Bulan (Nilai Sensus)</div>
+                                <button type="button" class="btn-copy-nilai" data-copy-target="monthlyResult-bgn" title="Salin nilai untuk ditempel di halaman Sosek">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                                    Salin
+                                </button>
+                            </div>
                             <div class="result-value monthly" id="monthlyResult-bgn">Rp 0</div>
                         </div>
                     </div>
@@ -2864,7 +3009,13 @@
                         <div class="result-title">Estimasi Pendapatan Tahunan</div>
                         <div class="result-value" id="annualResult-tani">Rp 0</div>
                         <div class="divider-dash">
-                            <div class="result-title">Rata-rata Pendapatan per Bulan (Nilai Sensus)</div>
+                            <div class="result-title-row">
+                                <div class="result-title">Rata-rata Pendapatan per Bulan (Nilai Sensus)</div>
+                                <button type="button" class="btn-copy-nilai" data-copy-target="monthlyResult-tani" title="Salin nilai untuk ditempel di halaman Sosek">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                                    Salin
+                                </button>
+                            </div>
                             <div class="result-value monthly" id="monthlyResult-tani">Rp 0</div>
                         </div>
                     </div>
@@ -3093,15 +3244,26 @@
                         <fieldset>
                             <div class="blok-label"><span class="dot"></span>Blok D &mdash; Pemasukan Seluruh Keluarga
                             </div>
-                            <div class="field">
-                                <label class="field-label" for="pemasukan-sosek">Total Pemasukan Seluruh Anggota
-                                    Keluarga per Bulan</label>
-                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                        id="pemasukan-sosek" inputmode="numeric" placeholder="Contoh: 3.000.000"></div>
-                                <small class="hint">Jumlahkan pemasukan seluruh anggota rumah tangga yang bekerja
-                                    (suami, istri, anak, dan anggota lain) dalam sebulan, untuk dibandingkan dengan
-                                    total pengeluaran rumah tangga.</small>
+                            <div id="pemasukan-list-sosek">
+                                <div class="field pemasukan-item" data-pemasukan-item>
+                                    <label class="field-label" for="pemasukan-sosek-1">Pemasukan Anggota Keluarga
+                                        ke-1 per Bulan</label>
+                                    <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                            class="input-pemasukan-sosek" id="pemasukan-sosek-1" inputmode="numeric"
+                                            placeholder="Contoh: 3.000.000"></div>
+                                </div>
                             </div>
+                            <button type="button" class="btn-tambah-item" id="btn-tambah-pemasukan-sosek">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                </svg>
+                                Tambah Pemasukan Lainnya
+                            </button>
+                            <small class="hint">Tambahkan satu kolom untuk tiap anggota rumah tangga yang memiliki
+                                pemasukan sendiri (suami, istri, anak, dan anggota lain). Seluruh kolom akan
+                                dijumlahkan otomatis untuk dibandingkan dengan total pengeluaran rumah tangga.</small>
                         </fieldset>
 
                         <button type="button" class="btn-hitung" id="btn-hitung-sosek">
@@ -3331,6 +3493,13 @@
             if (ribuan) { let separator = sisa ? '.' : ''; rupiah += separator + ribuan.join('.'); }
             input.value = rupiah ? rupiah : '';
         }
+        /* Format angka polos dengan pemisah titik ribuan (mis. 1234567 -> "1.234.567"),
+           dipakai untuk menyalin nilai pendapatan bersih/bulan agar siap ditempel
+           langsung ke kolom Pemasukan pada halaman Sosek. */
+        function formatAngkaTitik(angka) {
+            angka = Math.round(angka) || 0;
+            return angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
 
         /* ===================== DROPDOWN KUSTOM (PENGGANTI <select> SISTEM) ===================== */
         function closeAllCsel(except) {
@@ -3423,6 +3592,54 @@
             if (scToastTimer) clearTimeout(scToastTimer);
             scToastTimer = setTimeout(function () { toast.classList.remove('show'); }, 3200);
         }
+
+        /* ===================== SALIN NILAI PENDAPATAN BERSIH/BULAN ===================== */
+        /* Dipakai pada highlight "Pendapatan Bersih / Bulan" di tiap instrumen (Pertanian,
+           Pedagang Buah, Buruh Bangunan, Buruh Tani) supaya nilainya bisa langsung
+           ditempel ke kolom Pemasukan Anggota Keluarga pada halaman Sosek, tanpa perlu
+           mengetik ulang secara manual. */
+        function fallbackCopyTeks(teks) {
+            try {
+                var ta = document.createElement('textarea');
+                ta.value = teks;
+                ta.style.position = 'fixed';
+                ta.style.top = '-9999px';
+                ta.style.left = '-9999px';
+                document.body.appendChild(ta);
+                ta.focus();
+                ta.select();
+                var ok = document.execCommand('copy');
+                document.body.removeChild(ta);
+                return ok;
+            } catch (e) {
+                return false;
+            }
+        }
+        function salinTeks(teks) {
+            return new Promise(function (resolve, reject) {
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(teks).then(resolve).catch(function () {
+                        fallbackCopyTeks(teks) ? resolve() : reject();
+                    });
+                } else {
+                    fallbackCopyTeks(teks) ? resolve() : reject();
+                }
+            });
+        }
+        document.addEventListener('click', function (e) {
+            var btn = e.target.closest('.btn-copy-nilai');
+            if (!btn) return;
+            var targetEl = document.getElementById(btn.getAttribute('data-copy-target'));
+            if (!targetEl) return;
+            var teks = formatAngkaTitik(getRawNumber(targetEl.textContent));
+            salinTeks(teks).then(function () {
+                showToast('Nilai Rp ' + teks + ' disalin. Tempel di kolom Pemasukan pada halaman Sosek.');
+                btn.classList.add('copied');
+                setTimeout(function () { btn.classList.remove('copied'); }, 1200);
+            }).catch(function () {
+                showToast('Gagal menyalin otomatis. Nilainya: Rp ' + teks);
+            });
+        });
 
         function showConfirmModal(opts, onConfirm) {
             var overlay = document.getElementById('sc-confirm-overlay');
@@ -4177,7 +4394,10 @@
 
                 /* Blok D — Ringkasan Pemasukan vs Total Pengeluaran per Bulan */
                 let AMBANG_TIPIS = 200000; /* selisih <= Rp 200.000 dianggap rawan/tipis */
-                let pemasukanBulan = getRawNumber(el("pemasukan-sosek").value);
+                let pemasukanBulan = 0;
+                el("pemasukan-list-sosek").querySelectorAll(".input-pemasukan-sosek").forEach(function (input) {
+                    pemasukanBulan += getRawNumber(input.value);
+                });
                 let totalPengeluaranBulan = bulatkanRibuan(panganBulan + totalNonPanganBulan + (totalRutinTahun / 12));
                 let totalPengeluaranTahun = bulatkanRibuan((totalNonPanganBulan * 12) + totalRutinTahun);
                 let headlineSelisih = el("out-selisih-sosek").closest(".headline");
@@ -4250,10 +4470,49 @@
                 "sabunmandi-harga-sosek", "sabuncuci-harga-sosek", "arisan-harian-sosek",
                 "internet-sosek", "lainnya-sosek",
                 "pajak-kendaraan-sosek", "pajak-rumah-sosek", "hariraya-sosek", "ukt-semester-sosek",
-                "pemasukan-sosek"
+                "pemasukan-sosek-1"
             ].forEach(function (id) {
                 el(id).addEventListener("keyup", function () { formatInputRibuan(this); });
             });
+
+            /* Blok D — Pemasukan Seluruh Keluarga: tombol tambah/hapus kolom pemasukan,
+               karena satu rumah tangga bisa punya lebih dari satu sumber pemasukan
+               (suami, istri, anak, dst). Semua kolom pemasukan dijumlahkan otomatis
+               saat perhitungan (lihat fungsi hitungSosek). */
+            var pemasukanList = el("pemasukan-list-sosek");
+            var btnTambahPemasukan = el("btn-tambah-pemasukan-sosek");
+            var pemasukanCounter = pemasukanList.querySelectorAll(".pemasukan-item").length;
+
+            function labelPemasukan(idx) { return "Pemasukan Anggota Keluarga ke-" + idx + " per Bulan"; }
+
+            function renumberPemasukan() {
+                pemasukanList.querySelectorAll(".pemasukan-item").forEach(function (item, i) {
+                    item.querySelector(".field-label").textContent = labelPemasukan(i + 1);
+                });
+            }
+
+            function tambahBarisPemasukan() {
+                pemasukanCounter++;
+                var wrap = document.createElement("div");
+                wrap.className = "field pemasukan-item";
+                wrap.innerHTML = '<label class="field-label">' + labelPemasukan(pemasukanCounter) + '</label>' +
+                    '<div class="pemasukan-row">' +
+                    '<div class="prefix-wrap"><span class="rp">Rp</span><input type="text" class="input-pemasukan-sosek" inputmode="numeric" placeholder="Contoh: 1.000.000"></div>' +
+                    '<button type="button" class="btn-hapus-item" aria-label="Hapus kolom pemasukan ini">' +
+                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+                    '</button></div>';
+                pemasukanList.appendChild(wrap);
+
+                var input = wrap.querySelector(".input-pemasukan-sosek");
+                input.addEventListener("keyup", function () { formatInputRibuan(this); });
+                wrap.querySelector(".btn-hapus-item").addEventListener("click", function () {
+                    wrap.remove();
+                    renumberPemasukan();
+                });
+                input.focus();
+            }
+
+            btnTambahPemasukan.addEventListener("click", tambahBarisPemasukan);
 
             /* Kolom jumlah hari: angka polos tanpa pemisah ribuan */
             ["lpg-hari-sosek", "bensin-hari-sosek", "sabunmandi-hari-sosek", "sabuncuci-hari-sosek"].forEach(function (id) {
