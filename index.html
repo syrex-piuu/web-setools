@@ -470,6 +470,33 @@
             }
         }
 
+        /* ===== kotak Keterangan Perumahan, terpisah dari kalkulator pengeluaran sosek ===== */
+        .perumahan-box {
+            background: var(--surface-alt);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            padding: 20px 22px 22px;
+            margin-bottom: 24px;
+        }
+
+        .perumahan-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 24px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .perumahan-hasil .headline {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 760px) {
+            .perumahan-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .view {
             display: none;
         }
@@ -1614,6 +1641,11 @@
         .headline.alt.is-loss,
         .headline.is-loss {
             background: linear-gradient(135deg, #7a2318, var(--danger));
+        }
+
+        .headline.alt.is-warn,
+        .headline.is-warn {
+            background: linear-gradient(135deg, #7a4d02, var(--warn));
         }
 
         .headline-value .loss-tag {
@@ -2875,6 +2907,53 @@
                         </div>
                     </div>
 
+                    <div class="perumahan-box">
+                        <div class="result-head">
+                            <h3>Keterangan Perumahan</h3><span>Estimasi Langsung</span>
+                        </div>
+                        <div class="perumahan-grid">
+                            <div class="perumahan-form">
+                                <div class="field">
+                                    <label class="field-label" for="luas-bangunan-sosek">Luas Bangunan Tempat
+                                        Tinggal</label>
+                                    <input type="number" id="luas-bangunan-sosek" inputmode="decimal" step="0.01"
+                                        min="0" placeholder="Contoh: 45">
+                                    <small class="hint">Isi luas bangunan sesuai satuan yang digunakan
+                                        responden, lalu pilih satuannya di samping.</small>
+                                </div>
+                                <div class="field">
+                                    <label class="field-label" for="satuan-luas-sosek">Satuan Luas Bangunan</label>
+                                    <div class="csel">
+                                        <button type="button" class="csel-trigger" aria-haspopup="listbox"
+                                            aria-expanded="false">
+                                            <span class="csel-value">Meter Persegi (m&sup2;)</span>
+                                            <svg class="csel-chev" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <polyline points="6 9 12 15 18 9" />
+                                            </svg>
+                                        </button>
+                                        <ul class="csel-panel" role="listbox" tabindex="-1">
+                                            <li class="csel-opt" role="option" data-value="meter"
+                                                aria-selected="true">Meter Persegi (m&sup2;)</li>
+                                            <li class="csel-opt" role="option" data-value="bata">Bata (1 Bata =
+                                                14 m&sup2;)</li>
+                                        </ul>
+                                        <input type="hidden" id="satuan-luas-sosek" value="meter">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="perumahan-hasil">
+                                <div class="headline alt">
+                                    <div class="headline-label">Estimasi Luas Bangunan</div>
+                                    <div class="headline-value" id="out-luas-m2-sosek">0 m&sup2;</div>
+                                    <div class="headline-sub" id="out-luas-sub-sosek">Isi luas bangunan &amp;
+                                        pilih satuan di sebelah kiri untuk melihat hasilnya di sini.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="sosek-grid">
                     <div class="sosek-col-form">
                     <form id="form-sosek" novalidate>
@@ -3045,7 +3124,7 @@
 
                         <section id="hasil-sosek" class="result">
                             <div id="banner-info-sosek" class="banner banner-info"></div>
-                            <div id="banner-alert-sosek" class="banner banner-warning"></div>
+                            <div id="banner-alert-sosek" class="banner"></div>
 
                             <div class="result-head">
                                 <h3>Ringkasan Pemasukan vs Pengeluaran per Bulan</h3><span>Ringkasan</span>
@@ -4033,15 +4112,15 @@
 
                 let panganHarian = getRawNumber(el("pangan-harian-sosek").value);
                 if (panganHarian <= 0) {
-                    showError("Mohon isi \"Biaya Pangan per Hari\" pada Blok A terlebih dahulu!");
+                    showError("Mohon isi \"Biaya Pangan per Hari\" pada Blok B terlebih dahulu!");
                     return;
                 }
 
-                /* Blok A — Pangan */
+                /* Blok B — Pangan */
                 let panganMinggu = panganHarian * 7;
                 let panganBulan = panganHarian * 30;
 
-                /* Blok B — Non-Pangan per Bulan */
+                /* Blok C — Non-Pangan per Bulan */
                 let listrik = getRawNumber(el("listrik-sosek").value);
 
                 let lpgHari = getRawNumber(el("lpg-hari-sosek").value);
@@ -4072,7 +4151,7 @@
 
                 let totalNonPanganBulan = listrik + lpgBulan + bensinBulan + sabunMandiBulan + sabunCuciBulan + arisanBulan + internet + lainnya;
 
-                /* Blok C — Non-Pangan Rutin Tahunan */
+                /* Blok D — Non-Pangan Rutin Tahunan */
                 let pajakKendaraan = getRawNumber(el("pajak-kendaraan-sosek").value);
                 let pajakRumah = getRawNumber(el("pajak-rumah-sosek").value);
                 let hariRaya = getRawNumber(el("hariraya-sosek").value);
@@ -4086,32 +4165,40 @@
                 el("out-rutin-tahun-sosek").innerText = formatRp(totalRutinTahun);
 
                 /* Blok D — Ringkasan Pemasukan vs Total Pengeluaran per Bulan */
+                let AMBANG_TIPIS = 200000; /* selisih <= Rp 200.000 dianggap rawan/tipis */
                 let pemasukanBulan = getRawNumber(el("pemasukan-sosek").value);
                 let totalPengeluaranBulan = bulatkanRibuan(panganBulan + totalNonPanganBulan + (totalRutinTahun / 12));
-                let totalPengeluaranTahun = bulatkanRibuan((totalNonPanganBulan * 12) + totalRutinTahun);
+                let totalPengeluaranTahun = bulatkanRibuan(((panganBulan + totalNonPanganBulan) * 12) + totalRutinTahun);
                 let headlineSelisih = el("out-selisih-sosek").closest(".headline");
                 let bannerAlert = el("banner-alert-sosek");
 
                 el("out-pemasukan-sosek").innerText = formatRp(pemasukanBulan);
                 el("out-pengeluaran-total-sosek").innerText = formatRp(totalPengeluaranBulan);
                 el("out-pengeluaran-tahun-sosek").innerText = formatRp(totalPengeluaranTahun);
-                el("out-headline-sub-tahun-sosek").innerText = "Non-Pangan " + formatRp(totalNonPanganBulan) + "/bulan \u00d7 12 bulan, ditambah Non-Pangan Rutin " + formatRp(totalRutinTahun) + "/tahun";
+                el("out-headline-sub-tahun-sosek").innerText = "(Pangan " + formatRp(panganBulan) + " + Non-Pangan " + formatRp(totalNonPanganBulan) + ") /bulan \u00d7 12 bulan, ditambah Non-Pangan Rutin " + formatRp(totalRutinTahun) + "/tahun";
+
+                bannerAlert.classList.remove("banner-error", "banner-warning", "show");
 
                 if (pemasukanBulan > 0) {
                     let selisihBulan = pemasukanBulan - totalPengeluaranBulan;
-                    el("out-selisih-sosek").innerHTML = formatRp(selisihBulan) + (selisihBulan < 0 ? '<span class="loss-tag">Defisit</span>' : '');
+                    let statusTag = '';
+                    if (selisihBulan < 0) statusTag = '<span class="loss-tag">Defisit</span>';
+                    else if (selisihBulan <= AMBANG_TIPIS) statusTag = '<span class="loss-tag">Rawan</span>';
+                    el("out-selisih-sosek").innerHTML = formatRp(selisihBulan) + statusTag;
+
                     headlineSelisih.classList.toggle("is-loss", selisihBulan < 0);
+                    headlineSelisih.classList.toggle("is-warn", selisihBulan >= 0 && selisihBulan <= AMBANG_TIPIS);
 
                     if (selisihBulan < 0) {
                         bannerAlert.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><circle cx="12" cy="17" r=".4" fill="currentColor"/></svg><span><b>Perhatian:</b> Total pengeluaran rumah tangga (' + formatRp(totalPengeluaranBulan) + '/bulan) lebih besar daripada total pemasukan seluruh keluarga (' + formatRp(pemasukanBulan) + '/bulan). Estimasi rumah tangga mengalami <b>defisit ' + formatRp(Math.abs(selisihBulan)) + ' per bulan</b>.</span>';
-                        bannerAlert.classList.add("show");
-                    } else {
-                        bannerAlert.classList.remove("show");
+                        bannerAlert.classList.add("banner-error", "show");
+                    } else if (selisihBulan <= AMBANG_TIPIS) {
+                        bannerAlert.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><circle cx="12" cy="17" r=".4" fill="currentColor"/></svg><span><b>Perhatian:</b> Selisih pemasukan dan pengeluaran rumah tangga ini sangat tipis, hanya <b>' + formatRp(selisihBulan) + ' per bulan</b>. Rumah tangga berisiko kekurangan biaya hidup jika ada pengeluaran tak terduga.</span>';
+                        bannerAlert.classList.add("banner-warning", "show");
                     }
                 } else {
                     el("out-selisih-sosek").innerText = "—";
-                    headlineSelisih.classList.remove("is-loss");
-                    bannerAlert.classList.remove("show");
+                    headlineSelisih.classList.remove("is-loss", "is-warn");
                 }
 
                 /* Blok E — Rincian Pangan */
@@ -4161,6 +4248,27 @@
             ["lpg-hari-sosek", "bensin-hari-sosek", "sabunmandi-hari-sosek", "sabuncuci-hari-sosek"].forEach(function (id) {
                 el(id).addEventListener("keyup", function () { this.value = this.value.replace(/[^0-9]/g, ''); });
             });
+
+            /* Keterangan Perumahan (terpisah dari kalkulator sosek): konversi satuan luas bangunan, langsung muncul tanpa perlu isi form lain (1 Bata = 14 m2) */
+            function hitungLuasBangunan() {
+                let luas = parseFloat(el("luas-bangunan-sosek").value) || 0;
+                let satuan = el("satuan-luas-sosek").value;
+                let luasM2 = satuan === "bata" ? luas * 14 : luas;
+                let luasFormatted = new Intl.NumberFormat('id-ID', { maximumFractionDigits: 2 }).format(luasM2);
+                el("out-luas-m2-sosek").innerText = luasFormatted + " m\u00b2";
+                if (luas <= 0) {
+                    el("out-luas-sub-sosek").innerText = "Isi luas bangunan & pilih satuan di sebelah kiri untuk melihat hasilnya di sini.";
+                } else if (satuan === "bata") {
+                    el("out-luas-sub-sosek").innerText = luas + " bata \u00d7 14 = " + luasFormatted + " m\u00b2";
+                } else {
+                    el("out-luas-sub-sosek").innerText = "Satuan input: meter persegi (tanpa konversi).";
+                }
+            }
+            el("luas-bangunan-sosek").addEventListener("input", hitungLuasBangunan);
+            el("luas-bangunan-sosek").addEventListener("keyup", hitungLuasBangunan);
+            el("luas-bangunan-sosek").addEventListener("change", hitungLuasBangunan);
+            el("satuan-luas-sosek").addEventListener("change", hitungLuasBangunan);
+            hitungLuasBangunan();
 
             el("btn-hitung-sosek").addEventListener("click", hitungSosek);
         }
