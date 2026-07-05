@@ -925,6 +925,17 @@
             box-shadow: 0 0 0 3.5px var(--accent-soft);
         }
 
+        input[type="text"]:disabled {
+            background: var(--bg-soft, #f2f4f3);
+            color: var(--ink-faint);
+            cursor: not-allowed;
+            border-color: #e2e7e5;
+        }
+
+        input[type="text"]:disabled:hover {
+            border-color: #e2e7e5;
+        }
+
         .prefix-wrap {
             position: relative;
         }
@@ -4247,6 +4258,33 @@
             /* Kolom jumlah hari: angka polos tanpa pemisah ribuan */
             ["lpg-hari-sosek", "bensin-hari-sosek", "sabunmandi-hari-sosek", "sabuncuci-hari-sosek"].forEach(function (id) {
                 el(id).addEventListener("keyup", function () { this.value = this.value.replace(/[^0-9]/g, ''); });
+            });
+
+            /* Jika kolom "jumlah hari" diisi 0, kolom "harga" di bawahnya otomatis
+               dikunci ke 0 dan tidak perlu diisi manual (karena hasil perkaliannya
+               pasti 0). Saat jumlah hari diisi kembali > 0, kolom harga dibuka lagi
+               untuk diisi. */
+            var pasanganHariHarga = [
+                ["lpg-hari-sosek", "lpg-harga-sosek"],
+                ["bensin-hari-sosek", "bensin-harga-sosek"],
+                ["sabunmandi-hari-sosek", "sabunmandi-harga-sosek"],
+                ["sabuncuci-hari-sosek", "sabuncuci-harga-sosek"]
+            ];
+            function syncHariHarga(hariEl, hargaEl) {
+                let hari = getRawNumber(hariEl.value);
+                if (hari <= 0 && hariEl.value.trim() !== "") {
+                    hargaEl.value = "0";
+                    hargaEl.disabled = true;
+                } else {
+                    if (hargaEl.disabled) { hargaEl.value = ""; }
+                    hargaEl.disabled = false;
+                }
+            }
+            pasanganHariHarga.forEach(function (pasangan) {
+                let hariEl = el(pasangan[0]);
+                let hargaEl = el(pasangan[1]);
+                hariEl.addEventListener("keyup", function () { syncHariHarga(hariEl, hargaEl); });
+                hariEl.addEventListener("change", function () { syncHariHarga(hariEl, hargaEl); });
             });
 
             /* Keterangan Perumahan (terpisah dari kalkulator sosek): konversi satuan luas bangunan, langsung muncul tanpa perlu isi form lain (1 Bata = 14 m2) */
