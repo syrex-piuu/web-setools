@@ -4168,14 +4168,14 @@
                 let AMBANG_TIPIS = 200000; /* selisih <= Rp 200.000 dianggap rawan/tipis */
                 let pemasukanBulan = getRawNumber(el("pemasukan-sosek").value);
                 let totalPengeluaranBulan = bulatkanRibuan(panganBulan + totalNonPanganBulan + (totalRutinTahun / 12));
-                let totalPengeluaranTahun = bulatkanRibuan(((panganBulan + totalNonPanganBulan) * 12) + totalRutinTahun);
+                let totalPengeluaranTahun = bulatkanRibuan((totalNonPanganBulan * 12) + totalRutinTahun);
                 let headlineSelisih = el("out-selisih-sosek").closest(".headline");
                 let bannerAlert = el("banner-alert-sosek");
 
                 el("out-pemasukan-sosek").innerText = formatRp(pemasukanBulan);
                 el("out-pengeluaran-total-sosek").innerText = formatRp(totalPengeluaranBulan);
                 el("out-pengeluaran-tahun-sosek").innerText = formatRp(totalPengeluaranTahun);
-                el("out-headline-sub-tahun-sosek").innerText = "(Pangan " + formatRp(panganBulan) + " + Non-Pangan " + formatRp(totalNonPanganBulan) + ") /bulan \u00d7 12 bulan, ditambah Non-Pangan Rutin " + formatRp(totalRutinTahun) + "/tahun";
+                el("out-headline-sub-tahun-sosek").innerText = "Non-Pangan " + formatRp(totalNonPanganBulan) + "/bulan \u00d7 12 bulan, ditambah Non-Pangan Rutin " + formatRp(totalRutinTahun) + "/tahun";
 
                 bannerAlert.classList.remove("banner-error", "banner-warning", "show");
 
