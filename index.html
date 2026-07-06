@@ -76,6 +76,26 @@
             --accent-soft: #ece8f5;
         }
 
+        .module-riwayat {
+            --accent: #475569;
+            --accent-deep: #2f3b4c;
+            --accent-soft: #e7ebf0;
+        }
+
+        .nav-badge-count {
+            margin-left: auto;
+            flex: 0 0 auto;
+            background: #e0433a;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            line-height: 1;
+            padding: 3px 6px;
+            border-radius: 999px;
+            min-width: 17px;
+            text-align: center;
+        }
+
         * {
             box-sizing: border-box;
         }
@@ -600,6 +620,201 @@
             margin-top: 4px;
         }
 
+        /* ===== Halaman Riwayat ===== */
+        .riwayat-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin: 18px 0 20px;
+        }
+
+        .riwayat-toolbar .csel {
+            min-width: 190px;
+            flex: 1 1 190px;
+        }
+
+        .btn-outline-sm {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12.5px;
+            font-weight: 700;
+            padding: 9px 13px;
+            border-radius: var(--radius-sm, 8px);
+            border: 1.5px solid var(--line);
+            background: var(--surface);
+            color: var(--ink-soft);
+            cursor: pointer;
+            transition: .15s;
+            white-space: nowrap;
+        }
+
+        .btn-outline-sm:hover {
+            border-color: var(--accent);
+            color: var(--accent-deep);
+        }
+
+        .btn-outline-sm svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        .btn-danger-outline:hover {
+            border-color: #c0392b;
+            color: #c0392b;
+        }
+
+        .result-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 22px;
+            padding-top: 18px;
+            border-top: 1px dashed var(--line);
+        }
+
+        .btn-result-action {
+            flex: 1 1 200px;
+            justify-content: center;
+            padding: 11px 14px;
+        }
+
+        .btn-simpan-riwayat {
+            border-color: var(--accent);
+            color: var(--accent-deep);
+            background: var(--accent-soft);
+        }
+
+        .btn-simpan-riwayat:hover {
+            border-color: var(--accent-deep);
+        }
+
+        .btn-simpan-riwayat.is-saved {
+            background: #e6f3ea;
+            border-color: #2f8f5b;
+            color: #1f5c3a;
+        }
+
+        @media (max-width: 600px) {
+            .btn-result-action {
+                flex: 1 1 100%;
+            }
+        }
+
+        .riwayat-empty {
+            text-align: center;
+            padding: 46px 20px;
+            color: var(--ink-faint);
+            font-size: 13px;
+        }
+
+        .riwayat-empty svg {
+            width: 34px;
+            height: 34px;
+            margin-bottom: 12px;
+            opacity: .5;
+        }
+
+        .riwayat-card {
+            border: 1px solid var(--line);
+            border-radius: var(--radius-md, 12px);
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            background: var(--surface);
+            position: relative;
+            border-left: 4px solid var(--card-accent, var(--accent));
+        }
+
+        .riwayat-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .riwayat-badge {
+            display: inline-block;
+            font-size: 10.5px;
+            font-weight: 800;
+            letter-spacing: .03em;
+            padding: 3px 9px;
+            border-radius: 999px;
+            color: #fff;
+            background: var(--card-accent, var(--accent));
+            margin-bottom: 6px;
+        }
+
+        .riwayat-nama {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .riwayat-kode {
+            font-size: 12px;
+            color: var(--ink-faint);
+        }
+
+        .riwayat-nilai {
+            text-align: right;
+        }
+
+        .riwayat-nilai .v {
+            font-family: var(--font-mono, monospace);
+            font-weight: 700;
+            font-size: 15.5px;
+            color: var(--card-accent, var(--accent));
+        }
+
+        .riwayat-nilai .l {
+            font-size: 10px;
+            color: var(--ink-faint);
+            text-transform: uppercase;
+            letter-spacing: .05em;
+        }
+
+        .riwayat-waktu {
+            font-size: 11px;
+            color: var(--ink-faint);
+            margin-top: 6px;
+        }
+
+        .riwayat-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .riwayat-detail {
+            display: none;
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: var(--surface-alt);
+            border-radius: 8px;
+            font-family: var(--font-mono, monospace);
+            font-size: 11.5px;
+            white-space: pre-wrap;
+            color: var(--ink-soft);
+            line-height: 1.6;
+        }
+
+        .riwayat-detail.show {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .riwayat-nilai {
+                text-align: left;
+            }
+
+            .riwayat-card-top {
+                flex-direction: column;
+            }
+        }
+
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -884,6 +1099,32 @@
             color: #5b3aa8;
             background: #ece6fb;
             border-color: #8b6ed8;
+        }
+
+        .draft-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #2f8f5b;
+            background: #e6f3ea;
+            padding: 4px 10px;
+            border-radius: 999px;
+            opacity: 0;
+            transform: translateY(-3px);
+            transition: opacity .25s, transform .25s;
+            pointer-events: none;
+        }
+
+        .draft-indicator.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .draft-indicator svg {
+            width: 12px;
+            height: 12px;
         }
 
         .field {
@@ -2141,8 +2382,7 @@
         <!-- ============ TOPBAR MOBILE ============ -->
         <header class="app-topbar">
             <button class="hamburger" id="btn-open-sidebar" type="button" aria-label="Buka menu navigasi">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="4" y1="7" x2="20" y2="7" />
                     <line x1="4" y1="12" x2="20" y2="12" />
                     <line x1="4" y1="17" x2="20" y2="17" />
@@ -2174,10 +2414,8 @@
                     <span>Pendapatan Informal &middot; SE2026</span>
                 </div>
             </div>
-            <button class="sidebar-toggle" id="btn-collapse-sidebar" type="button"
-                aria-label="Ciutkan atau lebarkan sidebar" title="Ciutkan atau lebarkan sidebar">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"
-                    stroke-linejoin="round">
+            <button class="sidebar-toggle" id="btn-collapse-sidebar" type="button" aria-label="Ciutkan atau lebarkan sidebar" title="Ciutkan atau lebarkan sidebar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="14 6 8 12 14 18" />
                 </svg>
                 <span class="sidebar-toggle-label">Ciutkan panel</span>
@@ -2213,8 +2451,7 @@
                         </svg></span>
                     <span class="nav-label">Pedagang Buah</span>
                 </button>
-                <button class="nav-item module-usaha" data-view="usaha" type="button"
-                    title="Usaha Dagang &amp; Jasa Mikro">
+                <button class="nav-item module-usaha" data-view="usaha" type="button" title="Usaha Dagang &amp; Jasa Mikro">
                     <span class="nav-num">03</span>
                     <span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -2256,6 +2493,23 @@
                             <path d="M3 12h4l3 8 4-16 3 8h4" />
                         </svg></span>
                     <span class="nav-label">Sosial Ekonomi</span>
+                </button>
+
+                <div class="nav-group-label">Rekap</div>
+                <button class="nav-item module-riwayat" data-view="riwayat" type="button" title="Riwayat">
+                    <span class="nav-num">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px">
+                            <circle cx="12" cy="12" r="9" />
+                            <path d="M12 7v5l3 3" />
+                        </svg>
+                    </span>
+                    <span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 6h16M4 12h10M4 18h7" />
+                        </svg></span>
+                    <span class="nav-label">Riwayat</span>
+                    <span class="nav-badge-count" id="nav-riwayat-count" style="display:none">0</span>
                 </button>
             </nav>
             <div class="sidebar-foot">Satu berkas HTML &middot; berjalan penuh tanpa koneksi internet di lapangan.</div>
@@ -2411,18 +2665,15 @@
                 <div class="card">
                     <div class="page-actions">
                         <button type="button" class="back-link" data-goto="beranda">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M11 5 4 12l7 7M4 12h16" />
-                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
                             Kembali ke Beranda
                         </button>
+                        <span class="draft-indicator" id="draft-indicator-utp">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                            Draft tersimpan
+                        </span>
                         <button type="button" class="reload-link" data-reload="utp">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 12a9 9 0 1 1-2.64-6.36" />
-                                <path d="M21 3v6h-6" />
-                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" /></svg>
                             Reload Halaman
                         </button>
                     </div>
@@ -2455,23 +2706,29 @@
 
                     <form id="form-utp" novalidate>
                         <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok 0 — Data Responden</div>
+                            <div class="field">
+                                <label class="field-label" for="resp-nama-utp">Nama Kepala Keluarga / Usaha</label>
+                                <input type="text" id="resp-nama-utp" placeholder="Contoh: Bapak Asep Supriadi">
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="resp-kode-utp">Kode Sampel / No. Urut Bangunan</label>
+                                <input type="text" id="resp-kode-utp" placeholder="Contoh: 001-B / SLS 12">
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
                             <div class="blok-label"><span class="dot"></span>Blok A — Komoditas</div>
                             <div class="field">
                                 <label class="field-label" for="komoditas-utp">Pilih komoditas utama</label>
                                 <div class="csel">
-                                    <button type="button" class="csel-trigger" aria-haspopup="listbox"
-                                        aria-expanded="false">
+                                    <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
                                         <span class="csel-value">Padi Inbrida</span>
-                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <polyline points="6 9 12 15 18 9" />
-                                        </svg>
+                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
                                     </button>
                                     <ul class="csel-panel" role="listbox" tabindex="-1">
-                                        <li class="csel-opt" role="option" data-value="padi" aria-selected="true">Padi
-                                            Inbrida</li>
-                                        <li class="csel-opt" role="option" data-value="umbi">Umbi-umbian (Singkong/Ubi)
-                                        </li>
+                                        <li class="csel-opt" role="option" data-value="padi" aria-selected="true">Padi Inbrida</li>
+                                        <li class="csel-opt" role="option" data-value="umbi">Umbi-umbian (Singkong/Ubi)</li>
                                         <li class="csel-opt" role="option" data-value="jambu_merah">Jambu Merah</li>
                                         <li class="csel-opt" role="option" data-value="pisang">Pisang</li>
                                         <li class="csel-opt" role="option" data-value="pepaya">Pepaya</li>
@@ -2501,17 +2758,12 @@
                             <div class="field" id="grup-status-utp">
                                 <label class="field-label" for="status-lahan-utp">Status kepemilikan lahan</label>
                                 <div class="csel">
-                                    <button type="button" class="csel-trigger" aria-haspopup="listbox"
-                                        aria-expanded="false">
+                                    <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
                                         <span class="csel-value">Milik Sendiri</span>
-                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <polyline points="6 9 12 15 18 9" />
-                                        </svg>
+                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
                                     </button>
                                     <ul class="csel-panel" role="listbox" tabindex="-1">
-                                        <li class="csel-opt" role="option" data-value="milik" aria-selected="true">Milik
-                                            Sendiri</li>
+                                        <li class="csel-opt" role="option" data-value="milik" aria-selected="true">Milik Sendiri</li>
                                         <li class="csel-opt" role="option" data-value="sewa">Sewa Lahan</li>
                                     </ul>
                                     <input type="hidden" id="status-lahan-utp" value="milik">
@@ -2546,14 +2798,8 @@
                             <div class="headline">
                                 <div class="headline-top-row">
                                     <div class="headline-label">Pendapatan Bersih / Bulan</div>
-                                    <button type="button" class="btn-copy-nilai"
-                                        data-copy-target="out-omset-headline-utp"
-                                        title="Salin nilai untuk ditempel di halaman Sosek">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <rect x="9" y="9" width="11" height="11" rx="1.5" />
-                                            <path d="M5 15V5a2 2 0 0 1 2-2h10" />
-                                        </svg>
+                                    <button type="button" class="btn-copy-nilai" data-copy-target="out-omset-headline-utp" title="Salin nilai untuk ditempel di halaman Sosek">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
                                         Salin
                                     </button>
                                 </div>
@@ -2674,6 +2920,17 @@
                                 <td id="out-total-aset-utp">0</td>
                             </tr>
                         </table>
+
+                        <div class="result-actions">
+                            <button type="button" class="btn-outline-sm btn-result-action" id="btn-ringkasan-utp">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                                Salin Ringkasan Lengkap
+                            </button>
+                            <button type="button" class="btn-outline-sm btn-result-action btn-simpan-riwayat" id="btn-simpan-riwayat-utp">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+                                Simpan ke Riwayat
+                            </button>
+                        </div>
                     </section>
                 </div>
             </section>
@@ -2683,18 +2940,15 @@
                 <div class="card">
                     <div class="page-actions">
                         <button type="button" class="back-link" data-goto="beranda">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M11 5 4 12l7 7M4 12h16" />
-                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
                             Kembali ke Beranda
                         </button>
+                        <span class="draft-indicator" id="draft-indicator-buah">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                            Draft tersimpan
+                        </span>
                         <button type="button" class="reload-link" data-reload="buah">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 12a9 9 0 1 1-2.64-6.36" />
-                                <path d="M21 3v6h-6" />
-                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" /></svg>
                             Reload Halaman
                         </button>
                     </div>
@@ -2733,21 +2987,28 @@
 
                     <form id="form-buah" novalidate>
                         <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok 0 — Data Responden</div>
+                            <div class="field">
+                                <label class="field-label" for="resp-nama-buah">Nama Kepala Keluarga / Usaha</label>
+                                <input type="text" id="resp-nama-buah" placeholder="Contoh: Ibu Yayah Rokayah">
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="resp-kode-buah">Kode Sampel / No. Urut Bangunan</label>
+                                <input type="text" id="resp-kode-buah" placeholder="Contoh: 001-B / SLS 12">
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
                             <div class="blok-label"><span class="dot"></span>Blok A — Komoditas &amp; Muatan</div>
                             <div class="field">
                                 <label class="field-label" for="komoditas-buah">Pilih komoditas dagangan</label>
                                 <div class="csel">
-                                    <button type="button" class="csel-trigger" aria-haspopup="listbox"
-                                        aria-expanded="false">
+                                    <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
                                         <span class="csel-value">Jambu Merah</span>
-                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <polyline points="6 9 12 15 18 9" />
-                                        </svg>
+                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
                                     </button>
                                     <ul class="csel-panel" role="listbox" tabindex="-1">
-                                        <li class="csel-opt" role="option" data-value="jambu" aria-selected="true">Jambu
-                                            Merah</li>
+                                        <li class="csel-opt" role="option" data-value="jambu" aria-selected="true">Jambu Merah</li>
                                         <li class="csel-opt" role="option" data-value="mangga">Mangga</li>
                                     </ul>
                                     <input type="hidden" id="komoditas-buah" value="jambu">
@@ -2808,14 +3069,8 @@
                             <div class="headline">
                                 <div class="headline-top-row">
                                     <div class="headline-label">Keuntungan Bersih / Bulan</div>
-                                    <button type="button" class="btn-copy-nilai"
-                                        data-copy-target="out-omset-headline-buah"
-                                        title="Salin nilai untuk ditempel di halaman Sosek">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <rect x="9" y="9" width="11" height="11" rx="1.5" />
-                                            <path d="M5 15V5a2 2 0 0 1 2-2h10" />
-                                        </svg>
+                                    <button type="button" class="btn-copy-nilai" data-copy-target="out-omset-headline-buah" title="Salin nilai untuk ditempel di halaman Sosek">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
                                         Salin
                                     </button>
                                 </div>
@@ -2930,6 +3185,17 @@
                                 <td id="out-thn-laba-buah">0</td>
                             </tr>
                         </table>
+
+                        <div class="result-actions">
+                            <button type="button" class="btn-outline-sm btn-result-action" id="btn-ringkasan-buah">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                                Salin Ringkasan Lengkap
+                            </button>
+                            <button type="button" class="btn-outline-sm btn-result-action btn-simpan-riwayat" id="btn-simpan-riwayat-buah">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+                                Simpan ke Riwayat
+                            </button>
+                        </div>
                     </section>
                 </div>
             </section>
@@ -2939,18 +3205,15 @@
                 <div class="card">
                     <div class="page-actions">
                         <button type="button" class="back-link" data-goto="beranda">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M11 5 4 12l7 7M4 12h16" />
-                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
                             Kembali ke Beranda
                         </button>
+                        <span class="draft-indicator" id="draft-indicator-usaha">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                            Draft tersimpan
+                        </span>
                         <button type="button" class="reload-link" data-reload="usaha">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 12a9 9 0 1 1-2.64-6.36" />
-                                <path d="M21 3v6h-6" />
-                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" /></svg>
                             Reload Halaman
                         </button>
                     </div>
@@ -2988,30 +3251,33 @@
 
                     <form id="form-usaha" novalidate>
                         <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok 0 — Data Responden</div>
+                            <div class="field">
+                                <label class="field-label" for="resp-nama-usaha">Nama Kepala Keluarga / Usaha</label>
+                                <input type="text" id="resp-nama-usaha" placeholder="Contoh: Ibu Neneng Suryani">
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="resp-kode-usaha">Kode Sampel / No. Urut Bangunan</label>
+                                <input type="text" id="resp-kode-usaha" placeholder="Contoh: 001-B / SLS 12">
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
                             <div class="blok-label"><span class="dot"></span>Blok A — Jenis Usaha &amp; Periode
                                 Pencatatan</div>
                             <div class="field">
                                 <label class="field-label" for="jenis-usaha">Jenis usaha responden</label>
                                 <div class="csel">
-                                    <button type="button" class="csel-trigger" aria-haspopup="listbox"
-                                        aria-expanded="false">
+                                    <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
                                         <span class="csel-value">Kelontongan / Warung Sembako</span>
-                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                            <polyline points="6 9 12 15 18 9" />
-                                        </svg>
+                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
                                     </button>
                                     <ul class="csel-panel" role="listbox" tabindex="-1">
-                                        <li class="csel-opt" role="option" data-value="kelontongan"
-                                            aria-selected="true">Kelontongan / Warung Sembako</li>
-                                        <li class="csel-opt" role="option" data-value="asongan">Asongan / Pedagang Kaki
-                                            Lima</li>
-                                        <li class="csel-opt" role="option" data-value="penjahit">Penjahit / Konveksi
-                                            Rumahan</li>
-                                        <li class="csel-opt" role="option" data-value="dagang_lainnya">Usaha Dagang
-                                            Mikro Lainnya</li>
-                                        <li class="csel-opt" role="option" data-value="jasa_lainnya">Usaha Jasa Mikro
-                                            Lainnya</li>
+                                        <li class="csel-opt" role="option" data-value="kelontongan" aria-selected="true">Kelontongan / Warung Sembako</li>
+                                        <li class="csel-opt" role="option" data-value="asongan">Asongan / Pedagang Kaki Lima</li>
+                                        <li class="csel-opt" role="option" data-value="penjahit">Penjahit / Konveksi Rumahan</li>
+                                        <li class="csel-opt" role="option" data-value="dagang_lainnya">Usaha Dagang Mikro Lainnya</li>
+                                        <li class="csel-opt" role="option" data-value="jasa_lainnya">Usaha Jasa Mikro Lainnya</li>
                                     </ul>
                                     <input type="hidden" id="jenis-usaha" value="kelontongan">
                                 </div>
@@ -3021,12 +3287,9 @@
                             <div class="field">
                                 <label class="field-label">Periode pencatatan modal &amp; omset</label>
                                 <div class="segmented-3">
-                                    <label class="seg-opt"><input type="radio" name="periode_usaha" value="harian"
-                                            checked><span>Harian</span></label>
-                                    <label class="seg-opt"><input type="radio" name="periode_usaha"
-                                            value="mingguan"><span>Mingguan</span></label>
-                                    <label class="seg-opt"><input type="radio" name="periode_usaha"
-                                            value="bulanan"><span>Bulanan</span></label>
+                                    <label class="seg-opt"><input type="radio" name="periode_usaha" value="harian" checked><span>Harian</span></label>
+                                    <label class="seg-opt"><input type="radio" name="periode_usaha" value="mingguan"><span>Mingguan</span></label>
+                                    <label class="seg-opt"><input type="radio" name="periode_usaha" value="bulanan"><span>Bulanan</span></label>
                                 </div>
                                 <small class="hint">Pilih periode yang paling mudah diingat &amp; dijawab oleh
                                     responden.</small>
@@ -3042,17 +3305,14 @@
                                 <div class="field">
                                     <label class="field-label" id="label-modal-usaha" for="modal-usaha">Modal Belanja
                                         Barang/Bahan per Hari</label>
-                                    <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                            id="modal-usaha" inputmode="numeric" placeholder="150.000"></div>
+                                    <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="modal-usaha" inputmode="numeric" placeholder="150.000"></div>
                                     <small class="hint">Biaya produksi: belanja stok/bahan baku untuk periode yang
                                         dipilih.</small>
                                 </div>
                                 <div class="field">
-                                    <label class="field-label" id="label-omset-usaha" for="omset-usaha">Omset /
-                                        Pendapatan
+                                    <label class="field-label" id="label-omset-usaha" for="omset-usaha">Omset / Pendapatan
                                         Kotor per Hari</label>
-                                    <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                            id="omset-usaha" inputmode="numeric" placeholder="250.000"></div>
+                                    <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="omset-usaha" inputmode="numeric" placeholder="250.000"></div>
                                     <small class="hint">Total penjualan/pemasukan kotor sebelum dikurangi modal, untuk
                                         periode yang sama dengan modal di atas.</small>
                                 </div>
@@ -3060,8 +3320,7 @@
 
                             <div id="grup-jasa-usaha" class="hide">
                                 <div class="field">
-                                    <label class="field-label" id="label-jumlah-order-usaha"
-                                        for="jumlah-order-usaha">Jumlah
+                                    <label class="field-label" id="label-jumlah-order-usaha" for="jumlah-order-usaha">Jumlah
                                         Order/Pekerjaan Selesai per Hari</label>
                                     <input type="text" id="jumlah-order-usaha" inputmode="numeric" placeholder="5">
                                     <small class="hint">Berapa order/potong/pekerjaan yang diselesaikan pada periode
@@ -3070,16 +3329,14 @@
                                 <div class="field">
                                     <label class="field-label" for="ongkos-order-usaha">Ongkos Jasa per
                                         Order/Pekerjaan</label>
-                                    <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                            id="ongkos-order-usaha" inputmode="numeric" placeholder="35.000"></div>
+                                    <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="ongkos-order-usaha" inputmode="numeric" placeholder="35.000"></div>
                                     <small class="hint">Rata-rata ongkos/upah jasa yang diterima untuk satu
                                         order/pekerjaan (omset = jumlah &times; ongkos).</small>
                                 </div>
                                 <div class="field">
                                     <label class="field-label" for="bahan-order-usaha">Biaya Bahan Tambahan per Order
                                         (Opsional)</label>
-                                    <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                            id="bahan-order-usaha" inputmode="numeric" placeholder="5.000"></div>
+                                    <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="bahan-order-usaha" inputmode="numeric" placeholder="5.000"></div>
                                     <small class="hint">Benang, kancing, resleting, dll — kosongkan/isi 0 jika bahan
                                         utama (mis. kain) disediakan pelanggan sendiri.</small>
                                 </div>
@@ -3114,8 +3371,7 @@
                             <div class="blok-label"><span class="dot"></span>Blok D — Biaya Operasional Tambahan</div>
                             <div class="field">
                                 <label class="field-label" for="ops-usaha">Biaya Operasional Tambahan per Bulan</label>
-                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="ops-usaha"
-                                        inputmode="numeric" placeholder="0"></div>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="ops-usaha" inputmode="numeric" placeholder="0"></div>
                                 <small class="hint">Sewa tempat, listrik, air, transportasi, tenaga bantu, dll — di
                                     luar modal belanja barang/bahan pada Blok B.</small>
                             </div>
@@ -3142,14 +3398,8 @@
                             <div class="headline">
                                 <div class="headline-top-row">
                                     <div class="headline-label">Pendapatan Bersih / Bulan</div>
-                                    <button type="button" class="btn-copy-nilai"
-                                        data-copy-target="out-bersih-bulan-headline-usaha"
-                                        title="Salin nilai untuk ditempel di halaman Sosek">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <rect x="9" y="9" width="11" height="11" rx="1.5" />
-                                            <path d="M5 15V5a2 2 0 0 1 2-2h10" />
-                                        </svg>
+                                    <button type="button" class="btn-copy-nilai" data-copy-target="out-bersih-bulan-headline-usaha" title="Salin nilai untuk ditempel di halaman Sosek">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
                                         Salin
                                     </button>
                                 </div>
@@ -3228,6 +3478,17 @@
                                 Pengeluaran = Biaya Produksi + Biaya Operasional, Bersih = Omset &minus;
                                 Pengeluaran</code>
                         </div>
+
+                        <div class="result-actions">
+                            <button type="button" class="btn-outline-sm btn-result-action" id="btn-ringkasan-usaha">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                                Salin Ringkasan Lengkap
+                            </button>
+                            <button type="button" class="btn-outline-sm btn-result-action btn-simpan-riwayat" id="btn-simpan-riwayat-usaha">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+                                Simpan ke Riwayat
+                            </button>
+                        </div>
                     </section>
                 </div>
             </section>
@@ -3237,18 +3498,15 @@
                 <div class="card">
                     <div class="page-actions">
                         <button type="button" class="back-link" data-goto="beranda">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M11 5 4 12l7 7M4 12h16" />
-                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
                             Kembali ke Beranda
                         </button>
+                        <span class="draft-indicator" id="draft-indicator-bgn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                            Draft tersimpan
+                        </span>
                         <button type="button" class="reload-link" data-reload="bgn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 12a9 9 0 1 1-2.64-6.36" />
-                                <path d="M21 3v6h-6" />
-                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" /></svg>
                             Reload Halaman
                         </button>
                     </div>
@@ -3280,25 +3538,32 @@
                             aktif.</div>
                     </div>
 
-                    <fieldset>
+                    <form id="form-bgn" novalidate>
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok 0 — Data Responden</div>
+                            <div class="field">
+                                <label class="field-label" for="resp-nama-bgn">Nama Kepala Keluarga / Pekerja</label>
+                                <input type="text" id="resp-nama-bgn" placeholder="Contoh: Bapak Dedi Kurniawan">
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="resp-kode-bgn">Kode Sampel / No. Urut Bangunan</label>
+                                <input type="text" id="resp-kode-bgn" placeholder="Contoh: 001-B / SLS 12">
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
                         <div class="blok-label"><span class="dot"></span>Blok A — Peran &amp; Upah</div>
                         <div class="field">
                             <label class="field-label" for="role-bgn">Peran pekerja (otomatis atur upah standar)</label>
                             <div class="csel">
-                                <button type="button" class="csel-trigger" aria-haspopup="listbox"
-                                    aria-expanded="false">
+                                <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
                                     <span class="csel-value">Tukang (Standar Rp 130.000)</span>
-                                    <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="6 9 12 15 18 9" />
-                                    </svg>
+                                    <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
                                 </button>
                                 <ul class="csel-panel" role="listbox" tabindex="-1">
                                     <li class="csel-opt" role="option" data-value="Kenek">Laden (Standar Rp 90.000)</li>
-                                    <li class="csel-opt" role="option" data-value="Tukang" aria-selected="true">Tukang
-                                        (Standar Rp 130.000)</li>
-                                    <li class="csel-opt" role="option" data-value="Mandor">Mandor (Standar Rp 180.000)
-                                    </li>
+                                    <li class="csel-opt" role="option" data-value="Tukang" aria-selected="true">Tukang (Standar Rp 130.000)</li>
+                                    <li class="csel-opt" role="option" data-value="Mandor">Mandor (Standar Rp 180.000)</li>
                                     <li class="csel-opt" role="option" data-value="Custom">Lainnya (Ketik Manual)</li>
                                 </ul>
                                 <input type="hidden" id="role-bgn" value="Tukang">
@@ -3309,9 +3574,9 @@
                             <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="wage-bgn"
                                     inputmode="numeric" value="130.000"></div>
                         </div>
-                    </fieldset>
+                        </fieldset>
 
-                    <fieldset>
+                        <fieldset>
                         <div class="blok-label"><span class="dot"></span>Blok B — Intensitas Kerja</div>
                         <div class="field">
                             <div class="slider-card">
@@ -3330,7 +3595,8 @@
                                 <div class="slider-scale"><span>1</span><span>12 bulan</span></div>
                             </div>
                         </div>
-                    </fieldset>
+                        </fieldset>
+                    </form>
 
                     <div class="result-container">
                         <div class="result-title">Estimasi Pendapatan Tahunan</div>
@@ -3338,13 +3604,8 @@
                         <div class="divider-dash">
                             <div class="result-title-row">
                                 <div class="result-title">Rata-rata Pendapatan per Bulan (Nilai Sensus)</div>
-                                <button type="button" class="btn-copy-nilai" data-copy-target="monthlyResult-bgn"
-                                    title="Salin nilai untuk ditempel di halaman Sosek">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="9" y="9" width="11" height="11" rx="1.5" />
-                                        <path d="M5 15V5a2 2 0 0 1 2-2h10" />
-                                    </svg>
+                                <button type="button" class="btn-copy-nilai" data-copy-target="monthlyResult-bgn" title="Salin nilai untuk ditempel di halaman Sosek">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
                                     Salin
                                 </button>
                             </div>
@@ -3355,6 +3616,17 @@
                     <div class="formula-note">Rumus:
                         <code>Upah Harian &times; Hari Kerja/Minggu &times; 4 Minggu &times; Bulan Aktif Proyek &divide; 12 Bulan</code>
                     </div>
+
+                    <div class="result-actions">
+                        <button type="button" class="btn-outline-sm btn-result-action" id="btn-ringkasan-bgn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                            Salin Ringkasan Lengkap
+                        </button>
+                        <button type="button" class="btn-outline-sm btn-result-action btn-simpan-riwayat" id="btn-simpan-riwayat-bgn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+                            Simpan ke Riwayat
+                        </button>
+                    </div>
                 </div>
             </section>
 
@@ -3363,18 +3635,15 @@
                 <div class="card">
                     <div class="page-actions">
                         <button type="button" class="back-link" data-goto="beranda">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M11 5 4 12l7 7M4 12h16" />
-                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
                             Kembali ke Beranda
                         </button>
+                        <span class="draft-indicator" id="draft-indicator-tani">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                            Draft tersimpan
+                        </span>
                         <button type="button" class="reload-link" data-reload="tani">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 12a9 9 0 1 1-2.64-6.36" />
-                                <path d="M21 3v6h-6" />
-                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" /></svg>
                             Reload Halaman
                         </button>
                     </div>
@@ -3396,24 +3665,31 @@
                         </div>
                     </div>
 
-                    <fieldset>
+                    <form id="form-tani" novalidate>
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok 0 — Data Responden</div>
+                            <div class="field">
+                                <label class="field-label" for="resp-nama-tani">Nama Kepala Keluarga / Pekerja</label>
+                                <input type="text" id="resp-nama-tani" placeholder="Contoh: Ibu Iis Aisyah">
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="resp-kode-tani">Kode Sampel / No. Urut Bangunan</label>
+                                <input type="text" id="resp-kode-tani" placeholder="Contoh: 001-B / SLS 12">
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
                         <div class="blok-label"><span class="dot"></span>Blok A — Responden &amp; Upah</div>
                         <div class="field">
                             <label class="field-label" for="gender-tani">Jenis kelamin responden</label>
                             <div class="csel">
-                                <button type="button" class="csel-trigger" aria-haspopup="listbox"
-                                    aria-expanded="false">
+                                <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
                                     <span class="csel-value">Laki-laki (Standar Rp100.000/hari)</span>
-                                    <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="6 9 12 15 18 9" />
-                                    </svg>
+                                    <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
                                 </button>
                                 <ul class="csel-panel" role="listbox" tabindex="-1">
-                                    <li class="csel-opt" role="option" data-value="Laki-laki" aria-selected="true">
-                                        Laki-laki (Standar Rp100.000/hari)</li>
-                                    <li class="csel-opt" role="option" data-value="Perempuan">Perempuan (Standar
-                                        Rp70.000/hari)</li>
+                                    <li class="csel-opt" role="option" data-value="Laki-laki" aria-selected="true">Laki-laki (Standar Rp100.000/hari)</li>
+                                    <li class="csel-opt" role="option" data-value="Perempuan">Perempuan (Standar Rp70.000/hari)</li>
                                     <li class="csel-opt" role="option" data-value="Custom">Lainnya (Ketik Manual)</li>
                                 </ul>
                                 <input type="hidden" id="gender-tani" value="Laki-laki">
@@ -3424,31 +3700,28 @@
                             <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="wage-tani"
                                     inputmode="numeric" value="100.000"></div>
                         </div>
-                    </fieldset>
+                        </fieldset>
 
-                    <fieldset>
+                        <fieldset>
                         <div class="blok-label"><span class="dot"></span>Blok B — Hari Kerja per Musim</div>
                         <div class="musim-grid">
                             <div class="field">
                                 <div class="slider-card">
-                                    <div class="slider-top"><label for="musim1-tani">Musim 1 — Total Hari
-                                            Kerja</label><span class="slider-value" id="musim1Value-tani">13 Hari</span>
-                                    </div>
+                                    <div class="slider-top"><label for="musim1-tani">Musim 1 — Total Hari Kerja</label><span class="slider-value" id="musim1Value-tani">13 Hari</span></div>
                                     <input type="range" id="musim1-tani" min="1" max="25" value="13">
                                     <div class="slider-scale"><span>1 hari</span><span>25 hari</span></div>
                                 </div>
                             </div>
                             <div class="field">
                                 <div class="slider-card">
-                                    <div class="slider-top"><label for="musim2-tani">Musim 2 — Total Hari
-                                            Kerja</label><span class="slider-value" id="musim2Value-tani">13 Hari</span>
-                                    </div>
+                                    <div class="slider-top"><label for="musim2-tani">Musim 2 — Total Hari Kerja</label><span class="slider-value" id="musim2Value-tani">13 Hari</span></div>
                                     <input type="range" id="musim2-tani" min="1" max="25" value="13">
                                     <div class="slider-scale"><span>1 hari</span><span>25 hari</span></div>
                                 </div>
                             </div>
                         </div>
-                    </fieldset>
+                        </fieldset>
+                    </form>
 
                     <div class="result-container">
                         <div class="result-title">Estimasi Pendapatan Tahunan</div>
@@ -3456,13 +3729,8 @@
                         <div class="divider-dash">
                             <div class="result-title-row">
                                 <div class="result-title">Rata-rata Pendapatan per Bulan (Nilai Sensus)</div>
-                                <button type="button" class="btn-copy-nilai" data-copy-target="monthlyResult-tani"
-                                    title="Salin nilai untuk ditempel di halaman Sosek">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="9" y="9" width="11" height="11" rx="1.5" />
-                                        <path d="M5 15V5a2 2 0 0 1 2-2h10" />
-                                    </svg>
+                                <button type="button" class="btn-copy-nilai" data-copy-target="monthlyResult-tani" title="Salin nilai untuk ditempel di halaman Sosek">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
                                     Salin
                                 </button>
                             </div>
@@ -3473,6 +3741,17 @@
                     <div class="formula-note">Rumus:
                         <code>(Hari Kerja Musim 1 + Hari Kerja Musim 2) &times; Upah Harian &divide; 12 Bulan</code>
                     </div>
+
+                    <div class="result-actions">
+                        <button type="button" class="btn-outline-sm btn-result-action" id="btn-ringkasan-tani">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                            Salin Ringkasan Lengkap
+                        </button>
+                        <button type="button" class="btn-outline-sm btn-result-action btn-simpan-riwayat" id="btn-simpan-riwayat-tani">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+                            Simpan ke Riwayat
+                        </button>
+                    </div>
                 </div>
             </section>
 
@@ -3481,18 +3760,11 @@
                 <div class="card">
                     <div class="page-actions">
                         <button type="button" class="back-link" data-goto="beranda">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M11 5 4 12l7 7M4 12h16" />
-                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
                             Kembali ke Beranda
                         </button>
                         <button type="button" class="reload-link" data-reload="sosek">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 12a9 9 0 1 1-2.64-6.36" />
-                                <path d="M21 3v6h-6" />
-                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" /></svg>
                             Reload Halaman
                         </button>
                     </div>
@@ -3546,14 +3818,15 @@
                                         <button type="button" class="csel-trigger" aria-haspopup="listbox"
                                             aria-expanded="false">
                                             <span class="csel-value">Meter Persegi (m&sup2;)</span>
-                                            <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg class="csel-chev" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                                stroke-linejoin="round">
                                                 <polyline points="6 9 12 15 18 9" />
                                             </svg>
                                         </button>
                                         <ul class="csel-panel" role="listbox" tabindex="-1">
-                                            <li class="csel-opt" role="option" data-value="meter" aria-selected="true">
-                                                Meter Persegi (m&sup2;)</li>
+                                            <li class="csel-opt" role="option" data-value="meter"
+                                                aria-selected="true">Meter Persegi (m&sup2;)</li>
                                             <li class="csel-opt" role="option" data-value="bata">Bata (1 Bata =
                                                 14 m&sup2;)</li>
                                         </ul>
@@ -3573,365 +3846,410 @@
                     </div>
 
                     <div class="sosek-grid">
-                        <div class="sosek-col-form">
-                            <form id="form-sosek" novalidate>
-                                <fieldset>
-                                    <div class="blok-label"><span class="dot"></span>Blok A &mdash; Pengeluaran Pangan
-                                        per
-                                        Hari</div>
-                                    <div class="field">
-                                        <label class="field-label" for="pangan-harian-sosek">Biaya Pangan per Hari
-                                            (termasuk
-                                            bekal, jajan, rokok)</label>
-                                        <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                                id="pangan-harian-sosek" inputmode="numeric"
-                                                placeholder="Contoh: 45.000"></div>
-                                        <small class="hint">Nilai ini akan dikalikan 7 hari untuk estimasi seminggu, dan
-                                            30
-                                            hari untuk estimasi sebulan.</small>
-                                    </div>
-                                </fieldset>
+                    <div class="sosek-col-form">
+                    <form id="form-sosek" novalidate>
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok A &mdash; Pengeluaran Pangan per
+                                Hari</div>
+                            <div class="field">
+                                <label class="field-label" for="pangan-harian-sosek">Biaya Pangan per Hari (termasuk
+                                    bekal, jajan, rokok)</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="pangan-harian-sosek" inputmode="numeric" placeholder="Contoh: 45.000"></div>
+                                <small class="hint">Nilai ini akan dikalikan 7 hari untuk estimasi seminggu, dan 30
+                                    hari untuk estimasi sebulan.</small>
+                            </div>
+                        </fieldset>
 
-                                <fieldset>
-                                    <div class="blok-label"><span class="dot"></span>Blok B &mdash; Pengeluaran
-                                        Non-Pangan per
-                                        Bulan</div>
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok B &mdash; Pengeluaran Non-Pangan per
+                                Bulan</div>
 
-                                    <div class="field">
-                                        <label class="field-label" for="listrik-sosek">Listrik per Bulan</label>
-                                        <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                                id="listrik-sosek" inputmode="numeric" placeholder="Contoh: 150.000">
-                                        </div>
-                                    </div>
-
-                                    <div class="field">
-                                        <label class="field-label" for="internet-sosek">Internet per Bulan</label>
-                                        <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                                id="internet-sosek" inputmode="numeric" placeholder="Contoh: 100.000">
-                                        </div>
-                                    </div>
-
-                                    <div class="sub-label">LPG (Gas)</div>
-                                    <div class="field">
-                                        <label class="field-label" for="lpg-hari-sosek">1 Tabung Gas Habis dalam Berapa
-                                            Hari</label>
-                                        <input type="text" id="lpg-hari-sosek" inputmode="numeric"
-                                            placeholder="Contoh: 7">
-                                    </div>
-                                    <div class="field">
-                                        <label class="field-label" for="lpg-harga-sosek">Harga 1 Tabung Gas</label>
-                                        <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                                id="lpg-harga-sosek" inputmode="numeric" placeholder="Contoh: 22.000">
-                                        </div>
-                                    </div>
-
-                                    <div class="sub-label">Bensin / BBM</div>
-                                    <div class="field">
-                                        <label class="field-label" for="bensin-hari-sosek">1x Isi Bensin Habis dalam
-                                            Berapa
-                                            Hari</label>
-                                        <input type="text" id="bensin-hari-sosek" inputmode="numeric"
-                                            placeholder="Contoh: 5">
-                                    </div>
-                                    <div class="field">
-                                        <label class="field-label" for="bensin-harga-sosek">Biaya Sekali Isi
-                                            Bensin</label>
-                                        <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                                id="bensin-harga-sosek" inputmode="numeric"
-                                                placeholder="Contoh: 25.000"></div>
-                                    </div>
-
-                                    <div class="sub-label">Sabun Mandi</div>
-                                    <div class="field">
-                                        <label class="field-label" for="sabunmandi-hari-sosek">1 Buah Sabun Mandi Habis
-                                            dalam
-                                            Berapa Hari</label>
-                                        <input type="text" id="sabunmandi-hari-sosek" inputmode="numeric"
-                                            placeholder="Contoh: 20">
-                                    </div>
-                                    <div class="field">
-                                        <label class="field-label" for="sabunmandi-harga-sosek">Harga 1 Buah Sabun
-                                            Mandi</label>
-                                        <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                                id="sabunmandi-harga-sosek" inputmode="numeric"
-                                                placeholder="Contoh: 5.000"></div>
-                                    </div>
-
-                                    <div class="sub-label">Sabun Cuci</div>
-                                    <div class="field">
-                                        <label class="field-label" for="sabuncuci-hari-sosek">1 Buah/Bungkus Sabun Cuci
-                                            Habis
-                                            dalam Berapa Hari</label>
-                                        <input type="text" id="sabuncuci-hari-sosek" inputmode="numeric"
-                                            placeholder="Contoh: 15">
-                                    </div>
-                                    <div class="field">
-                                        <label class="field-label" for="sabuncuci-harga-sosek">Harga 1 Buah/Bungkus
-                                            Sabun
-                                            Cuci</label>
-                                        <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                                id="sabuncuci-harga-sosek" inputmode="numeric"
-                                                placeholder="Contoh: 12.000"></div>
-                                    </div>
-
-                                    <div class="sub-label">Arisan</div>
-                                    <div class="field">
-                                        <label class="field-label" for="arisan-harian-sosek">Biaya Arisan per
-                                            Hari</label>
-                                        <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                                id="arisan-harian-sosek" inputmode="numeric"
-                                                placeholder="Contoh: 5.000"></div>
-                                    </div>
-
-                                    <div class="field">
-                                        <label class="field-label" for="lainnya-sosek">Pengeluaran Lainnya per Bulan
-                                            (Transfer
-                                            ke Orang Tua, dll)</label>
-                                        <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                                id="lainnya-sosek" inputmode="numeric" placeholder="Contoh: 200.000">
-                                        </div>
-                                    </div>
-                                </fieldset>
-
-                                <fieldset>
-                                    <div class="blok-label"><span class="dot"></span>Blok C &mdash; Non-Pangan Rutin
-                                        Tahunan</div>
-                                    <div class="field">
-                                        <label class="field-label" for="pajak-kendaraan-sosek">Pajak Kendaraan per
-                                            Tahun</label>
-                                        <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                                id="pajak-kendaraan-sosek" inputmode="numeric"
-                                                placeholder="Contoh: 350.000"></div>
-                                    </div>
-                                    <div class="field">
-                                        <label class="field-label" for="pajak-rumah-sosek">Pajak Rumah (PBB) per
-                                            Tahun</label>
-                                        <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                                id="pajak-rumah-sosek" inputmode="numeric"
-                                                placeholder="Contoh: 150.000"></div>
-                                    </div>
-                                    <div class="field">
-                                        <label class="field-label" for="hariraya-sosek">Biaya Hari Raya per
-                                            Tahun</label>
-                                        <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                                id="hariraya-sosek" inputmode="numeric" placeholder="Contoh: 1.500.000">
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <label class="field-label" for="ukt-semester-sosek">Uang Gedung / UKT per
-                                            Semester</label>
-                                        <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                                id="ukt-semester-sosek" inputmode="numeric"
-                                                placeholder="Contoh: 2.500.000"></div>
-                                        <small class="hint">Nilai ini akan dikalikan 2 untuk estimasi setahun (2
-                                            semester).</small>
-                                    </div>
-                                </fieldset>
-
-                                <fieldset>
-                                    <div class="blok-label"><span class="dot"></span>Blok D &mdash; Pemasukan Seluruh
-                                        Keluarga
-                                    </div>
-                                    <div id="pemasukan-list-sosek">
-                                        <div class="field pemasukan-item" data-pemasukan-item>
-                                            <label class="field-label" for="pemasukan-sosek-1">Pemasukan Anggota
-                                                Keluarga
-                                                ke-1 per Bulan</label>
-                                            <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
-                                                    class="input-pemasukan-sosek" id="pemasukan-sosek-1"
-                                                    inputmode="numeric" placeholder="Contoh: 3.000.000"></div>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn-tambah-item" id="btn-tambah-pemasukan-sosek">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <line x1="12" y1="5" x2="12" y2="19" />
-                                            <line x1="5" y1="12" x2="19" y2="12" />
-                                        </svg>
-                                        Tambah Pemasukan Lainnya
-                                    </button>
-                                    <small class="hint">Tambahkan satu kolom untuk tiap anggota rumah tangga yang
-                                        memiliki
-                                        pemasukan sendiri (suami, istri, anak, dan anggota lain). Seluruh kolom akan
-                                        dijumlahkan otomatis untuk dibandingkan dengan total pengeluaran rumah
-                                        tangga.</small>
-                                </fieldset>
-
-                                <button type="button" class="btn-hitung" id="btn-hitung-sosek">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="4" y="3" width="16" height="18" rx="2" />
-                                        <line x1="8" y1="8" x2="16" y2="8" />
-                                        <line x1="8" y1="12" x2="16" y2="12" />
-                                        <line x1="8" y1="16" x2="12" y2="16" />
-                                    </svg>
-                                    Hitung Rincian Sosial Ekonomi
-                                </button>
-                            </form>
-                        </div>
-
-                        <div class="sosek-col-result">
-                            <div id="sosek-placeholder" class="sosek-placeholder">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="4" y="3" width="16" height="18" rx="2" />
-                                    <line x1="8" y1="8" x2="16" y2="8" />
-                                    <line x1="8" y1="12" x2="16" y2="12" />
-                                    <line x1="8" y1="16" x2="12" y2="16" />
-                                </svg>
-                                <p>Isi formulir pengeluaran &amp; pemasukan di sebelah kiri, lalu klik <b>Hitung Rincian
-                                        Sosial Ekonomi</b>. Rincian dan perbandingan pemasukan&ndash;pengeluaran akan
-                                    tampil di sini.</p>
+                            <div class="field">
+                                <label class="field-label" for="listrik-sosek">Listrik per Bulan</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="listrik-sosek" inputmode="numeric" placeholder="Contoh: 150.000"></div>
                             </div>
 
-                            <div id="banner-error-sosek" class="banner banner-error"></div>
+                            <div class="field">
+                                <label class="field-label" for="internet-sosek">Internet per Bulan</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="internet-sosek" inputmode="numeric" placeholder="Contoh: 100.000"></div>
+                            </div>
 
-                            <section id="hasil-sosek" class="result">
-                                <div id="banner-info-sosek" class="banner banner-info"></div>
-                                <div id="banner-alert-sosek" class="banner"></div>
+                            <div class="sub-label">LPG (Gas)</div>
+                            <div class="field">
+                                <label class="field-label" for="lpg-hari-sosek">1 Tabung Gas Habis dalam Berapa
+                                    Hari</label>
+                                <input type="text" id="lpg-hari-sosek" inputmode="numeric" placeholder="Contoh: 7">
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="lpg-harga-sosek">Harga 1 Tabung Gas</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="lpg-harga-sosek" inputmode="numeric" placeholder="Contoh: 22.000"></div>
+                            </div>
 
-                                <div class="result-head">
-                                    <h3>Ringkasan Pemasukan vs Pengeluaran per Bulan</h3><span>Ringkasan</span>
+                            <div class="sub-label">Bensin / BBM</div>
+                            <div class="field">
+                                <label class="field-label" for="bensin-hari-sosek">1x Isi Bensin Habis dalam Berapa
+                                    Hari</label>
+                                <input type="text" id="bensin-hari-sosek" inputmode="numeric" placeholder="Contoh: 5">
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="bensin-harga-sosek">Biaya Sekali Isi Bensin</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="bensin-harga-sosek" inputmode="numeric" placeholder="Contoh: 25.000"></div>
+                            </div>
+
+                            <div class="sub-label">Sabun Mandi</div>
+                            <div class="field">
+                                <label class="field-label" for="sabunmandi-hari-sosek">1 Buah Sabun Mandi Habis dalam
+                                    Berapa Hari</label>
+                                <input type="text" id="sabunmandi-hari-sosek" inputmode="numeric"
+                                    placeholder="Contoh: 20">
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="sabunmandi-harga-sosek">Harga 1 Buah Sabun Mandi</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="sabunmandi-harga-sosek" inputmode="numeric" placeholder="Contoh: 5.000"></div>
+                            </div>
+
+                            <div class="sub-label">Sabun Cuci</div>
+                            <div class="field">
+                                <label class="field-label" for="sabuncuci-hari-sosek">1 Buah/Bungkus Sabun Cuci Habis
+                                    dalam Berapa Hari</label>
+                                <input type="text" id="sabuncuci-hari-sosek" inputmode="numeric"
+                                    placeholder="Contoh: 15">
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="sabuncuci-harga-sosek">Harga 1 Buah/Bungkus Sabun
+                                    Cuci</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="sabuncuci-harga-sosek" inputmode="numeric" placeholder="Contoh: 12.000"></div>
+                            </div>
+
+                            <div class="sub-label">Arisan</div>
+                            <div class="field">
+                                <label class="field-label" for="arisan-harian-sosek">Biaya Arisan per Hari</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="arisan-harian-sosek" inputmode="numeric" placeholder="Contoh: 5.000"></div>
+                            </div>
+
+                            <div class="field">
+                                <label class="field-label" for="lainnya-sosek">Pengeluaran Lainnya per Bulan (Transfer
+                                    ke Orang Tua, dll)</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="lainnya-sosek" inputmode="numeric" placeholder="Contoh: 200.000"></div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok C &mdash; Non-Pangan Rutin Tahunan</div>
+                            <div class="field">
+                                <label class="field-label" for="pajak-kendaraan-sosek">Pajak Kendaraan per Tahun</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="pajak-kendaraan-sosek" inputmode="numeric" placeholder="Contoh: 350.000"></div>
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="pajak-rumah-sosek">Pajak Rumah (PBB) per Tahun</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="pajak-rumah-sosek" inputmode="numeric" placeholder="Contoh: 150.000"></div>
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="hariraya-sosek">Biaya Hari Raya per Tahun</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="hariraya-sosek" inputmode="numeric" placeholder="Contoh: 1.500.000"></div>
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="ukt-semester-sosek">Uang Gedung / UKT per
+                                    Semester</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="ukt-semester-sosek" inputmode="numeric" placeholder="Contoh: 2.500.000"></div>
+                                <small class="hint">Nilai ini akan dikalikan 2 untuk estimasi setahun (2
+                                    semester).</small>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok D &mdash; Pemasukan Seluruh Keluarga
+                            </div>
+                            <div id="pemasukan-list-sosek">
+                                <div class="field pemasukan-item" data-pemasukan-item>
+                                    <label class="field-label" for="pemasukan-sosek-1">Pemasukan Anggota Keluarga
+                                        ke-1 per Bulan</label>
+                                    <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                            class="input-pemasukan-sosek" id="pemasukan-sosek-1" inputmode="numeric"
+                                            placeholder="Contoh: 3.000.000"></div>
                                 </div>
-                                <div class="headline-grid-3">
-                                    <div class="headline">
-                                        <div class="headline-label">Pemasukan Keluarga / Bulan</div>
-                                        <div class="headline-value" id="out-pemasukan-sosek">Rp 0</div>
-                                    </div>
-                                    <div class="headline alt">
-                                        <div class="headline-label">Selisih (Surplus/Defisit)</div>
-                                        <div class="headline-value" id="out-selisih-sosek">Rp 0</div>
-                                    </div>
-                                    <div class="headline">
-                                        <div class="headline-label">Total Pengeluaran / Bulan</div>
-                                        <div class="headline-value" id="out-pengeluaran-total-sosek">Rp 0</div>
-                                    </div>
-                                </div>
+                            </div>
+                            <button type="button" class="btn-tambah-item" id="btn-tambah-pemasukan-sosek">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                </svg>
+                                Tambah Pemasukan Lainnya
+                            </button>
+                            <small class="hint">Tambahkan satu kolom untuk tiap anggota rumah tangga yang memiliki
+                                pemasukan sendiri (suami, istri, anak, dan anggota lain). Seluruh kolom akan
+                                dijumlahkan otomatis untuk dibandingkan dengan total pengeluaran rumah tangga.</small>
+                        </fieldset>
 
-                                <div class="headline-grid-3">
-                                    <div class="headline">
-                                        <div class="headline-label">Pangan / Minggu</div>
-                                        <div class="headline-value" id="out-pangan-minggu-sosek">Rp 0</div>
-                                    </div>
-                                    <div class="headline alt">
-                                        <div class="headline-label">Non-Pangan / Bulan</div>
-                                        <div class="headline-value" id="out-nonpangan-bulan-sosek">Rp 0</div>
-                                    </div>
-                                    <div class="headline">
-                                        <div class="headline-label">Non-Pangan Rutin / Tahun</div>
-                                        <div class="headline-value" id="out-rutin-tahun-sosek">Rp 0</div>
-                                    </div>
-                                </div>
+                        <button type="button" class="btn-hitung" id="btn-hitung-sosek">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="4" y="3" width="16" height="18" rx="2" />
+                                <line x1="8" y1="8" x2="16" y2="8" />
+                                <line x1="8" y1="12" x2="16" y2="12" />
+                                <line x1="8" y1="16" x2="12" y2="16" />
+                            </svg>
+                            Hitung Rincian Sosial Ekonomi
+                        </button>
+                    </form>
+                    </div>
 
+                    <div class="sosek-col-result">
+                        <div id="sosek-placeholder" class="sosek-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="4" y="3" width="16" height="18" rx="2" />
+                                <line x1="8" y1="8" x2="16" y2="8" />
+                                <line x1="8" y1="12" x2="16" y2="12" />
+                                <line x1="8" y1="16" x2="12" y2="16" />
+                            </svg>
+                            <p>Isi formulir pengeluaran &amp; pemasukan di sebelah kiri, lalu klik <b>Hitung Rincian
+                                    Sosial Ekonomi</b>. Rincian dan perbandingan pemasukan&ndash;pengeluaran akan
+                                tampil di sini.</p>
+                        </div>
+
+                        <div id="banner-error-sosek" class="banner banner-error"></div>
+
+                        <section id="hasil-sosek" class="result">
+                            <div id="banner-info-sosek" class="banner banner-info"></div>
+                            <div id="banner-alert-sosek" class="banner"></div>
+
+                            <div class="result-head">
+                                <h3>Ringkasan Pemasukan vs Pengeluaran per Bulan</h3><span>Ringkasan</span>
+                            </div>
+                            <div class="headline-grid-3">
                                 <div class="headline">
-                                    <div class="headline-label">Total Pengeluaran / Tahun</div>
-                                    <div class="headline-value" id="out-pengeluaran-tahun-sosek">Rp 0</div>
-                                    <div class="headline-sub" id="out-headline-sub-tahun-sosek">&nbsp;</div>
+                                    <div class="headline-label">Pemasukan Keluarga / Bulan</div>
+                                    <div class="headline-value" id="out-pemasukan-sosek">Rp 0</div>
                                 </div>
+                                <div class="headline alt">
+                                    <div class="headline-label">Selisih (Surplus/Defisit)</div>
+                                    <div class="headline-value" id="out-selisih-sosek">Rp 0</div>
+                                </div>
+                                <div class="headline">
+                                    <div class="headline-label">Total Pengeluaran / Bulan</div>
+                                    <div class="headline-value" id="out-pengeluaran-total-sosek">Rp 0</div>
+                                </div>
+                            </div>
 
-                                <div class="result-head">
-                                    <h3>Rincian Pengeluaran Pangan</h3><span>Blok E</span>
+                            <div class="headline-grid-3">
+                                <div class="headline">
+                                    <div class="headline-label">Pangan / Minggu</div>
+                                    <div class="headline-value" id="out-pangan-minggu-sosek">Rp 0</div>
                                 </div>
-                                <table>
-                                    <tr>
-                                        <th>Keterangan</th>
-                                        <th>Estimasi</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Biaya Pangan per Hari (Pangan, Jajan, Rokok)</td>
-                                        <td id="out-pangan-harian-sosek">0</td>
-                                    </tr>
-                                    <tr class="total-row">
-                                        <td>Total Pengeluaran Pangan / Minggu (&times;7 Hari)</td>
-                                        <td id="out-pangan-minggu-detail-sosek">0</td>
-                                    </tr>
-                                    <tr class="total-row">
-                                        <td>Estimasi Pengeluaran Pangan / Bulan (&times;30 Hari)</td>
-                                        <td id="out-pangan-bulan-sosek">0</td>
-                                    </tr>
-                                </table>
+                                <div class="headline alt">
+                                    <div class="headline-label">Non-Pangan / Bulan</div>
+                                    <div class="headline-value" id="out-nonpangan-bulan-sosek">Rp 0</div>
+                                </div>
+                                <div class="headline">
+                                    <div class="headline-label">Non-Pangan Rutin / Tahun</div>
+                                    <div class="headline-value" id="out-rutin-tahun-sosek">Rp 0</div>
+                                </div>
+                            </div>
 
-                                <div class="result-head">
-                                    <h3>Rincian Pengeluaran Non-Pangan / Bulan</h3><span>Blok F</span>
-                                </div>
-                                <table>
-                                    <tr>
-                                        <th>Kategori / Item</th>
-                                        <th>Total / Bulan</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Listrik</td>
-                                        <td id="out-listrik-sosek">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Internet</td>
-                                        <td id="out-internet-sosek">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>LPG (Gas) &mdash; <span id="out-lpg-frek-sosek">0 tabung/bulan</span></td>
-                                        <td id="out-lpg-sosek">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Bensin / BBM &mdash; <span id="out-bensin-frek-sosek">0x isi/bulan</span>
-                                        </td>
-                                        <td id="out-bensin-sosek">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sabun Mandi &mdash; <span id="out-sabunmandi-frek-sosek">0 buah/bulan</span>
-                                        </td>
-                                        <td id="out-sabunmandi-sosek">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sabun Cuci &mdash; <span id="out-sabuncuci-frek-sosek">0 buah/bulan</span>
-                                        </td>
-                                        <td id="out-sabuncuci-sosek">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Arisan (&times;30 Hari)</td>
-                                        <td id="out-arisan-sosek">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Lainnya (Transfer ke Orang Tua, dll)</td>
-                                        <td id="out-lainnya-sosek">0</td>
-                                    </tr>
-                                    <tr class="total-row">
-                                        <td>Total Pengeluaran Non-Pangan / Bulan</td>
-                                        <td id="out-nonpangan-bulan-detail-sosek">0</td>
-                                    </tr>
-                                </table>
+                            <div class="headline">
+                                <div class="headline-label">Total Pengeluaran / Tahun</div>
+                                <div class="headline-value" id="out-pengeluaran-tahun-sosek">Rp 0</div>
+                                <div class="headline-sub" id="out-headline-sub-tahun-sosek">&nbsp;</div>
+                            </div>
 
-                                <div class="result-head">
-                                    <h3>Rincian Non-Pangan Rutin Tahunan</h3><span>Blok G</span>
-                                </div>
-                                <table>
-                                    <tr>
-                                        <th>Kategori / Item</th>
-                                        <th>Total / Tahun</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Pajak Kendaraan</td>
-                                        <td id="out-pajak-kendaraan-sosek">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pajak Rumah (PBB)</td>
-                                        <td id="out-pajak-rumah-sosek">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Biaya Hari Raya</td>
-                                        <td id="out-hariraya-sosek">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Uang Gedung / UKT (2&times; Semester)</td>
-                                        <td id="out-ukt-tahun-sosek">0</td>
-                                    </tr>
-                                    <tr class="total-row">
-                                        <td>Total Non-Pangan Rutin / Tahun</td>
-                                        <td id="out-rutin-tahun-detail-sosek">0</td>
-                                    </tr>
-                                </table>
-                            </section>
+                        <div class="result-head">
+                            <h3>Rincian Pengeluaran Pangan</h3><span>Blok E</span>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Keterangan</th>
+                                <th>Estimasi</th>
+                            </tr>
+                            <tr>
+                                <td>Biaya Pangan per Hari (Pangan, Jajan, Rokok)</td>
+                                <td id="out-pangan-harian-sosek">0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Total Pengeluaran Pangan / Minggu (&times;7 Hari)</td>
+                                <td id="out-pangan-minggu-detail-sosek">0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Estimasi Pengeluaran Pangan / Bulan (&times;30 Hari)</td>
+                                <td id="out-pangan-bulan-sosek">0</td>
+                            </tr>
+                        </table>
+
+                        <div class="result-head">
+                            <h3>Rincian Pengeluaran Non-Pangan / Bulan</h3><span>Blok F</span>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Kategori / Item</th>
+                                <th>Total / Bulan</th>
+                            </tr>
+                            <tr>
+                                <td>Listrik</td>
+                                <td id="out-listrik-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Internet</td>
+                                <td id="out-internet-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>LPG (Gas) &mdash; <span id="out-lpg-frek-sosek">0 tabung/bulan</span></td>
+                                <td id="out-lpg-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Bensin / BBM &mdash; <span id="out-bensin-frek-sosek">0x isi/bulan</span></td>
+                                <td id="out-bensin-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Sabun Mandi &mdash; <span id="out-sabunmandi-frek-sosek">0 buah/bulan</span></td>
+                                <td id="out-sabunmandi-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Sabun Cuci &mdash; <span id="out-sabuncuci-frek-sosek">0 buah/bulan</span></td>
+                                <td id="out-sabuncuci-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Arisan (&times;30 Hari)</td>
+                                <td id="out-arisan-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Lainnya (Transfer ke Orang Tua, dll)</td>
+                                <td id="out-lainnya-sosek">0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Total Pengeluaran Non-Pangan / Bulan</td>
+                                <td id="out-nonpangan-bulan-detail-sosek">0</td>
+                            </tr>
+                        </table>
+
+                        <div class="result-head">
+                            <h3>Rincian Non-Pangan Rutin Tahunan</h3><span>Blok G</span>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Kategori / Item</th>
+                                <th>Total / Tahun</th>
+                            </tr>
+                            <tr>
+                                <td>Pajak Kendaraan</td>
+                                <td id="out-pajak-kendaraan-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Pajak Rumah (PBB)</td>
+                                <td id="out-pajak-rumah-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Biaya Hari Raya</td>
+                                <td id="out-hariraya-sosek">0</td>
+                            </tr>
+                            <tr>
+                                <td>Uang Gedung / UKT (2&times; Semester)</td>
+                                <td id="out-ukt-tahun-sosek">0</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Total Non-Pangan Rutin / Tahun</td>
+                                <td id="out-rutin-tahun-detail-sosek">0</td>
+                            </tr>
+                        </table>
+                        </section>
+                    </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== HALAMAN RIWAYAT / REKAP ===== -->
+            <section id="view-riwayat" class="view module-riwayat">
+                <div class="card">
+                    <div class="page-actions">
+                        <button type="button" class="back-link" data-goto="beranda">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
+                            Kembali ke Beranda
+                        </button>
+                    </div>
+                    <span class="eyebrow">Rekap Lapangan</span>
+                    <div class="doc-head">
+                        <div>
+                            <h1>Riwayat Perhitungan</h1>
+                            <p class="doc-sub">Daftar hasil perhitungan yang sudah disimpan dari seluruh instrumen
+                                selama sesi kerja di HP/laptop ini.</p>
+                        </div>
+                        <div class="doc-head__icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 6h16M4 12h10M4 18h7" />
+                            </svg>
                         </div>
                     </div>
+
+                    <div class="callout">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="9" />
+                            <line x1="12" y1="8" x2="12" y2="13" />
+                            <circle cx="12" cy="16.2" r=".4" fill="currentColor" />
+                        </svg>
+                        <div>Data tersimpan <b>hanya di perangkat ini</b> (tidak terkirim ke server manapun). Gunakan
+                            tombol <b>Simpan ke Riwayat</b> di tiap instrumen setelah menekan Hitung, supaya hasilnya
+                            muncul di sini.</div>
+                    </div>
+
+                    <div class="stat-row" id="riwayat-stat-row">
+                        <div class="stat-card">
+                            <div class="n" id="riwayat-stat-total">0</div>
+                            <div class="l">Total Tersimpan</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="n" id="riwayat-stat-hari-ini">0</div>
+                            <div class="l">Tersimpan Hari Ini</div>
+                        </div>
+                    </div>
+
+                    <div class="riwayat-toolbar">
+                        <div class="csel" id="riwayat-filter-wrap">
+                            <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                <span class="csel-value">Semua Instrumen</span>
+                                <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                            </button>
+                            <ul class="csel-panel" role="listbox" tabindex="-1">
+                                <li class="csel-opt" role="option" data-value="" aria-selected="true">Semua Instrumen</li>
+                                <li class="csel-opt" role="option" data-value="utp">Pertanian</li>
+                                <li class="csel-opt" role="option" data-value="buah">Pedagang Buah</li>
+                                <li class="csel-opt" role="option" data-value="usaha">Usaha Dagang &amp; Jasa</li>
+                                <li class="csel-opt" role="option" data-value="bgn">Buruh Bangunan</li>
+                                <li class="csel-opt" role="option" data-value="tani">Buruh Tani</li>
+                            </ul>
+                            <input type="hidden" id="riwayat-filter">
+                        </div>
+                        <button type="button" class="btn-outline-sm" id="btn-salin-semua-riwayat">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                            Salin Semua
+                        </button>
+                        <button type="button" class="btn-outline-sm btn-danger-outline" id="btn-kosongkan-riwayat">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m2 0-1 13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L6 7"/></svg>
+                            Kosongkan Semua
+                        </button>
+                    </div>
+
+                    <div id="riwayat-empty" class="riwayat-empty" style="display:none">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h7" /></svg>
+                        <p>Belum ada riwayat tersimpan. Buka salah satu instrumen, tekan Hitung, lalu tekan tombol
+                            <b>Simpan ke Riwayat</b>.</p>
+                    </div>
+
+                    <div id="riwayat-list"></div>
                 </div>
             </section>
 
@@ -3943,8 +4261,7 @@
     <div id="sc-confirm-overlay" class="sc-modal-overlay">
         <div class="sc-modal" role="alertdialog" aria-modal="true" aria-labelledby="sc-confirm-title">
             <div class="sc-modal-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 12a9 9 0 1 1-2.64-6.36" />
                     <path d="M21 3v6h-6" />
                 </svg>
@@ -4169,6 +4486,287 @@
             document.addEventListener('keydown', handleKey);
         }
 
+        /* ===================== AUTO-SAVE DRAFT PER HALAMAN ===================== */
+        /* Menyimpan isian form ke localStorage supaya tidak hilang kalau halaman
+           ter-reload/HP mati mendadak di tengah wawancara. Field ditemukan otomatis
+           dari <form> masing-masing instrumen, tidak perlu didaftarkan manual. */
+        var AutoSave = (function () {
+            function draftKey(moduleId) { return 'se2026_draft_' + moduleId; }
+
+            function fieldsOf(formEl) {
+                var list = [];
+                formEl.querySelectorAll('input[id], select[id], textarea[id]').forEach(function (elx) {
+                    if (elx.type === 'checkbox' || elx.type === 'radio') return;
+                    list.push(elx.id);
+                });
+                return list;
+            }
+            function radioGroupsOf(formEl) {
+                var names = {};
+                formEl.querySelectorAll('input[type="radio"][name]').forEach(function (r) { names[r.name] = true; });
+                return Object.keys(names);
+            }
+
+            function save(moduleId, formEl) {
+                try {
+                    var data = {};
+                    fieldsOf(formEl).forEach(function (id) {
+                        var elx = document.getElementById(id);
+                        if (elx) data[id] = elx.value;
+                    });
+                    radioGroupsOf(formEl).forEach(function (name) {
+                        var checked = formEl.querySelector('input[name="' + name + '"]:checked');
+                        if (checked) data['__radio__' + name] = checked.value;
+                    });
+                    localStorage.setItem(draftKey(moduleId), JSON.stringify(data));
+                    var indEl = document.getElementById('draft-indicator-' + moduleId);
+                    if (indEl) {
+                        indEl.classList.add('show');
+                        clearTimeout(indEl._timer);
+                        indEl._timer = setTimeout(function () { indEl.classList.remove('show'); }, 1600);
+                    }
+                } catch (e) { /* abaikan (mis. storage penuh / mode privat) */ }
+            }
+
+            function restore(moduleId, formEl) {
+                try {
+                    var raw = localStorage.getItem(draftKey(moduleId));
+                    if (!raw) return false;
+                    var data = JSON.parse(raw);
+
+                    fieldsOf(formEl).forEach(function (id) {
+                        if (typeof data[id] === 'undefined') return;
+                        var elx = document.getElementById(id);
+                        if (!elx) return;
+                        elx.value = data[id];
+
+                        var cselWrap = elx.closest('.csel');
+                        if (cselWrap && elx.type === 'hidden') {
+                            var opt = cselWrap.querySelector('.csel-opt[data-value="' + data[id] + '"]');
+                            var valueSpan = cselWrap.querySelector('.csel-value');
+                            if (opt && valueSpan) {
+                                valueSpan.textContent = opt.textContent;
+                                cselWrap.querySelectorAll('.csel-opt').forEach(function (o) { o.removeAttribute('aria-selected'); });
+                                opt.setAttribute('aria-selected', 'true');
+                            }
+                            elx.dispatchEvent(new Event('change'));
+                        } else if (elx.type === 'range') {
+                            elx.dispatchEvent(new Event('input'));
+                        }
+                    });
+
+                    radioGroupsOf(formEl).forEach(function (name) {
+                        var val = data['__radio__' + name];
+                        if (!val) return;
+                        var r = formEl.querySelector('input[name="' + name + '"][value="' + val + '"]');
+                        if (r) { r.checked = true; r.dispatchEvent(new Event('change')); }
+                    });
+
+                    return true;
+                } catch (e) { return false; }
+            }
+
+            function clear(moduleId) {
+                try { localStorage.removeItem(draftKey(moduleId)); } catch (e) { }
+            }
+
+            function bind(moduleId, formEl) {
+                var timer = null;
+                function scheduleSave() {
+                    clearTimeout(timer);
+                    timer = setTimeout(function () { save(moduleId, formEl); }, 400);
+                }
+                fieldsOf(formEl).forEach(function (id) {
+                    var elx = document.getElementById(id);
+                    if (!elx) return;
+                    elx.addEventListener('input', scheduleSave);
+                    elx.addEventListener('change', scheduleSave);
+                    elx.addEventListener('keyup', scheduleSave);
+                });
+                radioGroupsOf(formEl).forEach(function (name) {
+                    formEl.querySelectorAll('input[name="' + name + '"]').forEach(function (r) {
+                        r.addEventListener('change', scheduleSave);
+                    });
+                });
+            }
+
+            return { save: save, restore: restore, clear: clear, bind: bind };
+        })();
+        window.AutoSave = AutoSave;
+
+        /* ===================== RIWAYAT / REKAP HASIL PERHITUNGAN ===================== */
+        /* Tersimpan di localStorage perangkat ini saja (tidak terkirim ke server). */
+        var Riwayat = (function () {
+            var KEY = 'se2026_riwayat';
+            var MODUL_META = {
+                utp: { nama: 'Pertanian', num: '01' },
+                buah: { nama: 'Pedagang Buah', num: '02' },
+                usaha: { nama: 'Usaha Dagang & Jasa', num: '03' },
+                bgn: { nama: 'Buruh Bangunan', num: '04' },
+                tani: { nama: 'Buruh Tani', num: '05' }
+            };
+
+            function all() {
+                try {
+                    var raw = localStorage.getItem(KEY);
+                    return raw ? JSON.parse(raw) : [];
+                } catch (e) { return []; }
+            }
+            function persist(list) {
+                try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) { }
+            }
+            function add(entry) {
+                var list = all();
+                entry.id = 'r' + Date.now() + Math.random().toString(36).slice(2, 7);
+                entry.waktu = new Date().toISOString();
+                list.unshift(entry);
+                persist(list);
+                updateNavBadge();
+                return entry;
+            }
+            function remove(id) {
+                persist(all().filter(function (e) { return e.id !== id; }));
+                updateNavBadge();
+            }
+            function clearAll() {
+                persist([]);
+                updateNavBadge();
+            }
+            function updateNavBadge() {
+                var badge = document.getElementById('nav-riwayat-count');
+                if (!badge) return;
+                var n = all().length;
+                if (n > 0) { badge.style.display = ''; badge.textContent = n > 99 ? '99+' : String(n); }
+                else { badge.style.display = 'none'; }
+            }
+            function formatWaktu(iso) {
+                try {
+                    var d = new Date(iso);
+                    return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) +
+                        ' ' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                } catch (e) { return iso; }
+            }
+            function escapeHtml(s) {
+                return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+                    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+                });
+            }
+
+            function render() {
+                var list = all();
+                var filterEl = document.getElementById('riwayat-filter');
+                var filter = filterEl ? filterEl.value : '';
+                var filtered = filter ? list.filter(function (e) { return e.modul === filter; }) : list;
+
+                var listEl = document.getElementById('riwayat-list');
+                var emptyEl = document.getElementById('riwayat-empty');
+                if (!listEl) return;
+
+                var totalEl = document.getElementById('riwayat-stat-total');
+                if (totalEl) totalEl.textContent = list.length;
+                var todayStr = new Date().toDateString();
+                var hariIni = list.filter(function (e) { return new Date(e.waktu).toDateString() === todayStr; }).length;
+                var hariIniEl = document.getElementById('riwayat-stat-hari-ini');
+                if (hariIniEl) hariIniEl.textContent = hariIni;
+
+                if (filtered.length === 0) {
+                    listEl.innerHTML = '';
+                    if (emptyEl) {
+                        emptyEl.style.display = 'block';
+                        var p = emptyEl.querySelector('p');
+                        if (p) {
+                            p.innerHTML = (list.length > 0 && filter)
+                                ? 'Tidak ada riwayat untuk instrumen ini.'
+                                : 'Belum ada riwayat tersimpan. Buka salah satu instrumen, tekan Hitung, lalu tekan tombol <b>Simpan ke Riwayat</b>.';
+                        }
+                    }
+                    return;
+                }
+                if (emptyEl) emptyEl.style.display = 'none';
+
+                listEl.innerHTML = filtered.map(function (e) {
+                    var meta = MODUL_META[e.modul] || { nama: e.modul, num: '' };
+                    return '' +
+                        '<div class="riwayat-card module-' + e.modul + '">' +
+                        '  <div class="riwayat-card-top">' +
+                        '    <div>' +
+                        '      <span class="riwayat-badge">Instrumen ' + meta.num + ' &middot; ' + meta.nama + '</span><br>' +
+                        '      <span class="riwayat-nama">' + escapeHtml(e.nama || '(Tanpa nama responden)') + '</span><br>' +
+                        '      <span class="riwayat-kode">' + escapeHtml(e.kode || '-') + '</span>' +
+                        '    </div>' +
+                        '    <div class="riwayat-nilai">' +
+                        '      <div class="v">Rp ' + Math.round(e.bersihBulan || 0).toLocaleString('id-ID') + '</div>' +
+                        '      <div class="l">Bersih / Bulan</div>' +
+                        '    </div>' +
+                        '  </div>' +
+                        '  <div class="riwayat-waktu">Disimpan ' + formatWaktu(e.waktu) + '</div>' +
+                        '  <div class="riwayat-actions">' +
+                        '    <button type="button" class="btn-outline-sm" data-riwayat-detail="' + e.id + '">Lihat Detail</button>' +
+                        '    <button type="button" class="btn-outline-sm" data-riwayat-salin="' + e.id + '">Salin</button>' +
+                        '    <button type="button" class="btn-outline-sm btn-danger-outline" data-riwayat-hapus="' + e.id + '">Hapus</button>' +
+                        '  </div>' +
+                        '  <div class="riwayat-detail" id="riwayat-detail-' + e.id + '">' + escapeHtml(e.ringkasan || '') + '</div>' +
+                        '</div>';
+                }).join('');
+            }
+
+            document.addEventListener('click', function (e) {
+                var btnDetail = e.target.closest('[data-riwayat-detail]');
+                if (btnDetail) {
+                    var det = document.getElementById('riwayat-detail-' + btnDetail.getAttribute('data-riwayat-detail'));
+                    if (det) det.classList.toggle('show');
+                    return;
+                }
+                var btnSalin = e.target.closest('[data-riwayat-salin]');
+                if (btnSalin) {
+                    var idS = btnSalin.getAttribute('data-riwayat-salin');
+                    var entry = all().filter(function (x) { return x.id === idS; })[0];
+                    if (entry) {
+                        salinTeks(entry.ringkasan).then(function () { showToast('Ringkasan disalin.'); })
+                            .catch(function () { showToast('Gagal menyalin otomatis.'); });
+                    }
+                    return;
+                }
+                var btnHapus = e.target.closest('[data-riwayat-hapus]');
+                if (btnHapus) {
+                    var idH = btnHapus.getAttribute('data-riwayat-hapus');
+                    showConfirmModal({ title: 'Hapus Riwayat Ini?', message: 'Data yang sudah dihapus tidak bisa dikembalikan.' }, function () {
+                        remove(idH);
+                        render();
+                        showToast('Riwayat dihapus.');
+                    });
+                    return;
+                }
+            });
+
+            var filterInput = document.getElementById('riwayat-filter');
+            if (filterInput) filterInput.addEventListener('change', render);
+
+            var btnSalinSemua = document.getElementById('btn-salin-semua-riwayat');
+            if (btnSalinSemua) btnSalinSemua.addEventListener('click', function () {
+                var list = all();
+                if (list.length === 0) { showToast('Belum ada riwayat untuk disalin.'); return; }
+                var teks = list.map(function (e) { return e.ringkasan; }).join('\n\n' + Array(41).join('=') + '\n\n');
+                salinTeks(teks).then(function () { showToast('Semua riwayat (' + list.length + ' entri) disalin.'); })
+                    .catch(function () { showToast('Gagal menyalin otomatis.'); });
+            });
+
+            var btnKosongkan = document.getElementById('btn-kosongkan-riwayat');
+            if (btnKosongkan) btnKosongkan.addEventListener('click', function () {
+                if (all().length === 0) { showToast('Riwayat sudah kosong.'); return; }
+                showConfirmModal({ title: 'Kosongkan Semua Riwayat?', message: 'Seluruh riwayat tersimpan di perangkat ini akan dihapus permanen dan tidak bisa dikembalikan.' }, function () {
+                    clearAll();
+                    render();
+                    showToast('Semua riwayat telah dikosongkan.');
+                });
+            });
+
+            return { add: add, remove: remove, clearAll: clearAll, all: all, render: render, updateNavBadge: updateNavBadge };
+        })();
+        window.renderRiwayat = Riwayat.render;
+        window.Riwayat = Riwayat;
+        Riwayat.updateNavBadge();
+
         /* ===================== ROUTER NAVIGASI ===================== */
         (function () {
             var MOBILE_QUERY = window.matchMedia('(max-width: 860px)');
@@ -4189,7 +4787,8 @@
                 usaha: 'Kalkulator Usaha Dagang & Jasa Mikro',
                 bgn: 'Kalkulator Buruh Bangunan',
                 tani: 'Kalkulator Buruh Tani Musiman',
-                sosek: 'Halaman Sosial Ekonomi Rumah Tangga'
+                sosek: 'Halaman Sosial Ekonomi Rumah Tangga',
+                riwayat: 'Riwayat Perhitungan'
             };
 
             function switchView(name, opts) {
@@ -4200,6 +4799,7 @@
                 var nav = document.querySelector('.nav-item[data-view="' + name + '"]');
                 if (view) view.classList.add('active');
                 if (nav) nav.classList.add('active');
+                if (name === 'riwayat' && typeof window.renderRiwayat === 'function') window.renderRiwayat();
                 var topbarTitle = document.getElementById('topbar-title');
                 if (topbarTitle && nav) {
                     var label = nav.querySelector('.nav-label');
@@ -4352,6 +4952,7 @@
                 input.value = rupiah ? rupiah : '';
             }
             const el = (id) => document.getElementById(id);
+            var lastHasilUtp = null;
 
             function toggleForm() {
                 let komoditas = el("komoditas-utp").value;
@@ -4551,15 +5152,76 @@
                 el("out-bersih-bulan-utp").classList.toggle("value-loss", pendapatanBersihBulan < 0);
 
                 el("hasil-utp").classList.add("show");
+
+                lastHasilUtp = {
+                    komoditasLabel: (el("komoditas-utp").closest('.csel') ? el("komoditas-utp").closest('.csel').querySelector('.csel-value').textContent : komoditas),
+                    biayaProduksi: biayaProduksi, biayaOpsDasar: biayaOpsDasar, bebanSewaFinal: bebanSewaFinal,
+                    biayaBuruh: biayaBuruh, totalPengeluaran: totalPengeluaran,
+                    totalPanenKg: totalPanenKg, hargaJual: hargaJual, omset: omset, pendapatanBersih: pendapatanBersih,
+                    omsetBulan: omsetBulan, pengeluaranBulan: pengeluaranBulan, pendapatanBersihBulan: pendapatanBersihBulan
+                };
             }
 
-            el("komoditas-utp").addEventListener("change", toggleForm);
+            function generateRingkasanUtp() {
+                if (!lastHasilUtp) return null;
+                var h = lastHasilUtp;
+                var nama = el('resp-nama-utp').value.trim() || '(Tanpa nama responden)';
+                var kode = el('resp-kode-utp').value.trim() || '-';
+                return [
+                    '=== KALKULATOR PERTANIAN (Instrumen 01) ===',
+                    'Nama: ' + nama,
+                    'Kode Sampel: ' + kode,
+                    'Komoditas: ' + h.komoditasLabel,
+                    '--- Pengeluaran / Tahun ---',
+                    'Biaya Produksi: ' + formatRp(h.biayaProduksi),
+                    'Biaya Operasional Dasar: ' + formatRp(h.biayaOpsDasar),
+                    'Biaya Sewa: ' + formatRp(h.bebanSewaFinal),
+                    'Biaya Buruh: ' + formatRp(h.biayaBuruh),
+                    'Total Pengeluaran: ' + formatRp(h.totalPengeluaran),
+                    '--- Pendapatan / Tahun ---',
+                    'Hasil Panen: ' + h.totalPanenKg.toLocaleString('id-ID') + ' kg',
+                    'Harga Jual: ' + formatRp(h.hargaJual) + ' / kg',
+                    'Omset (Kotor): ' + formatRp(h.omset),
+                    'Pendapatan Bersih: ' + formatRp(h.pendapatanBersih),
+                    '--- Rata-rata / Bulan ---',
+                    'Omset (Kotor) / Bulan: ' + formatRp(h.omsetBulan),
+                    'Pendapatan Bersih / Bulan: ' + formatRp(h.pendapatanBersihBulan),
+                    'Dicatat: ' + new Date().toLocaleString('id-ID')
+                ].join('\n');
+            }
+
+            el('btn-ringkasan-utp').addEventListener('click', function () {
+                var teks = generateRingkasanUtp();
+                if (!teks) { showToast('Tekan Hitung terlebih dahulu sebelum menyalin ringkasan.'); return; }
+                salinTeks(teks).then(function () { showToast('Ringkasan lengkap disalin.'); })
+                    .catch(function () { showToast('Gagal menyalin otomatis.'); });
+            });
+
+            el('btn-simpan-riwayat-utp').addEventListener('click', function () {
+                if (!lastHasilUtp) { showToast('Tekan Hitung terlebih dahulu sebelum menyimpan ke riwayat.'); return; }
+                var teks = generateRingkasanUtp();
+                Riwayat.add({
+                    modul: 'utp',
+                    nama: el('resp-nama-utp').value.trim(),
+                    kode: el('resp-kode-utp').value.trim(),
+                    bersihBulan: lastHasilUtp.pendapatanBersihBulan,
+                    bersihTahun: lastHasilUtp.pendapatanBersih,
+                    ringkasan: teks
+                });
+                var btn = el('btn-simpan-riwayat-utp');
+                btn.classList.add('is-saved');
+                setTimeout(function () { btn.classList.remove('is-saved'); }, 1500);
+                showToast('Tersimpan ke Riwayat.');
+            });
+
+            AutoSave.bind('utp', el('form-utp'));
             el("status-lahan-utp").addEventListener("change", toggleForm);
             document.querySelectorAll('input[name="sistem_usaha_utp"]').forEach(function (r) { r.addEventListener("change", toggleForm); });
             el("input-nilai-utp").addEventListener("keyup", function () { formatInputRibuan(this); });
             el("biaya-sewa-utp").addEventListener("keyup", function () { formatInputRupiah(this); });
             el("btn-hitung-utp").addEventListener("click", kalkulasiOtomatis);
             toggleForm();
+            AutoSave.restore('utp', el('form-utp'));
         }
         initUtp();
 
@@ -4592,6 +5254,7 @@
                 input.value = rupiah ? rupiah : '';
             }
             const el = (id) => document.getElementById(id);
+            var lastHasilBuah = null;
 
             function showError(msg) {
                 let box = el("banner-error-buah");
@@ -4708,7 +5371,64 @@
                 el("out-thn-laba-buah").classList.toggle("value-loss", labaTahun < 0);
 
                 el("hasil-buah").classList.add("show");
+
+                lastHasilBuah = {
+                    namaBuah: namaBuah, muatanTotal: muatanTotal, buahBeli: buahBeli, buahSendiri: buahSendiri,
+                    hargaBeli: hargaBeli, hargaJual: hargaJual, modalBuahTrip: modalBuahTrip, transportTrip: transportTrip,
+                    omsetTrip: omsetTrip, labaTrip: labaTrip, omsetBulan: omsetBulan, pengeluaranBulan: pengeluaranBulan,
+                    labaBulan: labaBulan, omsetTahun: omsetTahun, pengeluaranTahun: pengeluaranTahun, labaTahun: labaTahun
+                };
             }
+
+            function generateRingkasanBuah() {
+                if (!lastHasilBuah) return null;
+                var h = lastHasilBuah;
+                var nama = el('resp-nama-buah').value.trim() || '(Tanpa nama responden)';
+                var kode = el('resp-kode-buah').value.trim() || '-';
+                return [
+                    '=== KALKULATOR PEDAGANG BUAH KELILING (Instrumen 02) ===',
+                    'Nama: ' + nama,
+                    'Kode Sampel: ' + kode,
+                    'Komoditas: ' + h.namaBuah,
+                    'Muatan: ' + h.muatanTotal.toLocaleString('id-ID') + ' kg (beli ' + h.buahBeli.toLocaleString('id-ID') + ' kg, sendiri ' + h.buahSendiri.toLocaleString('id-ID') + ' kg)',
+                    '--- Per Sekali Jalan (Trip) ---',
+                    'Modal Beli: ' + formatRp(h.modalBuahTrip) + ' | Transport: ' + formatRp(h.transportTrip),
+                    'Omset: ' + formatRp(h.omsetTrip) + ' | Laba: ' + formatRp(h.labaTrip),
+                    '--- Per Bulan ---',
+                    'Omset: ' + formatRp(h.omsetBulan) + ' | Pengeluaran: ' + formatRp(h.pengeluaranBulan) + ' | Laba: ' + formatRp(h.labaBulan),
+                    '--- Per Tahun ---',
+                    'Omset (Kotor): ' + formatRp(h.omsetTahun),
+                    'Total Pengeluaran: ' + formatRp(h.pengeluaranTahun),
+                    'Keuntungan Bersih: ' + formatRp(h.labaTahun),
+                    'Dicatat: ' + new Date().toLocaleString('id-ID')
+                ].join('\n');
+            }
+
+            el('btn-ringkasan-buah').addEventListener('click', function () {
+                var teks = generateRingkasanBuah();
+                if (!teks) { showToast('Tekan Hitung terlebih dahulu sebelum menyalin ringkasan.'); return; }
+                salinTeks(teks).then(function () { showToast('Ringkasan lengkap disalin.'); })
+                    .catch(function () { showToast('Gagal menyalin otomatis.'); });
+            });
+
+            el('btn-simpan-riwayat-buah').addEventListener('click', function () {
+                if (!lastHasilBuah) { showToast('Tekan Hitung terlebih dahulu sebelum menyimpan ke riwayat.'); return; }
+                var teks = generateRingkasanBuah();
+                Riwayat.add({
+                    modul: 'buah',
+                    nama: el('resp-nama-buah').value.trim(),
+                    kode: el('resp-kode-buah').value.trim(),
+                    bersihBulan: lastHasilBuah.labaBulan,
+                    bersihTahun: lastHasilBuah.labaTahun,
+                    ringkasan: teks
+                });
+                var btn = el('btn-simpan-riwayat-buah');
+                btn.classList.add('is-saved');
+                setTimeout(function () { btn.classList.remove('is-saved'); }, 1500);
+                showToast('Tersimpan ke Riwayat.');
+            });
+
+            AutoSave.bind('buah', el('form-buah'));
 
             el("komoditas-buah").addEventListener("change", toggleForm);
             document.querySelectorAll('input[name="sumber_buah_buah"]').forEach(function (r) { r.addEventListener("change", toggleForm); });
@@ -4717,12 +5437,14 @@
             el("buah-sendiri-buah").addEventListener("keyup", function () { formatInputRibuan(this); });
             el("btn-hitung-buah").addEventListener("click", kalkulasiPedagang);
             toggleForm();
+            AutoSave.restore('buah', el('form-buah'));
         }
         initBuah();
 
         /* ===================== MODUL 03: USAHA DAGANG & JASA MIKRO ===================== */
         function initUsaha() {
             const el = (id) => document.getElementById(id);
+            var lastHasilUsaha = null;
 
             var JENIS_MODEL = {
                 kelontongan: 'dagang',
@@ -4872,7 +5594,66 @@
                 el('banner-info-usaha').classList.add('show');
 
                 el('hasil-usaha').classList.add('show');
+
+                lastHasilUsaha = {
+                    jenisLabel: (el('jenis-usaha').closest('.csel') ? el('jenis-usaha').closest('.csel').querySelector('.csel-value').textContent : el('jenis-usaha').value),
+                    model: model, pesanModel: pesanModel,
+                    modalBulanan: modalBulanan, opsBulanan: opsBulanan, pengeluaranBulanan: pengeluaranBulanan,
+                    omsetBulanan: omsetBulanan, bersihBulanan: bersihBulanan,
+                    modalTahunan: modalTahunan, opsTahunan: opsTahunan, pengeluaranTahunan: pengeluaranTahunan,
+                    omsetTahunan: omsetTahunan, bersihTahunan: bersihTahunan
+                };
             }
+
+            function generateRingkasanUsaha() {
+                if (!lastHasilUsaha) return null;
+                var h = lastHasilUsaha;
+                var nama = el('resp-nama-usaha').value.trim() || '(Tanpa nama responden)';
+                var kode = el('resp-kode-usaha').value.trim() || '-';
+                return [
+                    '=== KALKULATOR USAHA DAGANG & JASA MIKRO (Instrumen 03) ===',
+                    'Nama: ' + nama,
+                    'Kode Sampel: ' + kode,
+                    'Jenis Usaha: ' + h.jenisLabel + ' (Mode ' + (h.model === 'jasa' ? 'Jasa' : 'Dagang') + ')',
+                    '--- Per Bulan ---',
+                    'Biaya Produksi: ' + formatRupiah(h.modalBulanan),
+                    'Biaya Operasional: ' + formatRupiah(h.opsBulanan),
+                    'Total Pengeluaran: ' + formatRupiah(h.pengeluaranBulanan),
+                    'Omset (Kotor): ' + formatRupiah(h.omsetBulanan),
+                    'Pendapatan Bersih: ' + formatRupiah(h.bersihBulanan),
+                    '--- Per Tahun ---',
+                    'Total Pengeluaran: ' + formatRupiah(h.pengeluaranTahunan),
+                    'Omset (Kotor): ' + formatRupiah(h.omsetTahunan),
+                    'Pendapatan Bersih: ' + formatRupiah(h.bersihTahunan),
+                    'Dicatat: ' + new Date().toLocaleString('id-ID')
+                ].join('\n');
+            }
+
+            el('btn-ringkasan-usaha').addEventListener('click', function () {
+                var teks = generateRingkasanUsaha();
+                if (!teks) { showToast('Tekan Hitung terlebih dahulu sebelum menyalin ringkasan.'); return; }
+                salinTeks(teks).then(function () { showToast('Ringkasan lengkap disalin.'); })
+                    .catch(function () { showToast('Gagal menyalin otomatis.'); });
+            });
+
+            el('btn-simpan-riwayat-usaha').addEventListener('click', function () {
+                if (!lastHasilUsaha) { showToast('Tekan Hitung terlebih dahulu sebelum menyimpan ke riwayat.'); return; }
+                var teks = generateRingkasanUsaha();
+                Riwayat.add({
+                    modul: 'usaha',
+                    nama: el('resp-nama-usaha').value.trim(),
+                    kode: el('resp-kode-usaha').value.trim(),
+                    bersihBulan: lastHasilUsaha.bersihBulanan,
+                    bersihTahun: lastHasilUsaha.bersihTahunan,
+                    ringkasan: teks
+                });
+                var btn = el('btn-simpan-riwayat-usaha');
+                btn.classList.add('is-saved');
+                setTimeout(function () { btn.classList.remove('is-saved'); }, 1500);
+                showToast('Tersimpan ke Riwayat.');
+            });
+
+            AutoSave.bind('usaha', el('form-usaha'));
 
             el('jenis-usaha').addEventListener('change', updateJenisUsaha);
             document.querySelectorAll('input[name="periode_usaha"]').forEach(function (r) {
@@ -4892,12 +5673,14 @@
             updatePeriodeUsaha();
             updateSliderValue('hari-buka-usaha', 'hariBukaValue-usaha', 'Hari');
             updateSliderValue('bulan-aktif-usaha', 'bulanAktifValue-usaha', 'Bulan');
+            AutoSave.restore('usaha', el('form-usaha'));
         }
         initUsaha();
 
         /* ===================== MODUL 04: BURUH BANGUNAN ===================== */
         function initBgn() {
             const el = (id) => document.getElementById(id);
+            var lastHasilBgn = null;
 
             function updateRoleWage() {
                 const role = el('role-bgn').value;
@@ -4922,6 +5705,7 @@
             function formatRupiah(angka) { return 'Rp ' + angka.toLocaleString('id-ID'); }
 
             function calculateIncome() {
+                const role = el('role-bgn').value;
                 const wage = getRawNumber(el('wage-bgn').value);
                 const daysPerWeek = parseInt(el('daysPerWeek-bgn').value);
                 const monthsPerYear = parseInt(el('monthsPerYear-bgn').value);
@@ -4929,7 +5713,56 @@
                 const averageMonthly = bulatkanRibuan(totalAnnual / 12);
                 el('annualResult-bgn').innerHTML = formatRupiah(totalAnnual);
                 el('monthlyResult-bgn').innerHTML = formatRupiah(averageMonthly);
+
+                lastHasilBgn = { role: role, wage: wage, daysPerWeek: daysPerWeek, monthsPerYear: monthsPerYear, totalAnnual: totalAnnual, averageMonthly: averageMonthly };
             }
+
+            function generateRingkasanBgn() {
+                if (!lastHasilBgn) return null;
+                var h = lastHasilBgn;
+                var nama = el('resp-nama-bgn').value.trim() || '(Tanpa nama responden)';
+                var kode = el('resp-kode-bgn').value.trim() || '-';
+                var roleLabel = h.role === 'Kenek' ? 'Laden/Kenek' : (h.role === 'Tukang' ? 'Tukang' : (h.role === 'Mandor' ? 'Mandor' : 'Lainnya'));
+                return [
+                    '=== KALKULATOR BURUH BANGUNAN (Instrumen 04) ===',
+                    'Nama: ' + nama,
+                    'Kode Sampel: ' + kode,
+                    'Peran: ' + roleLabel,
+                    'Upah Harian: ' + formatRupiah(h.wage),
+                    'Hari Kerja/Minggu: ' + h.daysPerWeek + ' hari',
+                    'Bulan Aktif/Tahun: ' + h.monthsPerYear + ' bulan',
+                    '--- Hasil ---',
+                    'Estimasi Pendapatan Tahunan: ' + formatRupiah(h.totalAnnual),
+                    'Rata-rata Pendapatan/Bulan: ' + formatRupiah(h.averageMonthly),
+                    'Dicatat: ' + new Date().toLocaleString('id-ID')
+                ].join('\n');
+            }
+
+            el('btn-ringkasan-bgn').addEventListener('click', function () {
+                var teks = generateRingkasanBgn();
+                if (!teks) { showToast('Belum ada hasil untuk disalin.'); return; }
+                salinTeks(teks).then(function () { showToast('Ringkasan lengkap disalin.'); })
+                    .catch(function () { showToast('Gagal menyalin otomatis.'); });
+            });
+
+            el('btn-simpan-riwayat-bgn').addEventListener('click', function () {
+                if (!lastHasilBgn) { showToast('Belum ada hasil untuk disimpan.'); return; }
+                var teks = generateRingkasanBgn();
+                Riwayat.add({
+                    modul: 'bgn',
+                    nama: el('resp-nama-bgn').value.trim(),
+                    kode: el('resp-kode-bgn').value.trim(),
+                    bersihBulan: lastHasilBgn.averageMonthly,
+                    bersihTahun: lastHasilBgn.totalAnnual,
+                    ringkasan: teks
+                });
+                var btn = el('btn-simpan-riwayat-bgn');
+                btn.classList.add('is-saved');
+                setTimeout(function () { btn.classList.remove('is-saved'); }, 1500);
+                showToast('Tersimpan ke Riwayat.');
+            });
+
+            AutoSave.bind('bgn', el('form-bgn'));
 
             el('role-bgn').addEventListener('change', updateRoleWage);
             el('wage-bgn').addEventListener('keyup', function () { formatInputRibuan(this); calculateIncome(); });
@@ -4938,12 +5771,15 @@
             updateSliderValue('daysPerWeek-bgn', 'daysValue-bgn');
             updateSliderValue('monthsPerYear-bgn', 'monthsValue-bgn');
             calculateIncome();
+            AutoSave.restore('bgn', el('form-bgn'));
+            calculateIncome();
         }
         initBgn();
 
         /* ===================== MODUL 05: BURUH TANI ===================== */
         function initTani() {
             const el = (id) => document.getElementById(id);
+            var lastHasilTani = null;
 
             function updateGenderWage() {
                 const gender = el('gender-tani').value;
@@ -4966,6 +5802,7 @@
             function formatRupiah(angka) { return 'Rp ' + angka.toLocaleString('id-ID'); }
 
             function calculateIncome() {
+                const gender = el('gender-tani').value;
                 const wage = getRawNumber(el('wage-tani').value);
                 const musim1 = parseInt(el('musim1-tani').value);
                 const musim2 = parseInt(el('musim2-tani').value);
@@ -4974,7 +5811,55 @@
                 const averageMonthly = bulatkanRibuan(totalAnnual / 12);
                 el('annualResult-tani').innerHTML = formatRupiah(totalAnnual);
                 el('monthlyResult-tani').innerHTML = formatRupiah(averageMonthly);
+
+                lastHasilTani = { gender: gender, wage: wage, musim1: musim1, musim2: musim2, totalAnnual: totalAnnual, averageMonthly: averageMonthly };
             }
+
+            function generateRingkasanTani() {
+                if (!lastHasilTani) return null;
+                var h = lastHasilTani;
+                var nama = el('resp-nama-tani').value.trim() || '(Tanpa nama responden)';
+                var kode = el('resp-kode-tani').value.trim() || '-';
+                return [
+                    '=== KALKULATOR BURUH TANI MUSIMAN (Instrumen 05) ===',
+                    'Nama: ' + nama,
+                    'Kode Sampel: ' + kode,
+                    'Jenis Kelamin: ' + h.gender,
+                    'Upah Harian: ' + formatRupiah(h.wage),
+                    'Hari Kerja Musim 1: ' + h.musim1 + ' hari',
+                    'Hari Kerja Musim 2: ' + h.musim2 + ' hari',
+                    '--- Hasil ---',
+                    'Estimasi Pendapatan Tahunan: ' + formatRupiah(h.totalAnnual),
+                    'Rata-rata Pendapatan/Bulan: ' + formatRupiah(h.averageMonthly),
+                    'Dicatat: ' + new Date().toLocaleString('id-ID')
+                ].join('\n');
+            }
+
+            el('btn-ringkasan-tani').addEventListener('click', function () {
+                var teks = generateRingkasanTani();
+                if (!teks) { showToast('Belum ada hasil untuk disalin.'); return; }
+                salinTeks(teks).then(function () { showToast('Ringkasan lengkap disalin.'); })
+                    .catch(function () { showToast('Gagal menyalin otomatis.'); });
+            });
+
+            el('btn-simpan-riwayat-tani').addEventListener('click', function () {
+                if (!lastHasilTani) { showToast('Belum ada hasil untuk disimpan.'); return; }
+                var teks = generateRingkasanTani();
+                Riwayat.add({
+                    modul: 'tani',
+                    nama: el('resp-nama-tani').value.trim(),
+                    kode: el('resp-kode-tani').value.trim(),
+                    bersihBulan: lastHasilTani.averageMonthly,
+                    bersihTahun: lastHasilTani.totalAnnual,
+                    ringkasan: teks
+                });
+                var btn = el('btn-simpan-riwayat-tani');
+                btn.classList.add('is-saved');
+                setTimeout(function () { btn.classList.remove('is-saved'); }, 1500);
+                showToast('Tersimpan ke Riwayat.');
+            });
+
+            AutoSave.bind('tani', el('form-tani'));
 
             el('gender-tani').addEventListener('change', updateGenderWage);
             el('wage-tani').addEventListener('keyup', function () { formatInputRibuan(this); calculateIncome(); });
@@ -4982,6 +5867,8 @@
             el('musim2-tani').addEventListener('input', function () { updateSliderValue('musim2-tani', 'musim2Value-tani'); calculateIncome(); });
             updateSliderValue('musim1-tani', 'musim1Value-tani');
             updateSliderValue('musim2-tani', 'musim2Value-tani');
+            calculateIncome();
+            AutoSave.restore('tani', el('form-tani'));
             calculateIncome();
         }
         initTani();
