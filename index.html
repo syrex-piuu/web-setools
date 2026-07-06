@@ -3344,7 +3344,7 @@
                         </fieldset>
 
                         <fieldset>
-                            <div class="blok-label"><span class="dot"></span>Blok A — Jenis Usaha &amp; Periode
+                            <div class="blok-label"><span class="dot"></span>Blok A — Jenis Usaha &amp; Cara
                                 Pencatatan</div>
                             <div class="field">
                                 <label class="field-label" for="jenis-usaha">Jenis usaha responden</label>
@@ -3366,14 +3366,31 @@
                                     lihat penanda mode di bawah.</small>
                             </div>
                             <div class="field">
-                                <label class="field-label">Periode pencatatan modal &amp; omset</label>
-                                <div class="segmented-3">
-                                    <label class="seg-opt"><input type="radio" name="periode_usaha" value="harian" checked><span>Harian</span></label>
-                                    <label class="seg-opt"><input type="radio" name="periode_usaha" value="mingguan"><span>Mingguan</span></label>
+                                <label class="field-label">Cara menghitung pendapatan</label>
+                                <div class="segmented">
+                                    <label class="seg-opt"><input type="radio" name="cara_hitung_usaha" value="omzet" checked><span>Omset &amp; Modal</span></label>
+                                    <label class="seg-opt"><input type="radio" name="cara_hitung_usaha" value="bersih"><span>Langsung Bersih</span></label>
+                                </div>
+                                <small class="hint">Pilih <b>"Langsung Bersih"</b> jika responden hanya bisa
+                                    menyebutkan sisa/laba usaha, tanpa bisa merinci modal belanja dan omset
+                                    kotor.</small>
+                            </div>
+                            <div class="field">
+                                <label class="field-label">Periode pencatatan</label>
+                                <div class="segmented">
+                                    <label class="seg-opt"><input type="radio" name="periode_usaha" value="interval" checked><span>Per Sekian Hari</span></label>
                                     <label class="seg-opt"><input type="radio" name="periode_usaha" value="bulanan"><span>Bulanan</span></label>
                                 </div>
                                 <small class="hint">Pilih periode yang paling mudah diingat &amp; dijawab oleh
                                     responden.</small>
+                            </div>
+                            <div class="field" id="grup-interval-usaha">
+                                <label class="field-label" for="interval-hari-usaha">Dicatat setiap berapa hari
+                                    sekali?</label>
+                                <input type="text" id="interval-hari-usaha" inputmode="numeric" placeholder="1" value="1">
+                                <small class="hint">Isi <b>1</b> jika responden mencatat/mengingat setiap hari,
+                                    <b>3</b> jika setiap 3 hari sekali, dst — sesuaikan dengan kebiasaan responden
+                                    berbelanja/menghitung hasil usahanya.</small>
                             </div>
                         </fieldset>
 
@@ -3420,6 +3437,17 @@
                                     <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="bahan-order-usaha" inputmode="numeric" placeholder="5.000"></div>
                                     <small class="hint">Benang, kancing, resleting, dll — kosongkan/isi 0 jika bahan
                                         utama (mis. kain) disediakan pelanggan sendiri.</small>
+                                </div>
+                            </div>
+
+                            <div id="grup-bersih-usaha" class="hide">
+                                <div class="field">
+                                    <label class="field-label" id="label-bersih-usaha" for="bersih-usaha">Pendapatan
+                                        Bersih / Laba Usaha per Hari</label>
+                                    <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="bersih-usaha" inputmode="numeric" placeholder="100.000"></div>
+                                    <small class="hint">Sisa/laba usaha yang benar-benar diterima responden setelah
+                                        dikurangi modal belanja barang/bahan — belum dikurangi biaya operasional pada
+                                        Blok D.</small>
                                 </div>
                             </div>
                         </fieldset>
@@ -3503,7 +3531,7 @@
                                 <th>Nominal per Bulan (Rp)</th>
                             </tr>
                             <tr>
-                                <td>Biaya Produksi (Belanja Barang/Bahan)</td>
+                                <td id="label-produksi-bulan-usaha">Biaya Produksi (Belanja Barang/Bahan)</td>
                                 <td id="out-produksi-bulan-usaha">0</td>
                             </tr>
                             <tr>
@@ -3515,7 +3543,7 @@
                                 <td id="out-pengeluaran-bulan-usaha">0</td>
                             </tr>
                             <tr>
-                                <td>Omset / Pendapatan Kotor</td>
+                                <td id="label-omset-bulan-usaha">Omset / Pendapatan Kotor</td>
                                 <td id="out-omset-bulan-usaha">0</td>
                             </tr>
                             <tr class="total-row">
@@ -3533,7 +3561,7 @@
                                 <th>Nominal per Tahun (Rp)</th>
                             </tr>
                             <tr>
-                                <td>Biaya Produksi (Belanja Barang/Bahan)</td>
+                                <td id="label-produksi-tahun-usaha">Biaya Produksi (Belanja Barang/Bahan)</td>
                                 <td id="out-produksi-tahun-usaha">0</td>
                             </tr>
                             <tr>
@@ -3545,7 +3573,7 @@
                                 <td id="out-pengeluaran-tahun-usaha">0</td>
                             </tr>
                             <tr>
-                                <td>Omset / Pendapatan Kotor</td>
+                                <td id="label-omset-tahun-usaha">Omset / Pendapatan Kotor</td>
                                 <td id="out-omset-tahun-detail-usaha">0</td>
                             </tr>
                             <tr class="total-row">
@@ -3555,9 +3583,10 @@
                         </table>
 
                         <div class="formula-note">Rumus:
-                            <code>(Modal + Omset per Periode &times; Konversi ke Bulan) &times; Bulan Aktif/Tahun,
-                                Pengeluaran = Biaya Produksi + Biaya Operasional, Bersih = Omset &minus;
-                                Pengeluaran</code>
+                            <code>Mode Omset &amp; Modal: (Modal + Omset per Periode &times; Siklus/Bulan) &times;
+                                Bulan Aktif/Tahun. Mode Langsung Bersih: (Pendapatan Bersih per Periode &times;
+                                Siklus/Bulan) &times; Bulan Aktif/Tahun. Pengeluaran = Biaya Produksi + Biaya
+                                Operasional. Bersih Akhir = Omset/Bersih Usaha &minus; Pengeluaran.</code>
                         </div>
 
                         <div class="result-actions">
@@ -3856,6 +3885,10 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 4 12l7 7M4 12h16" /></svg>
                             Kembali ke Beranda
                         </button>
+                        <span class="draft-indicator" id="draft-indicator-sosek">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                            Draft tersimpan
+                        </span>
                         <button type="button" class="reload-link" data-reload="sosek">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" /></svg>
                             Reload Halaman
@@ -3941,6 +3974,24 @@
                     <div class="sosek-grid">
                     <div class="sosek-col-form">
                     <form id="form-sosek" novalidate>
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok 0 — Data Responden</div>
+                            <div class="field">
+                                <label class="field-label" for="resp-nama-sosek">Nama Kepala Keluarga</label>
+                                <input type="text" id="resp-nama-sosek" placeholder="Contoh: Bapak Asep Saepudin">
+                            </div>
+                            <div class="field-row-2">
+                                <div class="field">
+                                    <label class="field-label" for="resp-nourut-sosek">No. Urut Bangunan</label>
+                                    <input type="text" id="resp-nourut-sosek" placeholder="Contoh: 001-B">
+                                </div>
+                                <div class="field">
+                                    <label class="field-label" for="resp-sls-sosek">SLS / RT</label>
+                                    <input type="text" id="resp-sls-sosek" placeholder="Contoh: SLS 12">
+                                </div>
+                            </div>
+                        </fieldset>
+
                         <fieldset>
                             <div class="blok-label"><span class="dot"></span>Blok A &mdash; Pengeluaran Pangan per
                                 Hari</div>
@@ -4257,6 +4308,17 @@
                                 <td id="out-rutin-tahun-detail-sosek">0</td>
                             </tr>
                         </table>
+
+                        <div class="result-actions">
+                            <button type="button" class="btn-outline-sm btn-result-action" id="btn-ringkasan-sosek">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                                Salin Ringkasan Lengkap
+                            </button>
+                            <button type="button" class="btn-outline-sm btn-result-action btn-simpan-riwayat" id="btn-simpan-riwayat-sosek">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+                                Simpan ke Riwayat
+                            </button>
+                        </div>
                         </section>
                     </div>
                     </div>
@@ -4323,6 +4385,7 @@
                                 <li class="csel-opt" role="option" data-value="usaha">Usaha Dagang &amp; Jasa</li>
                                 <li class="csel-opt" role="option" data-value="bgn">Buruh Bangunan</li>
                                 <li class="csel-opt" role="option" data-value="tani">Buruh Tani</li>
+                                <li class="csel-opt" role="option" data-value="sosek">Sosial Ekonomi (Sosek)</li>
                             </ul>
                             <input type="hidden" id="riwayat-filter">
                         </div>
@@ -4718,7 +4781,8 @@
                 buah: { nama: 'Pedagang Buah', num: '02' },
                 usaha: { nama: 'Usaha Dagang & Jasa', num: '03' },
                 bgn: { nama: 'Buruh Bangunan', num: '04' },
-                tani: { nama: 'Buruh Tani', num: '05' }
+                tani: { nama: 'Buruh Tani', num: '05' },
+                sosek: { nama: 'Sosial Ekonomi', num: 'SE' }
             };
 
             function all() {
@@ -4884,17 +4948,19 @@
                     var kodeDisplay = (e.nourut || e.sls)
                         ? ('No. Urut: ' + escapeHtml(e.nourut || '-') + ' &middot; SLS ' + escapeHtml(e.sls || '-'))
                         : escapeHtml(e.kode || '-');
+                    var badgeTeks = meta.num ? ('Instrumen ' + meta.num + ' &middot; ' + meta.nama) : meta.nama;
+                    var nilaiLabel = (e.modul === 'sosek') ? 'Selisih / Bulan' : 'Bersih / Bulan';
                     return '' +
                         '<div class="riwayat-card module-' + e.modul + '">' +
                         '  <div class="riwayat-card-top">' +
                         '    <div>' +
-                        '      <span class="riwayat-badge">Instrumen ' + meta.num + ' &middot; ' + meta.nama + '</span><br>' +
+                        '      <span class="riwayat-badge">' + badgeTeks + '</span><br>' +
                         '      <span class="riwayat-nama">' + escapeHtml(e.nama || '(Tanpa nama responden)') + '</span><br>' +
                         '      <span class="riwayat-kode">' + kodeDisplay + '</span>' +
                         '    </div>' +
                         '    <div class="riwayat-nilai">' +
                         '      <div class="v">Rp ' + Math.round(e.bersihBulan || 0).toLocaleString('id-ID') + '</div>' +
-                        '      <div class="l">Bersih / Bulan</div>' +
+                        '      <div class="l">' + nilaiLabel + '</div>' +
                         '    </div>' +
                         '  </div>' +
                         '  <div class="riwayat-waktu">Disimpan ' + formatWaktu(e.waktu) + '</div>' +
@@ -5707,50 +5773,89 @@
                 dagang_lainnya: '<div class="row"><b>Tips probing:</b>&nbsp;Sesuaikan pertanyaan modal belanja barang &amp; omset penjualan dengan usaha dagang yang dijalankan responden. <i>(Mode Dagang.)</i></div>',
                 jasa_lainnya: '<div class="row"><b>Tips probing:</b>&nbsp;Tanyakan berapa banyak pekerjaan/order yang diselesaikan dan rata-rata ongkos jasa per pekerjaan. <i>(Mode Jasa.)</i></div>'
             };
-            var PERIODE_LABEL = { harian: 'Hari', mingguan: 'Minggu', bulanan: 'Bulan' };
-            var PERIODE_PLACEHOLDER_MODAL = { harian: '150.000', mingguan: '900.000', bulanan: '3.500.000' };
-            var PERIODE_PLACEHOLDER_OMSET = { harian: '250.000', mingguan: '1.500.000', bulanan: '6.000.000' };
-            var PERIODE_PLACEHOLDER_ORDER = { harian: '5', mingguan: '20', bulanan: '80' };
+            var BASE_HARIAN = { modal: 150000, omset: 250000, order: 5, bersih: 100000 };
+            var PLACEHOLDER_BULANAN = { modal: 3500000, omset: 6000000, order: 80, bersih: 2000000 };
 
             function currentModel() {
                 var jenis = el('jenis-usaha').value;
                 return JENIS_MODEL[jenis] || 'dagang';
             }
 
-            function updateJenisUsaha() {
-                var jenis = el('jenis-usaha').value;
-                el('callout-text-usaha').innerHTML = CALLOUT_TEXT[jenis] || CALLOUT_TEXT.kelontongan;
+            function currentCara() {
+                var caraEl = document.querySelector('input[name="cara_hitung_usaha"]:checked');
+                return caraEl ? caraEl.value : 'omzet';
+            }
 
+            function updateBlokB() {
                 var model = currentModel();
+                var cara = currentCara();
                 var badge = el('model-badge-usaha');
-                if (model === 'jasa') {
+
+                el('grup-dagang-usaha').classList.add('hide');
+                el('grup-jasa-usaha').classList.add('hide');
+                el('grup-bersih-usaha').classList.add('hide');
+                badge.classList.remove('is-jasa');
+
+                if (cara === 'bersih') {
+                    badge.textContent = 'Mode: Langsung Bersih';
+                    el('grup-bersih-usaha').classList.remove('hide');
+                } else if (model === 'jasa') {
                     badge.textContent = 'Mode: Jasa (Order \u00d7 Ongkos)';
                     badge.classList.add('is-jasa');
-                    el('grup-dagang-usaha').classList.add('hide');
                     el('grup-jasa-usaha').classList.remove('hide');
                 } else {
                     badge.textContent = 'Mode: Dagang (Modal & Omset)';
-                    badge.classList.remove('is-jasa');
-                    el('grup-jasa-usaha').classList.add('hide');
                     el('grup-dagang-usaha').classList.remove('hide');
                 }
             }
 
+            function updateJenisUsaha() {
+                var jenis = el('jenis-usaha').value;
+                el('callout-text-usaha').innerHTML = CALLOUT_TEXT[jenis] || CALLOUT_TEXT.kelontongan;
+                updateBlokB();
+            }
+
+            function currentIntervalHari() {
+                var v = parseInt(getRawNumber(el('interval-hari-usaha').value), 10);
+                if (!v || v < 1) v = 1;
+                if (v > 31) v = 31;
+                return v;
+            }
+
             function updatePeriodeUsaha() {
                 var periodeEl = document.querySelector('input[name="periode_usaha"]:checked');
-                var periode = periodeEl ? periodeEl.value : 'harian';
-                var label = PERIODE_LABEL[periode];
+                var periode = periodeEl ? periodeEl.value : 'interval';
+                var intervalHari = currentIntervalHari();
+
+                var label, modalPH, omsetPH, orderPH, bersihPH;
+                if (periode === 'bulanan') {
+                    label = 'Bulan';
+                    modalPH = PLACEHOLDER_BULANAN.modal;
+                    omsetPH = PLACEHOLDER_BULANAN.omset;
+                    orderPH = PLACEHOLDER_BULANAN.order;
+                    bersihPH = PLACEHOLDER_BULANAN.bersih;
+                    el('grup-interval-usaha').classList.add('hide');
+                    el('grup-hari-buka-usaha').classList.add('hide');
+                } else {
+                    label = (intervalHari <= 1) ? 'Hari' : (intervalHari + ' Hari');
+                    modalPH = BASE_HARIAN.modal * intervalHari;
+                    omsetPH = BASE_HARIAN.omset * intervalHari;
+                    orderPH = Math.max(1, Math.round(BASE_HARIAN.order * intervalHari));
+                    bersihPH = BASE_HARIAN.bersih * intervalHari;
+                    el('grup-interval-usaha').classList.remove('hide');
+                    el('grup-hari-buka-usaha').classList.remove('hide');
+                }
 
                 el('label-modal-usaha').innerText = 'Modal Belanja Barang/Bahan per ' + label;
                 el('label-omset-usaha').innerText = 'Omset / Pendapatan Kotor per ' + label;
-                el('modal-usaha').placeholder = PERIODE_PLACEHOLDER_MODAL[periode];
-                el('omset-usaha').placeholder = PERIODE_PLACEHOLDER_OMSET[periode];
+                el('modal-usaha').placeholder = modalPH.toLocaleString('id-ID');
+                el('omset-usaha').placeholder = omsetPH.toLocaleString('id-ID');
 
                 el('label-jumlah-order-usaha').innerText = 'Jumlah Order/Pekerjaan Selesai per ' + label;
-                el('jumlah-order-usaha').placeholder = PERIODE_PLACEHOLDER_ORDER[periode];
+                el('jumlah-order-usaha').placeholder = orderPH.toLocaleString('id-ID');
 
-                if (periode === 'harian') { el('grup-hari-buka-usaha').classList.remove('hide'); }
-                else { el('grup-hari-buka-usaha').classList.add('hide'); }
+                el('label-bersih-usaha').innerText = 'Pendapatan Bersih / Laba Usaha per ' + label;
+                el('bersih-usaha').placeholder = bersihPH.toLocaleString('id-ID');
             }
 
             function updateSliderValue(sliderId, valueId, unit) {
@@ -5763,19 +5868,23 @@
 
             function formatRupiah(angka) { return 'Rp ' + Math.round(angka).toLocaleString('id-ID'); }
 
-            function labelPeriodeTeks(periode) {
-                if (periode === 'harian') return 'harian &times; hari buka/minggu &times; 4 minggu';
-                if (periode === 'mingguan') return 'mingguan &times; 4 minggu';
-                return 'bulanan langsung';
+            function labelPeriodeTeks(periode, intervalHari, siklusPerBulan) {
+                if (periode === 'bulanan') return 'bulanan langsung';
+                return 'per ' + intervalHari + ' hari &times; ' + siklusPerBulan.toFixed(1) + ' siklus/bulan';
             }
 
             function hitungUsaha() {
                 var periodeEl = document.querySelector('input[name="periode_usaha"]:checked');
-                var periode = periodeEl ? periodeEl.value : 'harian';
+                var periode = periodeEl ? periodeEl.value : 'interval';
                 var model = currentModel();
+                var cara = currentCara();
 
                 var modalInput = 0, omsetInput = 0, pesanModel = '';
-                if (model === 'jasa') {
+                if (cara === 'bersih') {
+                    omsetInput = getRawNumber(el('bersih-usaha').value);
+                    modalInput = 0;
+                    pesanModel = 'input langsung pendapatan bersih usaha';
+                } else if (model === 'jasa') {
                     var jumlahOrder = getRawNumber(el('jumlah-order-usaha').value);
                     var ongkosOrder = getRawNumber(el('ongkos-order-usaha').value);
                     var bahanOrder = getRawNumber(el('bahan-order-usaha').value);
@@ -5791,14 +5900,14 @@
                 var hariBukaPerMinggu = parseInt(el('hari-buka-usaha').value);
                 var bulanAktifPerTahun = parseInt(el('bulan-aktif-usaha').value);
                 var opsBulanan = getRawNumber(el('ops-usaha').value);
+                var intervalHari = currentIntervalHari();
 
-                var modalBulanan = 0, omsetBulanan = 0;
-                if (periode === 'harian') {
-                    modalBulanan = modalInput * hariBukaPerMinggu * 4;
-                    omsetBulanan = omsetInput * hariBukaPerMinggu * 4;
-                } else if (periode === 'mingguan') {
-                    modalBulanan = modalInput * 4;
-                    omsetBulanan = omsetInput * 4;
+                var modalBulanan = 0, omsetBulanan = 0, siklusPerBulan = 1;
+                if (periode === 'interval') {
+                    var hariOperasionalPerBulan = hariBukaPerMinggu * 4;
+                    siklusPerBulan = hariOperasionalPerBulan / intervalHari;
+                    modalBulanan = modalInput * siklusPerBulan;
+                    omsetBulanan = omsetInput * siklusPerBulan;
                 } else {
                     modalBulanan = modalInput;
                     omsetBulanan = omsetInput;
@@ -5813,6 +5922,13 @@
                 var pengeluaranTahunan = modalTahunan + opsTahunan;
                 var omsetTahunan = bulatkanRibuan(omsetBulanan * bulanAktifPerTahun);
                 var bersihTahunan = omsetTahunan - pengeluaranTahunan;
+
+                var labelProduksi = (cara === 'bersih') ? 'Modal Belanja (sudah termasuk dalam Bersih)' : 'Biaya Produksi (Belanja Barang/Bahan)';
+                var labelOmset = (cara === 'bersih') ? 'Pendapatan Bersih Usaha (sebelum Biaya Operasional)' : 'Omset / Pendapatan Kotor';
+                el('label-produksi-bulan-usaha').innerText = labelProduksi;
+                el('label-produksi-tahun-usaha').innerText = labelProduksi;
+                el('label-omset-bulan-usaha').innerText = labelOmset;
+                el('label-omset-tahun-usaha').innerText = labelOmset;
 
                 el('out-produksi-bulan-usaha').innerText = formatRupiah(modalBulanan);
                 el('out-ops-bulan-usaha').innerText = formatRupiah(opsBulanan);
@@ -5829,22 +5945,24 @@
                 var lossTagBulan = bersihBulanan < 0 ? '<span class="loss-tag">Rugi</span>' : '';
                 var lossTagTahun = bersihTahunan < 0 ? '<span class="loss-tag">Rugi</span>' : '';
 
+                var omsetLabelSingkat = (cara === 'bersih') ? 'Bersih usaha (sebelum ops)' : 'Omset kotor';
+
                 el('out-bersih-bulan-headline-usaha').innerHTML = formatRupiah(bersihBulanan) + lossTagBulan;
                 el('out-bersih-bulan-headline-usaha').closest('.headline').classList.toggle('is-loss', bersihBulanan < 0);
-                el('out-headline-sub-kiri-usaha').innerText = 'Omset kotor ' + formatRupiah(omsetBulanan) + ' per bulan.';
+                el('out-headline-sub-kiri-usaha').innerText = omsetLabelSingkat + ' ' + formatRupiah(omsetBulanan) + ' per bulan.';
 
                 el('out-bersih-tahun-usaha').innerHTML = formatRupiah(bersihTahunan) + lossTagTahun;
                 el('out-bersih-tahun-usaha').closest('.headline').classList.toggle('is-loss', bersihTahunan < 0);
-                el('out-headline-sub-usaha').innerText = 'Omset kotor ' + formatRupiah(omsetTahunan) + ', pengeluaran ' + formatRupiah(pengeluaranTahunan) + ' per tahun.';
+                el('out-headline-sub-usaha').innerText = omsetLabelSingkat + ' ' + formatRupiah(omsetTahunan) + ', pengeluaran ' + formatRupiah(pengeluaranTahunan) + ' per tahun.';
 
-                el('banner-info-usaha').innerHTML = '✅ Omset bulanan diestimasi ' + formatRupiah(omsetBulanan) + ' dari ' + pesanModel + ', dikonversi ' + labelPeriodeTeks(periode) + '.';
+                el('banner-info-usaha').innerHTML = '✅ ' + omsetLabelSingkat + ' bulanan diestimasi ' + formatRupiah(omsetBulanan) + ' dari ' + pesanModel + ', dikonversi ' + labelPeriodeTeks(periode, intervalHari, siklusPerBulan) + '.';
                 el('banner-info-usaha').classList.add('show');
 
                 el('hasil-usaha').classList.add('show');
 
                 lastHasilUsaha = {
                     jenisLabel: (el('jenis-usaha').closest('.csel') ? el('jenis-usaha').closest('.csel').querySelector('.csel-value').textContent : el('jenis-usaha').value),
-                    model: model, pesanModel: pesanModel,
+                    model: model, cara: cara, pesanModel: pesanModel,
                     modalBulanan: modalBulanan, opsBulanan: opsBulanan, pengeluaranBulanan: pengeluaranBulanan,
                     omsetBulanan: omsetBulanan, bersihBulanan: bersihBulanan,
                     modalTahunan: modalTahunan, opsTahunan: opsTahunan, pengeluaranTahunan: pengeluaranTahunan,
@@ -5858,21 +5976,23 @@
                 var nama = el('resp-nama-usaha').value.trim() || '(Tanpa nama responden)';
                 var noUrut = el('resp-nourut-usaha').value.trim() || '-';
                 var sls = el('resp-sls-usaha').value.trim() || '-';
+                var labelCara = (h.cara === 'bersih') ? 'Langsung Bersih' : ((h.model === 'jasa') ? 'Jasa' : 'Dagang');
+                var labelOmsetRingkas = (h.cara === 'bersih') ? 'Bersih Usaha (sebelum ops)' : 'Omset (Kotor)';
                 return [
                     '=== KALKULATOR USAHA DAGANG & JASA MIKRO (Instrumen 03) ===',
                     'Nama: ' + nama,
                     'No. Urut Bangunan: ' + noUrut,
                     'SLS/RT: ' + sls,
-                    'Jenis Usaha: ' + h.jenisLabel + ' (Mode ' + (h.model === 'jasa' ? 'Jasa' : 'Dagang') + ')',
+                    'Jenis Usaha: ' + h.jenisLabel + ' (Mode ' + labelCara + ')',
                     '--- Per Bulan ---',
                     'Biaya Produksi: ' + formatRupiah(h.modalBulanan),
                     'Biaya Operasional: ' + formatRupiah(h.opsBulanan),
                     'Total Pengeluaran: ' + formatRupiah(h.pengeluaranBulanan),
-                    'Omset (Kotor): ' + formatRupiah(h.omsetBulanan),
+                    labelOmsetRingkas + ': ' + formatRupiah(h.omsetBulanan),
                     'Pendapatan Bersih: ' + formatRupiah(h.bersihBulanan),
                     '--- Per Tahun ---',
                     'Total Pengeluaran: ' + formatRupiah(h.pengeluaranTahunan),
-                    'Omset (Kotor): ' + formatRupiah(h.omsetTahunan),
+                    labelOmsetRingkas + ': ' + formatRupiah(h.omsetTahunan),
                     'Pendapatan Bersih: ' + formatRupiah(h.bersihTahunan),
                     'Dicatat: ' + new Date().toLocaleString('id-ID')
                 ].join('\n');
@@ -5906,14 +6026,20 @@
             AutoSave.bind('usaha', el('form-usaha'));
 
             el('jenis-usaha').addEventListener('change', updateJenisUsaha);
+            document.querySelectorAll('input[name="cara_hitung_usaha"]').forEach(function (r) {
+                r.addEventListener('change', updateBlokB);
+            });
             document.querySelectorAll('input[name="periode_usaha"]').forEach(function (r) {
                 r.addEventListener('change', function () { updatePeriodeUsaha(); });
             });
+            el('interval-hari-usaha').addEventListener('keyup', function () { updatePeriodeUsaha(); });
+            el('interval-hari-usaha').addEventListener('change', function () { updatePeriodeUsaha(); });
             el('modal-usaha').addEventListener('keyup', function () { formatInputRibuan(this); });
             el('omset-usaha').addEventListener('keyup', function () { formatInputRibuan(this); });
             el('jumlah-order-usaha').addEventListener('keyup', function () { formatInputRibuan(this); });
             el('ongkos-order-usaha').addEventListener('keyup', function () { formatInputRibuan(this); });
             el('bahan-order-usaha').addEventListener('keyup', function () { formatInputRibuan(this); });
+            el('bersih-usaha').addEventListener('keyup', function () { formatInputRibuan(this); });
             el('ops-usaha').addEventListener('keyup', function () { formatInputRibuan(this); });
             el('hari-buka-usaha').addEventListener('input', function () { updateSliderValue('hari-buka-usaha', 'hariBukaValue-usaha', 'Hari'); });
             el('bulan-aktif-usaha').addEventListener('input', function () { updateSliderValue('bulan-aktif-usaha', 'bulanAktifValue-usaha', 'Bulan'); });
@@ -6132,6 +6258,7 @@
         /* ===================== HALAMAN SOSIAL EKONOMI ===================== */
         function initSosek() {
             const el = (id) => document.getElementById(id);
+            var lastHasilSosek = null;
 
             function showError(msg) {
                 let box = el("banner-error-sosek");
@@ -6225,8 +6352,9 @@
 
                 bannerAlert.classList.remove("banner-error", "banner-warning", "show");
 
+                let selisihBulan = pemasukanBulan > 0 ? (pemasukanBulan - totalPengeluaranBulan) : null;
+
                 if (pemasukanBulan > 0) {
-                    let selisihBulan = pemasukanBulan - totalPengeluaranBulan;
                     let statusTag = '';
                     if (selisihBulan < 0) statusTag = '<span class="loss-tag">Defisit</span>';
                     else if (selisihBulan <= AMBANG_TIPIS) statusTag = '<span class="loss-tag">Rawan</span>';
@@ -6278,6 +6406,20 @@
                 el("banner-info-sosek").classList.add("show");
 
                 el("hasil-sosek").classList.add("show");
+
+                lastHasilSosek = {
+                    panganHarian: panganHarian, panganMinggu: panganMinggu, panganBulan: panganBulan,
+                    listrik: listrik, lpgBulan: lpgBulan, bensinBulan: bensinBulan,
+                    sabunMandiBulan: sabunMandiBulan, sabunCuciBulan: sabunCuciBulan,
+                    arisanBulan: arisanBulan, internet: internet, lainnya: lainnya,
+                    totalNonPanganBulan: totalNonPanganBulan,
+                    pajakKendaraan: pajakKendaraan, pajakRumah: pajakRumah, hariRaya: hariRaya,
+                    uktTahun: uktTahun, totalRutinTahun: totalRutinTahun,
+                    pemasukanBulan: pemasukanBulan,
+                    totalPengeluaranBulan: totalPengeluaranBulan,
+                    totalPengeluaranTahun: totalPengeluaranTahun,
+                    selisihBulan: selisihBulan
+                };
             }
 
             /* Kolom nominal Rupiah: pakai format ribuan otomatis */
@@ -6381,6 +6523,61 @@
             el("luas-bangunan-sosek").addEventListener("change", hitungLuasBangunan);
             el("satuan-luas-sosek").addEventListener("change", hitungLuasBangunan);
             hitungLuasBangunan();
+
+            function generateRingkasanSosek() {
+                if (!lastHasilSosek) return null;
+                var h = lastHasilSosek;
+                var nama = el('resp-nama-sosek').value.trim() || '(Tanpa nama responden)';
+                var noUrut = el('resp-nourut-sosek').value.trim() || '-';
+                var sls = el('resp-sls-sosek').value.trim() || '-';
+                var selisihTeks = (h.selisihBulan === null) ? 'Tidak dihitung (pemasukan belum diisi)' : formatRp(h.selisihBulan);
+                return [
+                    '=== KALKULATOR SOSIAL EKONOMI RUMAH TANGGA ===',
+                    'Nama: ' + nama,
+                    'No. Urut Bangunan: ' + noUrut,
+                    'SLS/RT: ' + sls,
+                    '--- Pengeluaran per Bulan ---',
+                    'Pangan (' + formatRp(h.panganHarian) + '/hari \u00d7 30): ' + formatRp(h.panganBulan),
+                    'Non-Pangan: ' + formatRp(h.totalNonPanganBulan),
+                    'Non-Pangan Rutin Tahunan (dibagi 12): ' + formatRp(h.totalRutinTahun / 12),
+                    'Total Pengeluaran / Bulan: ' + formatRp(h.totalPengeluaranBulan),
+                    '--- Pemasukan & Selisih ---',
+                    'Pemasukan Keluarga / Bulan: ' + formatRp(h.pemasukanBulan),
+                    'Selisih (Surplus/Defisit) / Bulan: ' + selisihTeks,
+                    '--- Pengeluaran per Tahun ---',
+                    'Non-Pangan (\u00d712 bulan): ' + formatRp(h.totalNonPanganBulan * 12),
+                    'Non-Pangan Rutin Tahunan: ' + formatRp(h.totalRutinTahun),
+                    'Total Pengeluaran / Tahun: ' + formatRp(h.totalPengeluaranTahun),
+                    'Dicatat: ' + new Date().toLocaleString('id-ID')
+                ].join('\n');
+            }
+
+            el("btn-ringkasan-sosek").addEventListener("click", function () {
+                var teks = generateRingkasanSosek();
+                if (!teks) { showToast('Tekan Hitung terlebih dahulu sebelum menyalin ringkasan.'); return; }
+                salinTeks(teks).then(function () { showToast('Ringkasan lengkap disalin.'); })
+                    .catch(function () { showToast('Gagal menyalin otomatis.'); });
+            });
+
+            el("btn-simpan-riwayat-sosek").addEventListener("click", function () {
+                if (!lastHasilSosek) { showToast('Tekan Hitung terlebih dahulu sebelum menyimpan ke riwayat.'); return; }
+                var teks = generateRingkasanSosek();
+                Riwayat.add({
+                    modul: 'sosek',
+                    nama: el('resp-nama-sosek').value.trim(),
+                    nourut: el('resp-nourut-sosek').value.trim(),
+                    sls: el('resp-sls-sosek').value.trim(),
+                    bersihBulan: lastHasilSosek.selisihBulan || 0,
+                    bersihTahun: (lastHasilSosek.selisihBulan || 0) * 12,
+                    ringkasan: teks
+                });
+                var btn = el('btn-simpan-riwayat-sosek');
+                btn.classList.add('is-saved');
+                setTimeout(function () { btn.classList.remove('is-saved'); }, 1500);
+                showToast('Tersimpan ke Riwayat.');
+            });
+
+            AutoSave.bind('sosek', el('form-sosek'));
 
             el("btn-hitung-sosek").addEventListener("click", hitungSosek);
         }
