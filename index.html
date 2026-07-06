@@ -1624,6 +1624,153 @@
             font-weight: 700;
         }
 
+        /* ===== Blok E sosek: dropdown Data Kendaraan (motor & mobil) dengan pencarian ===== */
+        .csel-panel-veh {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .csel.open .csel-panel-veh {
+            max-height: 360px;
+        }
+
+        .csel-search-wrap {
+            position: sticky;
+            top: -6px;
+            background: var(--surface);
+            margin: -6px -6px 6px;
+            padding: 6px 6px 8px;
+            border-bottom: 1px solid var(--line);
+            z-index: 2;
+        }
+
+        .csel-search-input {
+            width: 100%;
+            padding: 9px 11px;
+            border: 1.5px solid var(--line);
+            border-radius: 7px;
+            font-size: 13px;
+            font-family: var(--font-ui);
+            color: var(--ink);
+            background: var(--surface-alt);
+        }
+
+        .csel-search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .csel-opt-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .csel-opt-group {
+            padding: 10px 11px 4px;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .csel-opt-veh {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .csel-opt-title {
+            font-weight: 700;
+        }
+
+        .csel-opt-sub {
+            font-size: 11.5px;
+            font-weight: 500;
+            color: var(--ink-faint);
+        }
+
+        .csel-opt[aria-selected="true"] .csel-opt-sub {
+            color: var(--accent-deep);
+            opacity: .8;
+        }
+
+        .kendaraan-hasil {
+            margin-top: 10px;
+            padding: 13px 14px;
+            border-radius: var(--radius-sm);
+            background: var(--surface-alt);
+            border: 1.5px dashed var(--line);
+            font-size: 12.5px;
+            color: var(--ink-faint);
+            line-height: 1.5;
+        }
+
+        .kendaraan-hasil.has-value {
+            background: linear-gradient(135deg, var(--navy-deep), var(--navy));
+            border: none;
+            color: #fff;
+        }
+
+        .kendaraan-hasil .kh-label {
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .65);
+            margin-bottom: 5px;
+        }
+
+        .kendaraan-hasil .kh-value {
+            font-family: var(--font-mono);
+            font-size: 18px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -.01em;
+        }
+
+        .kendaraan-hasil .kh-sub {
+            font-size: 11.5px;
+            margin-top: 5px;
+            color: rgba(255, 255, 255, .75);
+        }
+
+        /* ===== Blok E sosek: baris kendaraan dinamis (tambah/hapus) ===== */
+        .kendaraan-list .kendaraan-item {
+            margin-bottom: 14px;
+            padding-bottom: 14px;
+            border-bottom: 1px dashed var(--line-soft);
+        }
+
+        .kendaraan-list .kendaraan-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .kendaraan-item-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .kendaraan-item-row .csel {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .kendaraan-item-idx {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .03em;
+            color: var(--ink-faint);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
         /* ===== tombol kembali di setiap instrumen ===== */
         .back-link {
             display: inline-flex;
@@ -3344,7 +3491,7 @@
                         </fieldset>
 
                         <fieldset>
-                            <div class="blok-label"><span class="dot"></span>Blok A — Jenis Usaha &amp; Cara
+                            <div class="blok-label"><span class="dot"></span>Blok A — Jenis Usaha &amp; Periode
                                 Pencatatan</div>
                             <div class="field">
                                 <label class="field-label" for="jenis-usaha">Jenis usaha responden</label>
@@ -3362,18 +3509,8 @@
                                     </ul>
                                     <input type="hidden" id="jenis-usaha" value="kelontongan">
                                 </div>
-                                <small class="hint">Pilihan ini menentukan <b>model perhitungan</b> pada Blok B —
-                                    lihat penanda mode di bawah.</small>
-                            </div>
-                            <div class="field">
-                                <label class="field-label">Cara menghitung pendapatan</label>
-                                <div class="segmented">
-                                    <label class="seg-opt"><input type="radio" name="cara_hitung_usaha" value="omzet" checked><span>Omset &amp; Modal</span></label>
-                                    <label class="seg-opt"><input type="radio" name="cara_hitung_usaha" value="bersih"><span>Langsung Bersih</span></label>
-                                </div>
-                                <small class="hint">Pilih <b>"Langsung Bersih"</b> jika responden hanya bisa
-                                    menyebutkan sisa/laba usaha, tanpa bisa merinci modal belanja dan omset
-                                    kotor.</small>
+                                <small class="hint">Pilihan ini menentukan <b>model perhitungan</b> pada Blok B &amp;
+                                    Blok D — lihat penanda mode di bawah.</small>
                             </div>
                             <div class="field">
                                 <label class="field-label">Periode pencatatan</label>
@@ -3395,11 +3532,14 @@
                         </fieldset>
 
                         <fieldset>
-                            <div class="blok-label"><span class="dot"></span>Blok B — Modal &amp; Omset
+                            <div class="blok-label"><span class="dot"></span>Blok B — Biaya Produksi &amp; Operasional
                                 <span class="model-badge" id="model-badge-usaha">Mode: Dagang</span>
                             </div>
+                            <small class="hint" style="display:block;margin-bottom:14px;">Isi dulu seluruh biaya modal
+                                &amp; operasional usaha di blok ini. Pendapatan (kotor/bersih) diisi belakangan pada
+                                Blok D, setelah Blok C.</small>
 
-                            <div id="grup-dagang-usaha">
+                            <div id="grup-produksi-dagang-usaha">
                                 <div class="field">
                                     <label class="field-label" id="label-modal-usaha" for="modal-usaha">Modal Belanja
                                         Barang/Bahan per Hari</label>
@@ -3407,29 +3547,15 @@
                                     <small class="hint">Biaya produksi: belanja stok/bahan baku untuk periode yang
                                         dipilih.</small>
                                 </div>
-                                <div class="field">
-                                    <label class="field-label" id="label-omset-usaha" for="omset-usaha">Omset / Pendapatan
-                                        Kotor per Hari</label>
-                                    <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="omset-usaha" inputmode="numeric" placeholder="250.000"></div>
-                                    <small class="hint">Total penjualan/pemasukan kotor sebelum dikurangi modal, untuk
-                                        periode yang sama dengan modal di atas.</small>
-                                </div>
                             </div>
 
-                            <div id="grup-jasa-usaha" class="hide">
+                            <div id="grup-produksi-jasa-usaha" class="hide">
                                 <div class="field">
                                     <label class="field-label" id="label-jumlah-order-usaha" for="jumlah-order-usaha">Jumlah
                                         Order/Pekerjaan Selesai per Hari</label>
                                     <input type="text" id="jumlah-order-usaha" inputmode="numeric" placeholder="5">
                                     <small class="hint">Berapa order/potong/pekerjaan yang diselesaikan pada periode
-                                        ini.</small>
-                                </div>
-                                <div class="field">
-                                    <label class="field-label" for="ongkos-order-usaha">Ongkos Jasa per
-                                        Order/Pekerjaan</label>
-                                    <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="ongkos-order-usaha" inputmode="numeric" placeholder="35.000"></div>
-                                    <small class="hint">Rata-rata ongkos/upah jasa yang diterima untuk satu
-                                        order/pekerjaan (omset = jumlah &times; ongkos).</small>
+                                        ini — dipakai juga untuk menghitung pendapatan kotor pada Blok D.</small>
                                 </div>
                                 <div class="field">
                                     <label class="field-label" for="bahan-order-usaha">Biaya Bahan Tambahan per Order
@@ -3440,15 +3566,18 @@
                                 </div>
                             </div>
 
-                            <div id="grup-bersih-usaha" class="hide">
-                                <div class="field">
-                                    <label class="field-label" id="label-bersih-usaha" for="bersih-usaha">Pendapatan
-                                        Bersih / Laba Usaha per Hari</label>
-                                    <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="bersih-usaha" inputmode="numeric" placeholder="100.000"></div>
-                                    <small class="hint">Sisa/laba usaha yang benar-benar diterima responden setelah
-                                        dikurangi modal belanja barang/bahan — belum dikurangi biaya operasional pada
-                                        Blok D.</small>
-                                </div>
+                            <div class="field" id="info-bersih-biaya-usaha" style="display:none;">
+                                <small class="hint">Biaya produksi tidak perlu dirinci di sini karena responden
+                                    memilih <b>&ldquo;Pendapatan Bersih&rdquo;</b> pada Blok D — nilai belanja/bahan
+                                    dianggap sudah termasuk dalam pendapatan bersih yang akan diisi responden di
+                                    sana.</small>
+                            </div>
+
+                            <div class="field">
+                                <label class="field-label" for="ops-usaha">Biaya Operasional Tambahan per Bulan</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="ops-usaha" inputmode="numeric" placeholder="0"></div>
+                                <small class="hint">Sewa tempat, listrik, air, transportasi, tenaga bantu, dll — di
+                                    luar modal belanja barang/bahan di atas.</small>
                             </div>
                         </fieldset>
 
@@ -3477,12 +3606,47 @@
                         </fieldset>
 
                         <fieldset>
-                            <div class="blok-label"><span class="dot"></span>Blok D — Biaya Operasional Tambahan</div>
+                            <div class="blok-label"><span class="dot"></span>Blok D — Pendapatan</div>
                             <div class="field">
-                                <label class="field-label" for="ops-usaha">Biaya Operasional Tambahan per Bulan</label>
-                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="ops-usaha" inputmode="numeric" placeholder="0"></div>
-                                <small class="hint">Sewa tempat, listrik, air, transportasi, tenaga bantu, dll — di
-                                    luar modal belanja barang/bahan pada Blok B.</small>
+                                <label class="field-label">Cara menghitung pendapatan</label>
+                                <div class="segmented">
+                                    <label class="seg-opt"><input type="radio" name="cara_hitung_usaha" value="omzet" checked><span>Pendapatan Kotor</span></label>
+                                    <label class="seg-opt"><input type="radio" name="cara_hitung_usaha" value="bersih"><span>Pendapatan Bersih</span></label>
+                                </div>
+                                <small class="hint">Pilih <b>"Pendapatan Bersih"</b> jika responden hanya bisa
+                                    menyebutkan sisa/laba usaha, tanpa bisa merinci omset kotor.</small>
+                            </div>
+
+                            <div id="grup-pendapatan-dagang-usaha">
+                                <div class="field">
+                                    <label class="field-label" id="label-omset-usaha" for="omset-usaha">Omset / Pendapatan
+                                        Kotor per Hari</label>
+                                    <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="omset-usaha" inputmode="numeric" placeholder="250.000"></div>
+                                    <small class="hint">Total penjualan/pemasukan kotor sebelum dikurangi biaya pada
+                                        Blok B, untuk periode yang sama.</small>
+                                </div>
+                            </div>
+
+                            <div id="grup-pendapatan-jasa-usaha" class="hide">
+                                <div class="field">
+                                    <label class="field-label" for="ongkos-order-usaha">Ongkos Jasa per
+                                        Order/Pekerjaan</label>
+                                    <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="ongkos-order-usaha" inputmode="numeric" placeholder="35.000"></div>
+                                    <small class="hint">Rata-rata ongkos/upah jasa yang diterima untuk satu
+                                        order/pekerjaan (pendapatan kotor = jumlah order pada Blok B &times;
+                                        ongkos).</small>
+                                </div>
+                            </div>
+
+                            <div id="grup-bersih-usaha" class="hide">
+                                <div class="field">
+                                    <label class="field-label" id="label-bersih-usaha" for="bersih-usaha">Pendapatan
+                                        Bersih / Laba Usaha per Hari</label>
+                                    <div class="prefix-wrap"><span class="rp">Rp</span><input type="text" id="bersih-usaha" inputmode="numeric" placeholder="100.000"></div>
+                                    <small class="hint">Sisa/laba usaha yang benar-benar diterima responden setelah
+                                        dikurangi modal belanja barang/bahan — belum dikurangi biaya operasional pada
+                                        Blok B.</small>
+                                </div>
                             </div>
                         </fieldset>
 
@@ -3583,10 +3747,11 @@
                         </table>
 
                         <div class="formula-note">Rumus:
-                            <code>Mode Omset &amp; Modal: (Modal + Omset per Periode &times; Siklus/Bulan) &times;
-                                Bulan Aktif/Tahun. Mode Langsung Bersih: (Pendapatan Bersih per Periode &times;
-                                Siklus/Bulan) &times; Bulan Aktif/Tahun. Pengeluaran = Biaya Produksi + Biaya
-                                Operasional. Bersih Akhir = Omset/Bersih Usaha &minus; Pengeluaran.</code>
+                            <code>Biaya (Blok B) = Biaya Produksi + Biaya Operasional. Mode Pendapatan Kotor (Blok D):
+                                (Modal Produksi + Pendapatan Kotor per Periode &times; Siklus/Bulan) &times; Bulan
+                                Aktif/Tahun, lalu Bersih Akhir = Pendapatan Kotor &minus; Biaya. Mode Pendapatan
+                                Bersih (Blok D): (Pendapatan Bersih per Periode &times; Siklus/Bulan) &times; Bulan
+                                Aktif/Tahun, lalu Bersih Akhir = Pendapatan Bersih &minus; Biaya Operasional.</code>
                         </div>
 
                         <div class="result-actions">
@@ -4139,6 +4304,41 @@
                                 dijumlahkan otomatis untuk dibandingkan dengan total pengeluaran rumah tangga.</small>
                         </fieldset>
 
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok E &mdash; Data Kendaraan (Estimasi
+                                Aset)</div>
+                            <small class="hint" style="display:block;margin-bottom:14px;">Pilih model yang paling
+                                mendekati kendaraan milik responden untuk melihat estimasi harga jual saat ini. Jika
+                                rumah tangga tidak memiliki, pilih opsi &ldquo;Tidak Memiliki&rdquo;. Gunakan tombol
+                                &ldquo;Tambah&rdquo; jika responden memiliki lebih dari satu unit.</small>
+                            <div class="field-row-2">
+                                <div class="field">
+                                    <label class="field-label">Sepeda Motor</label>
+                                    <div class="kendaraan-list" id="motor-list-sosek"></div>
+                                    <button type="button" class="btn-tambah-item" id="btn-tambah-motor-sosek">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="12" y1="5" x2="12" y2="19" />
+                                            <line x1="5" y1="12" x2="19" y2="12" />
+                                        </svg>
+                                        Tambah Sepeda Motor Lainnya
+                                    </button>
+                                </div>
+                                <div class="field">
+                                    <label class="field-label">Mobil</label>
+                                    <div class="kendaraan-list" id="mobil-list-sosek"></div>
+                                    <button type="button" class="btn-tambah-item" id="btn-tambah-mobil-sosek">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="12" y1="5" x2="12" y2="19" />
+                                            <line x1="5" y1="12" x2="19" y2="12" />
+                                        </svg>
+                                        Tambah Mobil Lainnya
+                                    </button>
+                                </div>
+                            </div>
+                        </fieldset>
+
                         <button type="button" class="btn-hitung" id="btn-hitung-sosek">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -4173,29 +4373,25 @@
                             <div id="banner-alert-sosek" class="banner"></div>
 
                             <div class="result-head">
-                                <h3>Ringkasan Pemasukan vs Pengeluaran per Bulan</h3><span>Ringkasan</span>
+                                <h3>Ringkasan Pengeluaran Utama</h3><span>Ringkasan</span>
                             </div>
                             <div class="headline-grid-3">
                                 <div class="headline">
-                                    <div class="headline-label">Pemasukan Keluarga / Bulan</div>
-                                    <div class="headline-value" id="out-pemasukan-sosek">Rp 0</div>
-                                </div>
-                                <div class="headline alt">
-                                    <div class="headline-label">Selisih (Surplus/Defisit)</div>
-                                    <div class="headline-value" id="out-selisih-sosek">Rp 0</div>
+                                    <div class="headline-label">Listrik / Bulan</div>
+                                    <div class="headline-value" id="out-listrik-headline-sosek">Rp 0</div>
                                 </div>
                                 <div class="headline">
-                                    <div class="headline-label">Total Pengeluaran / Bulan</div>
-                                    <div class="headline-value" id="out-pengeluaran-total-sosek">Rp 0</div>
+                                    <div class="headline-label">Internet / Bulan</div>
+                                    <div class="headline-value" id="out-internet-headline-sosek">Rp 0</div>
+                                </div>
+                                <div class="headline">
+                                    <div class="headline-label">Pangan / Minggu</div>
+                                    <div class="headline-value" id="out-pangan-minggu-sosek">Rp 0</div>
                                 </div>
                             </div>
 
                             <div class="headline-grid-3">
                                 <div class="headline">
-                                    <div class="headline-label">Pangan / Minggu</div>
-                                    <div class="headline-value" id="out-pangan-minggu-sosek">Rp 0</div>
-                                </div>
-                                <div class="headline alt">
                                     <div class="headline-label">Non-Pangan / Bulan</div>
                                     <div class="headline-value" id="out-nonpangan-bulan-sosek">Rp 0</div>
                                 </div>
@@ -4203,16 +4399,15 @@
                                     <div class="headline-label">Non-Pangan Rutin / Tahun</div>
                                     <div class="headline-value" id="out-rutin-tahun-sosek">Rp 0</div>
                                 </div>
-                            </div>
-
-                            <div class="headline">
-                                <div class="headline-label">Total Pengeluaran / Tahun</div>
-                                <div class="headline-value" id="out-pengeluaran-tahun-sosek">Rp 0</div>
-                                <div class="headline-sub" id="out-headline-sub-tahun-sosek">&nbsp;</div>
+                                <div class="headline alt">
+                                    <div class="headline-label">Selisih (Surplus/Defisit)</div>
+                                    <div class="headline-value" id="out-selisih-sosek">Rp 0</div>
+                                    <div class="headline-sub" id="out-headline-sub-selisih-sosek">&nbsp;</div>
+                                </div>
                             </div>
 
                         <div class="result-head">
-                            <h3>Rincian Pengeluaran Pangan</h3><span>Blok E</span>
+                            <h3>Rincian Pengeluaran Pangan</h3><span>Blok F</span>
                         </div>
                         <table>
                             <tr>
@@ -4234,7 +4429,7 @@
                         </table>
 
                         <div class="result-head">
-                            <h3>Rincian Pengeluaran Non-Pangan / Bulan</h3><span>Blok F</span>
+                            <h3>Rincian Pengeluaran Non-Pangan / Bulan</h3><span>Blok G</span>
                         </div>
                         <table>
                             <tr>
@@ -4280,7 +4475,7 @@
                         </table>
 
                         <div class="result-head">
-                            <h3>Rincian Non-Pangan Rutin Tahunan</h3><span>Blok G</span>
+                            <h3>Rincian Non-Pangan Rutin Tahunan</h3><span>Blok H</span>
                         </div>
                         <table>
                             <tr>
@@ -5791,21 +5986,27 @@
                 var cara = currentCara();
                 var badge = el('model-badge-usaha');
 
-                el('grup-dagang-usaha').classList.add('hide');
-                el('grup-jasa-usaha').classList.add('hide');
+                el('grup-produksi-dagang-usaha').classList.add('hide');
+                el('grup-produksi-jasa-usaha').classList.add('hide');
+                el('grup-pendapatan-dagang-usaha').classList.add('hide');
+                el('grup-pendapatan-jasa-usaha').classList.add('hide');
                 el('grup-bersih-usaha').classList.add('hide');
+                el('info-bersih-biaya-usaha').style.display = 'none';
                 badge.classList.remove('is-jasa');
 
                 if (cara === 'bersih') {
                     badge.textContent = 'Mode: Langsung Bersih';
                     el('grup-bersih-usaha').classList.remove('hide');
+                    el('info-bersih-biaya-usaha').style.display = '';
                 } else if (model === 'jasa') {
                     badge.textContent = 'Mode: Jasa (Order \u00d7 Ongkos)';
                     badge.classList.add('is-jasa');
-                    el('grup-jasa-usaha').classList.remove('hide');
+                    el('grup-produksi-jasa-usaha').classList.remove('hide');
+                    el('grup-pendapatan-jasa-usaha').classList.remove('hide');
                 } else {
                     badge.textContent = 'Mode: Dagang (Modal & Omset)';
-                    el('grup-dagang-usaha').classList.remove('hide');
+                    el('grup-produksi-dagang-usaha').classList.remove('hide');
+                    el('grup-pendapatan-dagang-usaha').classList.remove('hide');
                 }
             }
 
@@ -6255,7 +6456,335 @@
         }
         initTani();
 
+
+        /* ===================== DATA KENDARAAN (Blok E — Sosial Ekonomi) =====================
+           Sumber: Database Kendaraan Indonesia Terbanyak v3 (katalog harga jual bekas).
+           c = kategori, m = merek & model, t = tahun populer, lo/hi = kisaran harga jual (Rp). */
+        const VEHICLE_MOTOR = [
+            {c:'Jadul & Klasik',m:'Honda C70 (Pitung)',t:'1970 - 1980an',lo:4000000,hi:15000000},
+            {c:'Jadul & Klasik',m:'Honda CB 100',t:'1970 - 1981',lo:6000000,hi:25000000},
+            {c:'Jadul & Klasik',m:'Honda Astrea Grand / Legenda',t:'1991 - 2002',lo:3000000,hi:8000000},
+            {c:'Jadul & Klasik',m:'Honda Astrea Prima',t:'1988 - 1992',lo:4000000,hi:10000000},
+            {c:'Jadul & Klasik',m:'Honda Win 100',t:'1984 - 2005',lo:7000000,hi:22000000},
+            {c:'Jadul & Klasik',m:'Honda GL Pro (Black Engine/Neotech)',t:'1992 - 1999',lo:5000000,hi:14000000},
+            {c:'Jadul & Klasik',m:'Honda Tiger 2000 / Revo',t:'1993 - 2013',lo:7000000,hi:25000000},
+            {c:'Jadul & Klasik',m:'Yamaha RX-King',t:'1983 - 2008',lo:15000000,hi:50000000},
+            {c:'Jadul & Klasik',m:'Yamaha RX-S / RX-Special',t:'1980an - 1990an',lo:6000000,hi:18000000},
+            {c:'Jadul & Klasik',m:'Yamaha F1ZR (Fiz-R)',t:'1997 - 2004',lo:5000000,hi:15000000},
+            {c:'Jadul & Klasik',m:'Yamaha Alfa 2R / Champ',t:'1988 - 1995',lo:2000000,hi:6000000},
+            {c:'Jadul & Klasik',m:'Yamaha Crypton',t:'1997 - 1999',lo:2000000,hi:4500000},
+            {c:'Jadul & Klasik',m:'Vespa PX 150 / Exclusive',t:'1980 - 2000an',lo:10000000,hi:30000000},
+            {c:'Jadul & Klasik',m:'Vespa Super 150 / Sprint 150 Veloce',t:'1960 - 1970an',lo:12000000,hi:40000000},
+            {c:'Jadul & Klasik',m:'Suzuki RC 100 / Bravo / Sprinter',t:'1980 - 1990an',lo:2000000,hi:5500000},
+            {c:'Jadul & Klasik',m:'Suzuki Shogun 110 (Kebo)',t:'1995 - 1999',lo:2500000,hi:6500000},
+            {c:'Jadul & Klasik',m:'Suzuki Shogun 125 (R/SP)',t:'2004 - 2009',lo:3000000,hi:7500000},
+            {c:'Jadul & Klasik',m:'Suzuki Smash 110',t:'2002 - 2008',lo:2000000,hi:5000000},
+            {c:'Jadul & Klasik',m:'Kawasaki Binter Merzy 200',t:'1980 - 1986',lo:15000000,hi:35000000},
+            {c:'Matik Retro Modern',m:'Yamaha Fazzio Hybrid',t:'2022 - 2025',lo:15500000,hi:21500000},
+            {c:'Matik Retro Modern',m:'Honda Stylo 160',t:'2024 - 2025',lo:24500000,hi:30900000},
+            {c:'Matik Retro Modern',m:'Yamaha Grand Filano',t:'2023 - 2025',lo:20000000,hi:25000000},
+            {c:'Matik Retro Modern',m:'Vespa LX 125 i-get',t:'2017 - 2024',lo:26000000,hi:38000000},
+            {c:'Matik Retro Modern',m:'Vespa Sprint 150 3V / i-get',t:'2014 - 2024',lo:34000000,hi:54000000},
+            {c:'Matik Retro Modern',m:'Vespa Primavera 150',t:'2014 - 2024',lo:32000000,hi:50000000},
+            {c:'Matik Retro Modern',m:'Honda Scoopy (Karbu/FI/Keyless)',t:'2010 - 2024',lo:6500000,hi:20000000},
+            {c:'Matik Retro Modern',m:'Yamaha Fino 125',t:'2012 - 2022',lo:6000000,hi:14000000},
+            {c:'Matik Retro Modern',m:'Suzuki Lets 110',t:'2012 - 2014',lo:4500000,hi:7500000},
+            {c:'Matik Modern',m:'Honda Beat (Karbu / FI / ESP)',t:'2008 - 2024',lo:5000000,hi:15500000},
+            {c:'Matik Modern',m:'Honda Vario 110 (Karbu/FI)',t:'2006 - 2019',lo:5000000,hi:12000000},
+            {c:'Matik Modern',m:'Honda Vario 125',t:'2012 - 2024',lo:8500000,hi:21000000},
+            {c:'Matik Modern',m:'Honda Vario 150 / 160',t:'2015 - 2024',lo:13000000,hi:25500000},
+            {c:'Matik Modern',m:'Honda PCX 150 / 160',t:'2018 - 2024',lo:22000000,hi:32500000},
+            {c:'Matik Modern',m:'Honda ADV 150 / 160',t:'2019 - 2024',lo:24000000,hi:35000000},
+            {c:'Matik Modern',m:'Yamaha Mio Sporty / Smile',t:'2004 - 2012',lo:3000000,hi:7500000},
+            {c:'Matik Modern',m:'Yamaha Mio J / GT / M3 125',t:'2012 - 2022',lo:4500000,hi:11000000},
+            {c:'Matik Modern',m:'Yamaha NMAX 155 (Old/New)',t:'2015 - 2024',lo:16500000,hi:31000000},
+            {c:'Matik Modern',m:'Yamaha Aerox 155 VVA',t:'2017 - 2024',lo:16000000,hi:27000000},
+            {c:'Matik Modern',m:'Yamaha Lexi 125 / LX 155',t:'2018 - 2024',lo:12500000,hi:26000000},
+            {c:'Matik Modern',m:'Yamaha XMAX 250',t:'2017 - 2024',lo:38000000,hi:58000000},
+            {c:'Matik Modern',m:'Suzuki Spin 125',t:'2006 - 2011',lo:2500000,hi:5000000},
+            {c:'Matik Modern',m:'Suzuki Skywave 125',t:'2007 - 2012',lo:3500000,hi:7000000},
+            {c:'Matik Modern',m:'Suzuki Nex II',t:'2018 - 2023',lo:7500000,hi:12000000},
+            {c:'Bebek & Sport',m:'Honda Supra Fit / X 100',t:'2001 - 2008',lo:2500000,hi:6000000},
+            {c:'Bebek & Sport',m:'Honda Supra X 125 DD',t:'2005 - 2022',lo:4500000,hi:14000000},
+            {c:'Bebek & Sport',m:'Honda Revo Absolute / Fit',t:'2009 - 2023',lo:3500000,hi:9500000},
+            {c:'Bebek & Sport',m:'Honda Sonic 150R',t:'2015 - 2022',lo:8000000,hi:15000000},
+            {c:'Bebek & Sport',m:'Honda CB150R Streetfire',t:'2013 - 2023',lo:9000000,hi:21000000},
+            {c:'Bebek & Sport',m:'Honda CBR150R Local',t:'2015 - 2024',lo:12000000,hi:28000000},
+            {c:'Bebek & Sport',m:'Honda CRF150L',t:'2017 - 2024',lo:21000000,hi:29000000},
+            {c:'Bebek & Sport',m:'Yamaha Vega R / ZR',t:'2004 - 2013',lo:3000000,hi:6500000},
+            {c:'Bebek & Sport',m:'Yamaha Jupiter Z / Burhan',t:'2003 - 2012',lo:3500000,hi:8500000},
+            {c:'Bebek & Sport',m:'Yamaha Jupiter MX 135 / King 150',t:'2005 - 2023',lo:4500000,hi:17000000},
+            {c:'Bebek & Sport',m:'Yamaha Vixion (Old / New NVL / R)',t:'2007 - 2022',lo:6500000,hi:18500000},
+            {c:'Bebek & Sport',m:'Yamaha R15 V2 / V3 / V4',t:'2014 - 2024',lo:11000000,hi:29000000},
+            {c:'Bebek & Sport',m:'Yamaha WR155R',t:'2020 - 2024',lo:26000000,hi:33000000},
+            {c:'Bebek & Sport',m:'Suzuki Satria FU 150 (Karbu/FI)',t:'2005 - 2022',lo:4500000,hi:15000000},
+            {c:'Bebek & Sport',m:'Suzuki GSX-R150',t:'2017 - 2022',lo:11000000,hi:18000000},
+            {c:'Bebek & Sport',m:'Kawasaki Ninja 150 R / RR (2-Tak)',t:'1996 - 2015',lo:16000000,hi:45000000},
+            {c:'Bebek & Sport',m:'Kawasaki KLX 150',t:'2009 - 2024',lo:13000000,hi:28000000},
+            {c:'Bebek & Sport',m:'Kawasaki Ninja 250 FI / Mono',t:'2012 - 2023',lo:18000000,hi:56000000},
+        ];
+        const VEHICLE_MOBIL = [
+            {c:'Mobil Klasik & Tua',m:'Toyota Kijang Doyok (KF20)',t:'1981 - 1986',lo:15000000,hi:30000000},
+            {c:'Mobil Klasik & Tua',m:'Toyota Kijang Super / Grand Extra',t:'1986 - 1996',lo:23000000,hi:48000000},
+            {c:'Mobil Klasik & Tua',m:'Toyota Kijang Kapsul (Bensin/Diesel)',t:'1997 - 2004',lo:40000000,hi:95000000},
+            {c:'Mobil Klasik & Tua',m:'Isuzu Panther Kotak (2.3 / 2.5)',t:'1991 - 2000',lo:35000000,hi:65000000},
+            {c:'Mobil Klasik & Tua',m:'Isuzu Panther Kapsul (Hi-Grade/Touring)',t:'2000 - 2015',lo:65000000,hi:160000000},
+            {c:'Mobil Klasik & Tua',m:'Suzuki Katana (G10/GX)',t:'1989 - 2006',lo:35000000,hi:85000000},
+            {c:'Mobil Klasik & Tua',m:'Suzuki Carry ST20 (Turungtung)',t:'1970an - 1983',lo:10000000,hi:25000000},
+            {c:'Mobil Klasik & Tua',m:'Daihatsu Zebra / Espass',t:'1989 - 2005',lo:15000000,hi:38000000},
+            {c:'Mobil Klasik & Tua',m:'Daihatsu Feroza',t:'1993 - 1999',lo:35000000,hi:60000000},
+            {c:'Mobil Klasik & Tua',m:'Daihatsu Taft / Rocky (GTL/GTS) Diesel',t:'1985 - 2003',lo:50000000,hi:150000000},
+            {c:'Sedan',m:'Toyota Corolla Great',t:'1992 - 1995',lo:35000000,hi:55000000},
+            {c:'Sedan',m:'Toyota Corolla All New / New Corolla',t:'1996 - 2001',lo:38000000,hi:60000000},
+            {c:'Sedan',m:'Toyota Corolla Altis (Gen 1 - Gen 3)',t:'2001 - 2013',lo:55000000,hi:135000000},
+            {c:'Sedan',m:'Toyota Corona Absolute',t:'1993 - 1998',lo:25000000,hi:45000000},
+            {c:'Sedan',m:'Toyota Vios / Limo (Gen 1 - Gen 3)',t:'2003 - 2018',lo:40000000,hi:110000000},
+            {c:'Sedan',m:'Honda Civic Wonder (SB3/SB4)',t:'1984 - 1987',lo:15000000,hi:35000000},
+            {c:'Sedan',m:'Honda Civic Grand / LX',t:'1988 - 1991',lo:25000000,hi:45000000},
+            {c:'Sedan',m:'Honda Civic Genio / Ferio',t:'1992 - 2000',lo:40000000,hi:70000000},
+            {c:'Sedan',m:'Honda Civic Century / VTI-S (ES)',t:'2001 - 2005',lo:50000000,hi:80000000},
+            {c:'Sedan',m:'Honda Civic FD1 / FD2 (Batman)',t:'2006 - 2011',lo:95000000,hi:160000000},
+            {c:'Sedan',m:'Honda Accord Maestro / Cielo',t:'1990 - 1998',lo:25000000,hi:50000000},
+            {c:'Sedan',m:'Honda Accord VTI-L / CM5',t:'1999 - 2007',lo:45000000,hi:85000000},
+            {c:'Sedan',m:'Mitsubishi Galant Lele / V6 Hiu',t:'1993 - 2002',lo:30000000,hi:65000000},
+            {c:'Sedan',m:'Mitsubishi Lancer Evo III / IV (GTI/SEi)',t:'1993 - 2002',lo:35000000,hi:75000000},
+            {c:'Sedan',m:'Suzuki Amenity / Esteem',t:'1990 - 1996',lo:18000000,hi:35000000},
+            {c:'Sedan',m:'Suzuki Baleno Millenium / Next-G',t:'1996 - 2005',lo:30000000,hi:55000000},
+            {c:'Sedan',m:'BMW Seri 3 E36 (318i/320i)',t:'1992 - 1998',lo:35000000,hi:65000000},
+            {c:'Sedan',m:'BMW Seri 3 E46 (318i/325i)',t:'1999 - 2005',lo:65000000,hi:120000000},
+            {c:'Sedan',m:'Mercedes-Benz C-Class W202',t:'1994 - 2000',lo:40000000,hi:85000000},
+            {c:'Sedan',m:'Hyundai Avega Liftback',t:'2007 - 2012',lo:40000000,hi:65000000},
+            {c:'LCGC & City Car',m:'Toyota Agya / Daihatsu Ayla',t:'2013 - 2023',lo:75000000,hi:145000000},
+            {c:'LCGC & City Car',m:'Toyota Calya / Daihatsu Sigra',t:'2016 - 2023',lo:90000000,hi:150000000},
+            {c:'LCGC & City Car',m:'Honda Brio Satya / RS',t:'2013 - 2023',lo:95000000,hi:185000000},
+            {c:'LCGC & City Car',m:'Honda Jazz (GD3 / GE8 / GK5)',t:'2004 - 2020',lo:68000000,hi:250000000},
+            {c:'LCGC & City Car',m:'Toyota Yaris Bakpao / Lele / Joker',t:'2006 - 2021',lo:78000000,hi:225000000},
+            {c:'LCGC & City Car',m:'Suzuki Ignis',t:'2017 - 2022',lo:95000000,hi:140000000},
+            {c:'LCGC & City Car',m:'Suzuki Karimun Kotak / Estilo / WagonR',t:'1999 - 2021',lo:40000000,hi:95000000},
+            {c:'LCGC & City Car',m:'Nissan March',t:'2010 - 2018',lo:65000000,hi:115000000},
+            {c:'MPV',m:'Toyota Avanza / Daihatsu Xenia (Gen 1-2)',t:'2004 - 2021',lo:60000000,hi:195000000},
+            {c:'MPV',m:'Mitsubishi Xpander / Cross',t:'2017 - 2023',lo:175000000,hi:275000000},
+            {c:'MPV',m:'Suzuki Ertiga (Gen 1 / All New)',t:'2012 - 2022',lo:95000000,hi:200000000},
+            {c:'MPV',m:'Toyota Kijang Innova (Generasi Awal)',t:'2004 - 2015',lo:85000000,hi:215000000},
+            {c:'MPV',m:'Toyota Innova Reborn',t:'2016 - 2022',lo:260000000,hi:425000000},
+            {c:'MPV',m:'Nissan Grand Livina (L10 / L11)',t:'2007 - 2018',lo:50000000,hi:130000000},
+            {c:'MPV',m:'Honda Freed (Pintu Geser)',t:'2009 - 2016',lo:110000000,hi:190000000},
+            {c:'MPV',m:'Honda Mobilio',t:'2014 - 2022',lo:90000000,hi:170000000},
+            {c:'SUV & Crossover',m:'Toyota Rush / Daihatsu Terios (Konde)',t:'2007 - 2017',lo:80000000,hi:150000000},
+            {c:'SUV & Crossover',m:'Toyota Rush / Daihatsu Terios (All New)',t:'2018 - 2023',lo:175000000,hi:245000000},
+            {c:'SUV & Crossover',m:'Honda HR-V (Gen 2)',t:'2015 - 2021',lo:175000000,hi:310000000},
+            {c:'SUV & Crossover',m:'Honda CR-V Gen 3 (Kura-kura)',t:'2007 - 2012',lo:95000000,hi:150000000},
+            {c:'SUV & Crossover',m:'Honda CR-V Gen 4 & Gen 5 Turbo',t:'2013 - 2022',lo:160000000,hi:460000000},
+            {c:'SUV & Crossover',m:'Toyota Fortuner VNT / VRZ',t:'2012 - 2023',lo:210000000,hi:510000000},
+            {c:'SUV & Crossover',m:'Mitsubishi Pajero Sport (Exceed/Dakar)',t:'2009 - 2023',lo:195000000,hi:525000000},
+            {c:'SUV & Crossover',m:'Nissan X-Trail (T31 / T32)',t:'2008 - 2019',lo:85000000,hi:220000000},
+            {c:'Mobil Niaga (Pickup)',m:'Mitsubishi L300 Diesel',t:'2000 - 2024',lo:45000000,hi:205000000},
+            {c:'Mobil Niaga (Pickup)',m:'Suzuki Carry Futura Pick-Up',t:'1995 - 2019',lo:25000000,hi:80000000},
+            {c:'Mobil Niaga (Pickup)',m:'Suzuki New Carry Pick-Up',t:'2019 - 2024',lo:80000000,hi:135000000},
+            {c:'Mobil Niaga (Pickup)',m:'Daihatsu Gran Max Pick-Up',t:'2008 - 2024',lo:50000000,hi:125000000},
+            {c:'Mobil Niaga (Pickup)',m:'Daihatsu Hi-Max (Pickup Kecil)',t:'2016 - 2019',lo:55000000,hi:75000000},
+        ];
+
+        function renderVehicleOptions(listEl, data, noneLabel) {
+            var html = '<li class="csel-opt csel-opt-veh" role="option" data-value="none" data-search="' +
+                noneLabel.toLowerCase() + '"><span class="csel-opt-title">' + noneLabel + '</span></li>';
+            var lastCat = null;
+            data.forEach(function (v, i) {
+                if (v.c !== lastCat) {
+                    html += '<li class="csel-opt-group" role="presentation">' + v.c + '</li>';
+                    lastCat = v.c;
+                }
+                html += '<li class="csel-opt csel-opt-veh" role="option" data-value="' + i + '" data-search="' +
+                    (v.m + ' ' + v.c).toLowerCase() + '">' +
+                    '<span class="csel-opt-title">' + v.m + '</span>' +
+                    '<span class="csel-opt-sub">' + v.t + ' &middot; ' + formatRp(v.lo) + ' &ndash; ' + formatRp(v.hi) + '</span></li>';
+            });
+            listEl.innerHTML = html;
+        }
+
+        function initVehiclePicker(opts) {
+            var wrap = opts.wrapEl || document.getElementById(opts.wrapId);
+            if (!wrap) return;
+            var trigger = wrap.querySelector('.csel-trigger');
+            var valueEl = wrap.querySelector('.csel-value');
+            var hidden = wrap.querySelector('input[type="hidden"]');
+            var panel = wrap.querySelector('.csel-panel');
+            var searchInput = wrap.querySelector('.csel-search-input');
+            var listEl = wrap.querySelector('.csel-opt-list');
+            var resultBox = opts.resultBox || document.getElementById(opts.resultId);
+            if (!trigger || !hidden || !panel || !listEl || !resultBox) return;
+
+            renderVehicleOptions(listEl, opts.data, opts.noneLabel);
+
+            function updateResult() {
+                var val = hidden.value;
+                if (val === 'none' || val === '') {
+                    resultBox.classList.remove('has-value');
+                    resultBox.innerHTML = '<span class="kh-empty">Rumah tangga tidak memiliki ' + opts.unitName + '.</span>';
+                    return;
+                }
+                var v = opts.data[parseInt(val, 10)];
+                if (!v) return;
+                resultBox.classList.add('has-value');
+                resultBox.innerHTML =
+                    '<div class="kh-label">Estimasi Harga Jual ' + opts.unitName + ' Saat Ini</div>' +
+                    '<div class="kh-value">' + formatRp(v.lo) + ' &ndash; ' + formatRp(v.hi) + '</div>' +
+                    '<div class="kh-sub">' + v.m + ' &middot; Tahun Populer ' + v.t + '</div>';
+            }
+
+            function selectValue(val, text) {
+                hidden.value = val;
+                if (valueEl) valueEl.textContent = text;
+                listEl.querySelectorAll('.csel-opt').forEach(function (o) { o.removeAttribute('aria-selected'); });
+                var opt = listEl.querySelector('.csel-opt[data-value="' + val + '"]');
+                if (opt) opt.setAttribute('aria-selected', 'true');
+                updateResult();
+            }
+
+            function filterList(q) {
+                q = q.trim().toLowerCase();
+                var groups = listEl.querySelectorAll('.csel-opt-group');
+                var items = listEl.querySelectorAll('.csel-opt-veh');
+                items.forEach(function (it) {
+                    var s = it.getAttribute('data-search') || '';
+                    it.style.display = (!q || s.indexOf(q) !== -1) ? '' : 'none';
+                });
+                groups.forEach(function (g) {
+                    var next = g.nextElementSibling;
+                    var hasVisible = false;
+                    while (next && !next.classList.contains('csel-opt-group')) {
+                        if (next.classList.contains('csel-opt-veh') && next.style.display !== 'none') { hasVisible = true; break; }
+                        next = next.nextElementSibling;
+                    }
+                    g.style.display = hasVisible ? '' : 'none';
+                });
+            }
+
+            function openPanel() {
+                closeAllCsel(wrap);
+                wrap.classList.add('open');
+                trigger.setAttribute('aria-expanded', 'true');
+                if (searchInput) {
+                    searchInput.value = '';
+                    filterList('');
+                    setTimeout(function () { searchInput.focus(); }, 10);
+                }
+            }
+            function closePanel() {
+                wrap.classList.remove('open');
+                trigger.setAttribute('aria-expanded', 'false');
+            }
+
+            trigger.addEventListener('click', function (e) {
+                e.stopPropagation();
+                if (wrap.classList.contains('open')) closePanel(); else openPanel();
+            });
+
+            panel.addEventListener('click', function (e) { e.stopPropagation(); });
+
+            listEl.addEventListener('click', function (e) {
+                var opt = e.target.closest('.csel-opt');
+                if (!opt) return;
+                var titleEl = opt.querySelector('.csel-opt-title');
+                selectValue(opt.getAttribute('data-value'), titleEl ? titleEl.textContent : opt.textContent);
+                closePanel();
+                trigger.focus();
+            });
+
+            if (searchInput) {
+                searchInput.addEventListener('input', function () { filterList(this.value); });
+                searchInput.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') { closePanel(); trigger.focus(); }
+                });
+            }
+
+            trigger.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    if (wrap.classList.contains('open')) closePanel(); else openPanel();
+                } else if (e.key === 'Escape') {
+                    closePanel();
+                }
+            });
+
+            selectValue('none', opts.noneLabel);
+        }
+
+        /* Blok E — baris kendaraan dinamis: setiap unit motor/mobil punya csel + hasil
+           sendiri-sendiri (tanpa id, dicari lewat querySelector supaya bisa digandakan
+           berkali-kali). Baris pertama tidak punya tombol hapus (selalu ada minimal 1
+           baris agar tetap bisa menyatakan "Tidak Memiliki"); baris tambahan boleh dihapus. */
+        var KENDARAAN_CONFIG = {
+            motor: { data: VEHICLE_MOTOR, noneLabel: 'Tidak Memiliki Sepeda Motor', unitName: 'Sepeda Motor', searchPh: 'Cari merek / model motor\u2026', listId: 'motor-list-sosek' },
+            mobil: { data: VEHICLE_MOBIL, noneLabel: 'Tidak Memiliki Mobil', unitName: 'Mobil', searchPh: 'Cari merek / model mobil\u2026', listId: 'mobil-list-sosek' }
+        };
+
+        function tambahKendaraanItem(type, withRemove) {
+            var cfg = KENDARAAN_CONFIG[type];
+            if (!cfg) return;
+            var listEl = document.getElementById(cfg.listId);
+            if (!listEl) return;
+
+            var item = document.createElement('div');
+            item.className = 'kendaraan-item';
+            item.setAttribute('data-veh-type', type);
+            item.innerHTML =
+                (withRemove ? '<div class="kendaraan-item-idx">Unit Tambahan</div>' : '') +
+                '<div class="kendaraan-item-row">' +
+                '<div class="csel csel-dynamic">' +
+                '<button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">' +
+                '<span class="csel-value">' + cfg.noneLabel + '</span>' +
+                '<svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>' +
+                '</button>' +
+                '<div class="csel-panel csel-panel-veh" role="listbox" tabindex="-1">' +
+                '<div class="csel-search-wrap"><input type="text" class="csel-search-input" placeholder="' + cfg.searchPh + '"></div>' +
+                '<ul class="csel-opt-list"></ul>' +
+                '</div>' +
+                '<input type="hidden" value="none">' +
+                '</div>' +
+                (withRemove ? '<button type="button" class="btn-hapus-item" aria-label="Hapus baris kendaraan ini">' +
+                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+                    '</button>' : '') +
+                '</div>' +
+                '<div class="kendaraan-hasil"></div>';
+
+            listEl.appendChild(item);
+
+            initVehiclePicker({
+                wrapEl: item.querySelector('.csel-dynamic'),
+                resultBox: item.querySelector('.kendaraan-hasil'),
+                data: cfg.data,
+                noneLabel: cfg.noneLabel,
+                unitName: cfg.unitName
+            });
+
+            if (withRemove) {
+                item.querySelector('.btn-hapus-item').addEventListener('click', function () {
+                    item.remove();
+                });
+            }
+        }
+
+        /* Kumpulkan seluruh kendaraan yang sudah dipilih (bukan "Tidak Memiliki") dari
+           semua baris motor/mobil, dipakai saat menyusun ringkasan. */
+        function collectKendaraanTerpilih(type) {
+            var cfg = KENDARAAN_CONFIG[type];
+            var listEl = document.getElementById(cfg.listId);
+            var hasil = [];
+            if (!listEl) return hasil;
+            listEl.querySelectorAll('.kendaraan-item').forEach(function (item) {
+                var hidden = item.querySelector('input[type="hidden"]');
+                if (!hidden) return;
+                var val = hidden.value;
+                if (val === 'none' || val === '') return;
+                var v = cfg.data[parseInt(val, 10)];
+                if (v) hasil.push(v);
+            });
+            return hasil;
+        }
+
         /* ===================== HALAMAN SOSIAL EKONOMI ===================== */
+
         function initSosek() {
             const el = (id) => document.getElementById(id);
             var lastHasilSosek = null;
@@ -6329,10 +6858,12 @@
                 let uktTahun = uktSemester * 2;
                 let totalRutinTahun = pajakKendaraan + pajakRumah + hariRaya + uktTahun;
 
-                /* Headline 3 output utama */
+                /* Headline output utama */
                 el("out-pangan-minggu-sosek").innerText = formatRp(panganMinggu);
                 el("out-nonpangan-bulan-sosek").innerText = formatRp(totalNonPanganBulan);
                 el("out-rutin-tahun-sosek").innerText = formatRp(totalRutinTahun);
+                el("out-listrik-headline-sosek").innerText = formatRp(listrik);
+                el("out-internet-headline-sosek").innerText = formatRp(internet);
 
                 /* Blok D — Ringkasan Pemasukan vs Total Pengeluaran per Bulan */
                 let AMBANG_TIPIS = 200000; /* selisih <= Rp 200.000 dianggap rawan/tipis */
@@ -6345,11 +6876,6 @@
                 let headlineSelisih = el("out-selisih-sosek").closest(".headline");
                 let bannerAlert = el("banner-alert-sosek");
 
-                el("out-pemasukan-sosek").innerText = formatRp(pemasukanBulan);
-                el("out-pengeluaran-total-sosek").innerText = formatRp(totalPengeluaranBulan);
-                el("out-pengeluaran-tahun-sosek").innerText = formatRp(totalPengeluaranTahun);
-                el("out-headline-sub-tahun-sosek").innerText = "Non-Pangan " + formatRp(totalNonPanganBulan) + "/bulan \u00d7 12 bulan, ditambah Non-Pangan Rutin " + formatRp(totalRutinTahun) + "/tahun";
-
                 bannerAlert.classList.remove("banner-error", "banner-warning", "show");
 
                 let selisihBulan = pemasukanBulan > 0 ? (pemasukanBulan - totalPengeluaranBulan) : null;
@@ -6359,6 +6885,7 @@
                     if (selisihBulan < 0) statusTag = '<span class="loss-tag">Defisit</span>';
                     else if (selisihBulan <= AMBANG_TIPIS) statusTag = '<span class="loss-tag">Rawan</span>';
                     el("out-selisih-sosek").innerHTML = formatRp(selisihBulan) + statusTag;
+                    el("out-headline-sub-selisih-sosek").innerText = "Pemasukan " + formatRp(pemasukanBulan) + " \u2212 Pengeluaran " + formatRp(totalPengeluaranBulan) + " per bulan";
 
                     headlineSelisih.classList.toggle("is-loss", selisihBulan < 0);
                     headlineSelisih.classList.toggle("is-warn", selisihBulan >= 0 && selisihBulan <= AMBANG_TIPIS);
@@ -6372,6 +6899,7 @@
                     }
                 } else {
                     el("out-selisih-sosek").innerText = "—";
+                    el("out-headline-sub-selisih-sosek").innerText = "Isi Pemasukan Keluarga / Bulan pada Blok D untuk melihat selisihnya.";
                     headlineSelisih.classList.remove("is-loss", "is-warn");
                 }
 
@@ -6524,6 +7052,15 @@
             el("satuan-luas-sosek").addEventListener("change", hitungLuasBangunan);
             hitungLuasBangunan();
 
+            /* Blok E — Data Kendaraan: dropdown pencarian motor & mobil, terpisah dari
+               kalkulator utama (langsung tampil begitu dipilih, tidak perlu tekan Hitung).
+               Baris pertama motor & mobil dibuat otomatis; responden bisa menambah baris
+               lagi lewat tombol "Tambah" jika memiliki lebih dari satu unit. */
+            tambahKendaraanItem('motor', false);
+            tambahKendaraanItem('mobil', false);
+            el('btn-tambah-motor-sosek').addEventListener('click', function () { tambahKendaraanItem('motor', true); });
+            el('btn-tambah-mobil-sosek').addEventListener('click', function () { tambahKendaraanItem('mobil', true); });
+
             function generateRingkasanSosek() {
                 if (!lastHasilSosek) return null;
                 var h = lastHasilSosek;
@@ -6531,7 +7068,24 @@
                 var noUrut = el('resp-nourut-sosek').value.trim() || '-';
                 var sls = el('resp-sls-sosek').value.trim() || '-';
                 var selisihTeks = (h.selisihBulan === null) ? 'Tidak dihitung (pemasukan belum diisi)' : formatRp(h.selisihBulan);
-                return [
+
+                function barisKendaraan(list, label) {
+                    if (list.length === 0) return ['Tidak memiliki ' + label.toLowerCase() + '.'];
+                    var baris = list.map(function (v, i) {
+                        return (i + 1) + '. ' + v.m + ' (' + v.t + ') \u2014 Estimasi jual: ' + formatRp(v.lo) + ' - ' + formatRp(v.hi);
+                    });
+                    if (list.length > 1) {
+                        var totalLo = list.reduce(function (s, v) { return s + v.lo; }, 0);
+                        var totalHi = list.reduce(function (s, v) { return s + v.hi; }, 0);
+                        baris.push('Total estimasi ' + list.length + ' unit: ' + formatRp(totalLo) + ' - ' + formatRp(totalHi));
+                    }
+                    return baris;
+                }
+
+                var motorList = collectKendaraanTerpilih('motor');
+                var mobilList = collectKendaraanTerpilih('mobil');
+
+                var lines = [
                     '=== KALKULATOR SOSIAL EKONOMI RUMAH TANGGA ===',
                     'Nama: ' + nama,
                     'No. Urut Bangunan: ' + noUrut,
@@ -6548,8 +7102,14 @@
                     'Non-Pangan (\u00d712 bulan): ' + formatRp(h.totalNonPanganBulan * 12),
                     'Non-Pangan Rutin Tahunan: ' + formatRp(h.totalRutinTahun),
                     'Total Pengeluaran / Tahun: ' + formatRp(h.totalPengeluaranTahun),
-                    'Dicatat: ' + new Date().toLocaleString('id-ID')
-                ].join('\n');
+                    '--- Kepemilikan Kendaraan (Estimasi Aset) ---',
+                    'Sepeda Motor:'
+                ].concat(barisKendaraan(motorList, 'sepeda motor').map(function (s) { return '  ' + s; }))
+                    .concat(['Mobil:'])
+                    .concat(barisKendaraan(mobilList, 'mobil').map(function (s) { return '  ' + s; }))
+                    .concat(['Dicatat: ' + new Date().toLocaleString('id-ID')]);
+
+                return lines.join('\n');
             }
 
             el("btn-ringkasan-sosek").addEventListener("click", function () {
