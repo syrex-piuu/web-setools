@@ -276,6 +276,29 @@
             gap: 3px;
             overflow-y: auto;
             overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, .22) transparent;
+        }
+
+        .app-nav::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .app-nav::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .app-nav::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, .18);
+            border-radius: 10px;
+        }
+
+        .app-nav:hover::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, .3);
+        }
+
+        .app-nav::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(255, 255, 255, .42);
         }
 
         .nav-group-label {
@@ -1135,6 +1158,24 @@
             margin-bottom: 0;
         }
 
+        .field-row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .field-row-2 .field {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 560px) {
+            .field-row-2 {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+        }
+
         label.field-label {
             display: block;
             font-weight: 600;
@@ -1537,6 +1578,28 @@
             opacity: 1;
             transform: translateY(0);
             pointer-events: auto;
+        }
+
+        .csel-panel {
+            scrollbar-width: thin;
+            scrollbar-color: var(--line) transparent;
+        }
+
+        .csel-panel::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .csel-panel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .csel-panel::-webkit-scrollbar-thumb {
+            background-color: var(--line);
+            border-radius: 10px;
+        }
+
+        .csel-panel::-webkit-scrollbar-thumb:hover {
+            background-color: var(--accent);
         }
 
         .csel-opt {
@@ -2711,9 +2774,15 @@
                                 <label class="field-label" for="resp-nama-utp">Nama Kepala Keluarga / Usaha</label>
                                 <input type="text" id="resp-nama-utp" placeholder="Contoh: Bapak Asep Supriadi">
                             </div>
-                            <div class="field">
-                                <label class="field-label" for="resp-kode-utp">Kode Sampel / No. Urut Bangunan</label>
-                                <input type="text" id="resp-kode-utp" placeholder="Contoh: 001-B / SLS 12">
+                            <div class="field-row-2">
+                                <div class="field">
+                                    <label class="field-label" for="resp-nourut-utp">No. Urut Bangunan</label>
+                                    <input type="text" id="resp-nourut-utp" placeholder="Contoh: 001-B">
+                                </div>
+                                <div class="field">
+                                    <label class="field-label" for="resp-sls-utp">SLS / RT</label>
+                                    <input type="text" id="resp-sls-utp" placeholder="Contoh: SLS 12">
+                                </div>
                             </div>
                         </fieldset>
 
@@ -2992,9 +3061,15 @@
                                 <label class="field-label" for="resp-nama-buah">Nama Kepala Keluarga / Usaha</label>
                                 <input type="text" id="resp-nama-buah" placeholder="Contoh: Ibu Yayah Rokayah">
                             </div>
-                            <div class="field">
-                                <label class="field-label" for="resp-kode-buah">Kode Sampel / No. Urut Bangunan</label>
-                                <input type="text" id="resp-kode-buah" placeholder="Contoh: 001-B / SLS 12">
+                            <div class="field-row-2">
+                                <div class="field">
+                                    <label class="field-label" for="resp-nourut-buah">No. Urut Bangunan</label>
+                                    <input type="text" id="resp-nourut-buah" placeholder="Contoh: 001-B">
+                                </div>
+                                <div class="field">
+                                    <label class="field-label" for="resp-sls-buah">SLS / RT</label>
+                                    <input type="text" id="resp-sls-buah" placeholder="Contoh: SLS 12">
+                                </div>
                             </div>
                         </fieldset>
 
@@ -3256,9 +3331,15 @@
                                 <label class="field-label" for="resp-nama-usaha">Nama Kepala Keluarga / Usaha</label>
                                 <input type="text" id="resp-nama-usaha" placeholder="Contoh: Ibu Neneng Suryani">
                             </div>
-                            <div class="field">
-                                <label class="field-label" for="resp-kode-usaha">Kode Sampel / No. Urut Bangunan</label>
-                                <input type="text" id="resp-kode-usaha" placeholder="Contoh: 001-B / SLS 12">
+                            <div class="field-row-2">
+                                <div class="field">
+                                    <label class="field-label" for="resp-nourut-usaha">No. Urut Bangunan</label>
+                                    <input type="text" id="resp-nourut-usaha" placeholder="Contoh: 001-B">
+                                </div>
+                                <div class="field">
+                                    <label class="field-label" for="resp-sls-usaha">SLS / RT</label>
+                                    <input type="text" id="resp-sls-usaha" placeholder="Contoh: SLS 12">
+                                </div>
                             </div>
                         </fieldset>
 
@@ -3545,9 +3626,15 @@
                                 <label class="field-label" for="resp-nama-bgn">Nama Kepala Keluarga / Pekerja</label>
                                 <input type="text" id="resp-nama-bgn" placeholder="Contoh: Bapak Dedi Kurniawan">
                             </div>
-                            <div class="field">
-                                <label class="field-label" for="resp-kode-bgn">Kode Sampel / No. Urut Bangunan</label>
-                                <input type="text" id="resp-kode-bgn" placeholder="Contoh: 001-B / SLS 12">
+                            <div class="field-row-2">
+                                <div class="field">
+                                    <label class="field-label" for="resp-nourut-bgn">No. Urut Bangunan</label>
+                                    <input type="text" id="resp-nourut-bgn" placeholder="Contoh: 001-B">
+                                </div>
+                                <div class="field">
+                                    <label class="field-label" for="resp-sls-bgn">SLS / RT</label>
+                                    <input type="text" id="resp-sls-bgn" placeholder="Contoh: SLS 12">
+                                </div>
                             </div>
                         </fieldset>
 
@@ -3672,9 +3759,15 @@
                                 <label class="field-label" for="resp-nama-tani">Nama Kepala Keluarga / Pekerja</label>
                                 <input type="text" id="resp-nama-tani" placeholder="Contoh: Ibu Iis Aisyah">
                             </div>
-                            <div class="field">
-                                <label class="field-label" for="resp-kode-tani">Kode Sampel / No. Urut Bangunan</label>
-                                <input type="text" id="resp-kode-tani" placeholder="Contoh: 001-B / SLS 12">
+                            <div class="field-row-2">
+                                <div class="field">
+                                    <label class="field-label" for="resp-nourut-tani">No. Urut Bangunan</label>
+                                    <input type="text" id="resp-nourut-tani" placeholder="Contoh: 001-B">
+                                </div>
+                                <div class="field">
+                                    <label class="field-label" for="resp-sls-tani">SLS / RT</label>
+                                    <input type="text" id="resp-sls-tani" placeholder="Contoh: SLS 12">
+                                </div>
                             </div>
                         </fieldset>
 
@@ -4233,6 +4326,27 @@
                             </ul>
                             <input type="hidden" id="riwayat-filter">
                         </div>
+                        <div class="csel csel-dynamic" id="riwayat-sls-filter-wrap">
+                            <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                <span class="csel-value">Semua SLS</span>
+                                <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                            </button>
+                            <ul class="csel-panel" role="listbox" tabindex="-1">
+                                <li class="csel-opt" role="option" data-value="" aria-selected="true">Semua SLS</li>
+                            </ul>
+                            <input type="hidden" id="riwayat-sls-filter">
+                        </div>
+                        <div class="csel" id="riwayat-sort-wrap">
+                            <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                <span class="csel-value">Terbaru Disimpan</span>
+                                <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                            </button>
+                            <ul class="csel-panel" role="listbox" tabindex="-1">
+                                <li class="csel-opt" role="option" data-value="waktu" aria-selected="true">Terbaru Disimpan</li>
+                                <li class="csel-opt" role="option" data-value="nourut">Urutkan No. Urut Bangunan</li>
+                            </ul>
+                            <input type="hidden" id="riwayat-sort" value="waktu">
+                        </div>
                         <button type="button" class="btn-outline-sm" id="btn-salin-semua-riwayat">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
                             Salin Semua
@@ -4326,6 +4440,7 @@
 
         function initCselIn(root) {
             root.querySelectorAll('.csel').forEach(function (wrap) {
+                if (wrap.classList.contains('csel-dynamic')) return;
                 var trigger = wrap.querySelector('.csel-trigger');
                 var panel = wrap.querySelector('.csel-panel');
                 var hidden = wrap.querySelector('input[type="hidden"]');
@@ -4652,11 +4767,91 @@
                 });
             }
 
+            /* Perbandingan alami untuk No. Urut Bangunan (mis. "9" < "10", "001-B" < "002-A") */
+            function naturalCompare(a, b) {
+                a = String(a || '').trim();
+                b = String(b || '').trim();
+                var re = /(\d+)|(\D+)/g;
+                var ax = a.match(re) || [];
+                var bx = b.match(re) || [];
+                var len = Math.max(ax.length, bx.length);
+                for (var i = 0; i < len; i++) {
+                    var an = ax[i] || '', bn = bx[i] || '';
+                    var aNum = /^\d+$/.test(an), bNum = /^\d+$/.test(bn);
+                    if (aNum && bNum) {
+                        var diff = parseInt(an, 10) - parseInt(bn, 10);
+                        if (diff !== 0) return diff;
+                    } else if (an !== bn) {
+                        return an < bn ? -1 : 1;
+                    }
+                }
+                return 0;
+            }
+
+            function uniqueSls(list) {
+                var set = {};
+                list.forEach(function (e) {
+                    var v = (e.sls || '').trim();
+                    if (v) set[v] = true;
+                });
+                return Object.keys(set).sort(naturalCompare);
+            }
+
+            function rebuildSlsOptions() {
+                var wrap = document.getElementById('riwayat-sls-filter-wrap');
+                if (!wrap) return;
+                var panel = wrap.querySelector('.csel-panel');
+                var hidden = document.getElementById('riwayat-sls-filter');
+                var valueEl = wrap.querySelector('.csel-value');
+                if (!panel || !hidden) return;
+
+                var current = hidden.value || '';
+                var opts = uniqueSls(all());
+
+                var html = '<li class="csel-opt" role="option" data-value="">Semua SLS</li>';
+                opts.forEach(function (v) {
+                    html += '<li class="csel-opt" role="option" data-value="' + escapeHtml(v) + '">' + escapeHtml(v) + '</li>';
+                });
+                panel.innerHTML = html;
+
+                if (current && opts.indexOf(current) === -1) {
+                    current = '';
+                    hidden.value = '';
+                }
+                var selected = panel.querySelector('.csel-opt[data-value="' + (current ? current.replace(/"/g, '\\"') : '') + '"]') || panel.querySelector('.csel-opt');
+                panel.querySelectorAll('.csel-opt').forEach(function (o) { o.removeAttribute('aria-selected'); });
+                if (selected) {
+                    selected.setAttribute('aria-selected', 'true');
+                    if (valueEl) valueEl.textContent = selected.textContent;
+                }
+            }
+
             function render() {
                 var list = all();
                 var filterEl = document.getElementById('riwayat-filter');
                 var filter = filterEl ? filterEl.value : '';
-                var filtered = filter ? list.filter(function (e) { return e.modul === filter; }) : list;
+                var slsFilterEl = document.getElementById('riwayat-sls-filter');
+                var slsFilter = slsFilterEl ? slsFilterEl.value : '';
+                var sortEl = document.getElementById('riwayat-sort');
+                var sortMode = sortEl ? sortEl.value : 'waktu';
+
+                rebuildSlsOptions();
+
+                var filtered = list.filter(function (e) {
+                    if (filter && e.modul !== filter) return false;
+                    if (slsFilter && (e.sls || '').trim() !== slsFilter) return false;
+                    return true;
+                });
+
+                if (sortMode === 'nourut') {
+                    filtered = filtered.slice().sort(function (a, b) {
+                        var an = (a.nourut || '').trim(), bn = (b.nourut || '').trim();
+                        if (!an && !bn) return 0;
+                        if (!an) return 1;
+                        if (!bn) return -1;
+                        return naturalCompare(an, bn);
+                    });
+                }
 
                 var listEl = document.getElementById('riwayat-list');
                 var emptyEl = document.getElementById('riwayat-empty');
@@ -4675,8 +4870,8 @@
                         emptyEl.style.display = 'block';
                         var p = emptyEl.querySelector('p');
                         if (p) {
-                            p.innerHTML = (list.length > 0 && filter)
-                                ? 'Tidak ada riwayat untuk instrumen ini.'
+                            p.innerHTML = (list.length > 0 && (filter || slsFilter))
+                                ? 'Tidak ada riwayat untuk filter ini.'
                                 : 'Belum ada riwayat tersimpan. Buka salah satu instrumen, tekan Hitung, lalu tekan tombol <b>Simpan ke Riwayat</b>.';
                         }
                     }
@@ -4686,13 +4881,16 @@
 
                 listEl.innerHTML = filtered.map(function (e) {
                     var meta = MODUL_META[e.modul] || { nama: e.modul, num: '' };
+                    var kodeDisplay = (e.nourut || e.sls)
+                        ? ('No. Urut: ' + escapeHtml(e.nourut || '-') + ' &middot; SLS ' + escapeHtml(e.sls || '-'))
+                        : escapeHtml(e.kode || '-');
                     return '' +
                         '<div class="riwayat-card module-' + e.modul + '">' +
                         '  <div class="riwayat-card-top">' +
                         '    <div>' +
                         '      <span class="riwayat-badge">Instrumen ' + meta.num + ' &middot; ' + meta.nama + '</span><br>' +
                         '      <span class="riwayat-nama">' + escapeHtml(e.nama || '(Tanpa nama responden)') + '</span><br>' +
-                        '      <span class="riwayat-kode">' + escapeHtml(e.kode || '-') + '</span>' +
+                        '      <span class="riwayat-kode">' + kodeDisplay + '</span>' +
                         '    </div>' +
                         '    <div class="riwayat-nilai">' +
                         '      <div class="v">Rp ' + Math.round(e.bersihBulan || 0).toLocaleString('id-ID') + '</div>' +
@@ -4709,6 +4907,43 @@
                         '</div>';
                 }).join('');
             }
+
+            function initSlsFilterDropdown() {
+                var wrap = document.getElementById('riwayat-sls-filter-wrap');
+                if (!wrap) return;
+                var trigger = wrap.querySelector('.csel-trigger');
+                var panel = wrap.querySelector('.csel-panel');
+                var hidden = document.getElementById('riwayat-sls-filter');
+                var valueEl = wrap.querySelector('.csel-value');
+                if (!trigger || !panel || !hidden) return;
+
+                trigger.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    if (wrap.classList.contains('open')) {
+                        wrap.classList.remove('open');
+                        trigger.setAttribute('aria-expanded', 'false');
+                    } else {
+                        closeAllCsel(wrap);
+                        wrap.classList.add('open');
+                        trigger.setAttribute('aria-expanded', 'true');
+                    }
+                });
+
+                panel.addEventListener('click', function (e) {
+                    var opt = e.target.closest('.csel-opt');
+                    if (!opt) return;
+                    e.stopPropagation();
+                    panel.querySelectorAll('.csel-opt').forEach(function (o) { o.removeAttribute('aria-selected'); });
+                    opt.setAttribute('aria-selected', 'true');
+                    hidden.value = opt.getAttribute('data-value') || '';
+                    if (valueEl) valueEl.textContent = opt.textContent;
+                    wrap.classList.remove('open');
+                    trigger.setAttribute('aria-expanded', 'false');
+                    hidden.dispatchEvent(new Event('change', { bubbles: true }));
+                    trigger.focus();
+                });
+            }
+            initSlsFilterDropdown();
 
             document.addEventListener('click', function (e) {
                 var btnDetail = e.target.closest('[data-riwayat-detail]');
@@ -4741,6 +4976,12 @@
 
             var filterInput = document.getElementById('riwayat-filter');
             if (filterInput) filterInput.addEventListener('change', render);
+
+            var slsFilterInput = document.getElementById('riwayat-sls-filter');
+            if (slsFilterInput) slsFilterInput.addEventListener('change', render);
+
+            var sortInput = document.getElementById('riwayat-sort');
+            if (sortInput) sortInput.addEventListener('change', render);
 
             var btnSalinSemua = document.getElementById('btn-salin-semua-riwayat');
             if (btnSalinSemua) btnSalinSemua.addEventListener('click', function () {
@@ -5166,11 +5407,13 @@
                 if (!lastHasilUtp) return null;
                 var h = lastHasilUtp;
                 var nama = el('resp-nama-utp').value.trim() || '(Tanpa nama responden)';
-                var kode = el('resp-kode-utp').value.trim() || '-';
+                var noUrut = el('resp-nourut-utp').value.trim() || '-';
+                var sls = el('resp-sls-utp').value.trim() || '-';
                 return [
                     '=== KALKULATOR PERTANIAN (Instrumen 01) ===',
                     'Nama: ' + nama,
-                    'Kode Sampel: ' + kode,
+                    'No. Urut Bangunan: ' + noUrut,
+                    'SLS/RT: ' + sls,
                     'Komoditas: ' + h.komoditasLabel,
                     '--- Pengeluaran / Tahun ---',
                     'Biaya Produksi: ' + formatRp(h.biayaProduksi),
@@ -5203,7 +5446,8 @@
                 Riwayat.add({
                     modul: 'utp',
                     nama: el('resp-nama-utp').value.trim(),
-                    kode: el('resp-kode-utp').value.trim(),
+                    nourut: el('resp-nourut-utp').value.trim(),
+                    sls: el('resp-sls-utp').value.trim(),
                     bersihBulan: lastHasilUtp.pendapatanBersihBulan,
                     bersihTahun: lastHasilUtp.pendapatanBersih,
                     ringkasan: teks
@@ -5384,11 +5628,13 @@
                 if (!lastHasilBuah) return null;
                 var h = lastHasilBuah;
                 var nama = el('resp-nama-buah').value.trim() || '(Tanpa nama responden)';
-                var kode = el('resp-kode-buah').value.trim() || '-';
+                var noUrut = el('resp-nourut-buah').value.trim() || '-';
+                var sls = el('resp-sls-buah').value.trim() || '-';
                 return [
                     '=== KALKULATOR PEDAGANG BUAH KELILING (Instrumen 02) ===',
                     'Nama: ' + nama,
-                    'Kode Sampel: ' + kode,
+                    'No. Urut Bangunan: ' + noUrut,
+                    'SLS/RT: ' + sls,
                     'Komoditas: ' + h.namaBuah,
                     'Muatan: ' + h.muatanTotal.toLocaleString('id-ID') + ' kg (beli ' + h.buahBeli.toLocaleString('id-ID') + ' kg, sendiri ' + h.buahSendiri.toLocaleString('id-ID') + ' kg)',
                     '--- Per Sekali Jalan (Trip) ---',
@@ -5417,7 +5663,8 @@
                 Riwayat.add({
                     modul: 'buah',
                     nama: el('resp-nama-buah').value.trim(),
-                    kode: el('resp-kode-buah').value.trim(),
+                    nourut: el('resp-nourut-buah').value.trim(),
+                    sls: el('resp-sls-buah').value.trim(),
                     bersihBulan: lastHasilBuah.labaBulan,
                     bersihTahun: lastHasilBuah.labaTahun,
                     ringkasan: teks
@@ -5609,11 +5856,13 @@
                 if (!lastHasilUsaha) return null;
                 var h = lastHasilUsaha;
                 var nama = el('resp-nama-usaha').value.trim() || '(Tanpa nama responden)';
-                var kode = el('resp-kode-usaha').value.trim() || '-';
+                var noUrut = el('resp-nourut-usaha').value.trim() || '-';
+                var sls = el('resp-sls-usaha').value.trim() || '-';
                 return [
                     '=== KALKULATOR USAHA DAGANG & JASA MIKRO (Instrumen 03) ===',
                     'Nama: ' + nama,
-                    'Kode Sampel: ' + kode,
+                    'No. Urut Bangunan: ' + noUrut,
+                    'SLS/RT: ' + sls,
                     'Jenis Usaha: ' + h.jenisLabel + ' (Mode ' + (h.model === 'jasa' ? 'Jasa' : 'Dagang') + ')',
                     '--- Per Bulan ---',
                     'Biaya Produksi: ' + formatRupiah(h.modalBulanan),
@@ -5642,7 +5891,8 @@
                 Riwayat.add({
                     modul: 'usaha',
                     nama: el('resp-nama-usaha').value.trim(),
-                    kode: el('resp-kode-usaha').value.trim(),
+                    nourut: el('resp-nourut-usaha').value.trim(),
+                    sls: el('resp-sls-usaha').value.trim(),
                     bersihBulan: lastHasilUsaha.bersihBulanan,
                     bersihTahun: lastHasilUsaha.bersihTahunan,
                     ringkasan: teks
@@ -5721,12 +5971,14 @@
                 if (!lastHasilBgn) return null;
                 var h = lastHasilBgn;
                 var nama = el('resp-nama-bgn').value.trim() || '(Tanpa nama responden)';
-                var kode = el('resp-kode-bgn').value.trim() || '-';
+                var noUrut = el('resp-nourut-bgn').value.trim() || '-';
+                var sls = el('resp-sls-bgn').value.trim() || '-';
                 var roleLabel = h.role === 'Kenek' ? 'Laden/Kenek' : (h.role === 'Tukang' ? 'Tukang' : (h.role === 'Mandor' ? 'Mandor' : 'Lainnya'));
                 return [
                     '=== KALKULATOR BURUH BANGUNAN (Instrumen 04) ===',
                     'Nama: ' + nama,
-                    'Kode Sampel: ' + kode,
+                    'No. Urut Bangunan: ' + noUrut,
+                    'SLS/RT: ' + sls,
                     'Peran: ' + roleLabel,
                     'Upah Harian: ' + formatRupiah(h.wage),
                     'Hari Kerja/Minggu: ' + h.daysPerWeek + ' hari',
@@ -5751,7 +6003,8 @@
                 Riwayat.add({
                     modul: 'bgn',
                     nama: el('resp-nama-bgn').value.trim(),
-                    kode: el('resp-kode-bgn').value.trim(),
+                    nourut: el('resp-nourut-bgn').value.trim(),
+                    sls: el('resp-sls-bgn').value.trim(),
                     bersihBulan: lastHasilBgn.averageMonthly,
                     bersihTahun: lastHasilBgn.totalAnnual,
                     ringkasan: teks
@@ -5819,11 +6072,13 @@
                 if (!lastHasilTani) return null;
                 var h = lastHasilTani;
                 var nama = el('resp-nama-tani').value.trim() || '(Tanpa nama responden)';
-                var kode = el('resp-kode-tani').value.trim() || '-';
+                var noUrut = el('resp-nourut-tani').value.trim() || '-';
+                var sls = el('resp-sls-tani').value.trim() || '-';
                 return [
                     '=== KALKULATOR BURUH TANI MUSIMAN (Instrumen 05) ===',
                     'Nama: ' + nama,
-                    'Kode Sampel: ' + kode,
+                    'No. Urut Bangunan: ' + noUrut,
+                    'SLS/RT: ' + sls,
                     'Jenis Kelamin: ' + h.gender,
                     'Upah Harian: ' + formatRupiah(h.wage),
                     'Hari Kerja Musim 1: ' + h.musim1 + ' hari',
@@ -5848,7 +6103,8 @@
                 Riwayat.add({
                     modul: 'tani',
                     nama: el('resp-nama-tani').value.trim(),
-                    kode: el('resp-kode-tani').value.trim(),
+                    nourut: el('resp-nourut-tani').value.trim(),
+                    sls: el('resp-sls-tani').value.trim(),
                     bersihBulan: lastHasilTani.averageMonthly,
                     bersihTahun: lastHasilTani.totalAnnual,
                     ringkasan: teks
