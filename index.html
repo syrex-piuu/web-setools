@@ -814,18 +814,190 @@
         .riwayat-detail {
             display: none;
             margin-top: 10px;
-            padding: 10px 12px;
+            padding: 12px 14px;
             background: var(--surface-alt);
-            border-radius: 8px;
-            font-family: var(--font-mono, monospace);
-            font-size: 11.5px;
-            white-space: pre-wrap;
+            border: 1px solid var(--line-soft);
+            border-radius: 10px;
+            font-size: 12.5px;
             color: var(--ink-soft);
-            line-height: 1.6;
         }
 
         .riwayat-detail.show {
             display: block;
+        }
+
+        .rd-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed var(--line);
+        }
+
+        .rd-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 1.5px solid var(--line);
+            background: var(--surface);
+            color: var(--ink-soft);
+            cursor: pointer;
+            transition: .15s;
+        }
+
+        .rd-btn:hover {
+            border-color: var(--card-accent, var(--accent));
+            color: var(--card-accent, var(--accent));
+        }
+
+        .rd-btn-primary {
+            border-color: var(--card-accent, var(--accent));
+            background: var(--accent-soft);
+            color: var(--accent-deep);
+        }
+
+        .rd-section {
+            font-size: 10.5px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            color: var(--card-accent, var(--accent));
+            margin: 12px 0 4px;
+            padding-bottom: 3px;
+            border-bottom: 1px solid var(--line-soft);
+        }
+
+        .rd-body>.rd-section:first-child {
+            margin-top: 0;
+        }
+
+        .rd-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 4px 0;
+            border-bottom: 1px dashed var(--line-soft);
+        }
+
+        .rd-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .rd-label {
+            color: var(--ink-faint);
+            flex: 1 1 auto;
+        }
+
+        .rd-value {
+            flex: 0 0 auto;
+            max-width: 60%;
+            text-align: right;
+            font-weight: 700;
+            color: var(--ink);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .rd-input {
+            display: none;
+            width: 100%;
+            max-width: 220px;
+            text-align: right;
+            font: inherit;
+            font-weight: 700;
+            color: var(--ink);
+            padding: 3px 7px;
+            border: 1.5px solid var(--card-accent, var(--accent));
+            border-radius: 6px;
+            background: var(--surface);
+        }
+
+        .riwayat-detail.editing .rd-view {
+            display: none;
+        }
+
+        .riwayat-detail.editing .rd-input {
+            display: inline-block;
+        }
+
+        .riwayat-detail.editing .rd-row {
+            align-items: center;
+        }
+
+        .rd-plain {
+            padding: 3px 0;
+            color: var(--ink-soft);
+        }
+
+        .rd-footer {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px dashed var(--line);
+            font-size: 10.5px;
+            font-style: italic;
+            color: var(--ink-faint);
+        }
+
+        .rd-empty {
+            color: var(--ink-faint);
+            font-style: italic;
+        }
+
+        .print-only {
+            display: none;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #print-area,
+            #print-area * {
+                visibility: visible;
+            }
+
+            #print-area {
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 28px;
+            }
+
+            .print-doc h2 {
+                margin: 0 0 4px;
+                font-size: 19px;
+            }
+
+            .print-meta {
+                font-size: 12px;
+                color: #444;
+                margin-bottom: 16px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #ccc;
+            }
+
+            .print-doc .rd-section {
+                color: #000;
+                border-bottom: 1px solid #999;
+            }
+
+            .print-doc .rd-row {
+                border-bottom: 1px dashed #ccc;
+            }
+
+            .print-footer {
+                margin-top: 22px;
+                font-size: 10.5px;
+                color: #666;
+            }
         }
 
         @media (max-width: 600px) {
@@ -4649,6 +4821,8 @@
 
     <div id="sc-toast" class="sc-toast" role="status" aria-live="polite"></div>
 
+    <div id="print-area" class="print-only"></div>
+
     <script>
         /* ===================== UTILITAS ANGKA BERSAMA ===================== */
         function formatRp(angka) {
@@ -5002,6 +5176,19 @@
                 persist(all().filter(function (e) { return e.id !== id; }));
                 updateNavBadge();
             }
+            function update(id, patch) {
+                var list = all();
+                var idx = -1;
+                for (var i = 0; i < list.length; i++) { if (list[i].id === id) { idx = i; break; } }
+                if (idx === -1) return null;
+                list[idx] = Object.assign({}, list[idx], patch);
+                persist(list);
+                return list[idx];
+            }
+            function getById(id) {
+                var found = all().filter(function (e) { return e.id === id; });
+                return found.length ? found[0] : null;
+            }
             function clearAll() {
                 persist([]);
                 updateNavBadge();
@@ -5024,6 +5211,52 @@
                 return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
                     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
                 });
+            }
+            function escapeRegex(s) {
+                return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            }
+
+            /* Mengubah teks ringkasan polos (format "Label: Nilai", diselingi baris
+               "=== Judul ===" dan "--- Bagian ---") menjadi tampilan rapi berbentuk
+               baris label-nilai yang juga bisa diedit langsung (lihat enterEdit/
+               saveEdit di bawah). Baris judul "=== ... ===" tidak ditampilkan ulang
+               karena sudah terwakili oleh badge instrumen di atas kartu. */
+            function formatDetailHtml(teks) {
+                if (!teks || !String(teks).trim()) {
+                    return '<div class="rd-empty">Tidak ada rincian tersimpan.</div>';
+                }
+                var lines = String(teks).split('\n');
+                var html = '';
+                lines.forEach(function (line, idx) {
+                    var trimmed = line.trim();
+                    if (trimmed === '' || /^={3,}.*={3,}$/.test(trimmed)) {
+                        return; /* baris judul === ... === dilewati, sudah ada di badge */
+                    }
+                    if (/^-{3,}.*-{3,}$/.test(trimmed)) {
+                        var judulBagian = trimmed.replace(/^-+\s*/, '').replace(/\s*-+$/, '');
+                        html += '<div class="rd-section">' + escapeHtml(judulBagian) + '</div>';
+                        return;
+                    }
+                    if (/^Dicatat:/i.test(trimmed)) {
+                        html += '<div class="rd-footer">' + escapeHtml(trimmed) + '</div>';
+                        return;
+                    }
+                    var m = trimmed.match(/^([^:]{1,64}):\s?(.*)$/);
+                    if (m) {
+                        var label = m[1], nilai = m[2];
+                        html += '' +
+                            '<div class="rd-row" data-line="' + idx + '">' +
+                            '  <span class="rd-label">' + escapeHtml(label) + '</span>' +
+                            '  <span class="rd-value">' +
+                            '    <span class="rd-view">' + (escapeHtml(nilai) || '&mdash;') + '</span>' +
+                            '    <input type="text" class="rd-input" value="' + escapeHtml(nilai) + '">' +
+                            '  </span>' +
+                            '</div>';
+                    } else {
+                        html += '<div class="rd-plain">' + escapeHtml(trimmed) + '</div>';
+                    }
+                });
+                return html || '<div class="rd-empty">Tidak ada rincian tersimpan.</div>';
             }
 
             /* Perbandingan alami untuk No. Urut Bangunan (mis. "9" < "10", "001-B" < "002-A") */
@@ -5164,7 +5397,15 @@
                         '    <button type="button" class="btn-outline-sm" data-riwayat-salin="' + e.id + '">Salin</button>' +
                         '    <button type="button" class="btn-outline-sm btn-danger-outline" data-riwayat-hapus="' + e.id + '">Hapus</button>' +
                         '  </div>' +
-                        '  <div class="riwayat-detail" id="riwayat-detail-' + e.id + '">' + escapeHtml(e.ringkasan || '') + '</div>' +
+                        '  <div class="riwayat-detail" id="riwayat-detail-' + e.id + '">' +
+                        '    <div class="rd-toolbar">' +
+                        '      <button type="button" class="rd-btn" data-rd-edit="' + e.id + '">Edit</button>' +
+                        '      <button type="button" class="rd-btn rd-btn-primary" data-rd-save="' + e.id + '" style="display:none">Simpan Perubahan</button>' +
+                        '      <button type="button" class="rd-btn" data-rd-cancel="' + e.id + '" style="display:none">Batal</button>' +
+                        '      <button type="button" class="rd-btn" data-rd-pdf="' + e.id + '">Ekspor PDF</button>' +
+                        '    </div>' +
+                        '    <div class="rd-body" data-rd-body>' + formatDetailHtml(e.ringkasan) + '</div>' +
+                        '  </div>' +
                         '</div>';
                 }).join('');
             }
@@ -5206,6 +5447,96 @@
             }
             initSlsFilterDropdown();
 
+            function setToolbarMode(id, editing) {
+                var editBtn = document.querySelector('[data-rd-edit="' + id + '"]');
+                var saveBtn = document.querySelector('[data-rd-save="' + id + '"]');
+                var cancelBtn = document.querySelector('[data-rd-cancel="' + id + '"]');
+                if (editBtn) editBtn.style.display = editing ? 'none' : '';
+                if (saveBtn) saveBtn.style.display = editing ? '' : 'none';
+                if (cancelBtn) cancelBtn.style.display = editing ? '' : 'none';
+            }
+            function enterEdit(id) {
+                var container = document.getElementById('riwayat-detail-' + id);
+                if (!container) return;
+                container.classList.add('editing');
+                setToolbarMode(id, true);
+            }
+            function cancelEdit(id) {
+                var entry = getById(id);
+                var body = document.querySelector('#riwayat-detail-' + id + ' [data-rd-body]');
+                if (body && entry) body.innerHTML = formatDetailHtml(entry.ringkasan);
+                var container = document.getElementById('riwayat-detail-' + id);
+                if (container) container.classList.remove('editing');
+                setToolbarMode(id, false);
+            }
+            /* Menyimpan perubahan hasil edit langsung dari tampilan Lihat Detail.
+               Baris "Label: Nilai" yang diedit ditulis ulang ke teks ringkasan asli
+               (dipakai juga untuk tombol Salin & Ekspor PDF). Nama, No. Urut
+               Bangunan, dan SLS/RT ikut disinkronkan ke kartu riwayat karena
+               labelnya sama persis di seluruh instrumen. */
+            function saveEdit(id) {
+                var entry = getById(id);
+                var container = document.getElementById('riwayat-detail-' + id);
+                if (!entry || !container) return;
+                var lines = String(entry.ringkasan || '').split('\n');
+                container.querySelectorAll('.rd-row').forEach(function (row) {
+                    var idx = parseInt(row.getAttribute('data-line'), 10);
+                    var labelEl = row.querySelector('.rd-label');
+                    var inputEl = row.querySelector('.rd-input');
+                    if (isNaN(idx) || !labelEl || !inputEl || lines[idx] === undefined) return;
+                    lines[idx] = labelEl.textContent + ': ' + inputEl.value;
+                });
+                var ringkasanBaru = lines.join('\n');
+
+                function extract(label) {
+                    var re = new RegExp('^' + escapeRegex(label) + ':\\s?(.*)$', 'm');
+                    var m = ringkasanBaru.match(re);
+                    return m ? m[1].trim() : null;
+                }
+                var patch = { ringkasan: ringkasanBaru };
+                var namaBaru = extract('Nama');
+                var noUrutBaru = extract('No\\. Urut Bangunan');
+                var slsBaru = extract('SLS/RT');
+                if (namaBaru !== null) patch.nama = namaBaru;
+                if (noUrutBaru !== null) patch.nourut = noUrutBaru;
+                if (slsBaru !== null) patch.sls = slsBaru;
+
+                update(id, patch);
+                render();
+                var detBaru = document.getElementById('riwayat-detail-' + id);
+                if (detBaru) detBaru.classList.add('show');
+                showToast('Perubahan tersimpan.');
+            }
+
+            /* Ekspor 1 entri riwayat sebagai PDF lewat dialog cetak bawaan browser
+               (pilih tujuan "Simpan sebagai PDF"), supaya tetap berfungsi tanpa
+               koneksi internet / pustaka tambahan. */
+            function exportEntryToPdf(id) {
+                var entry = getById(id);
+                var area = document.getElementById('print-area');
+                if (!entry || !area) return;
+                var meta = MODUL_META[entry.modul] || { nama: entry.modul, num: '' };
+                var judul = (meta.num ? 'Instrumen ' + meta.num + ' — ' : '') + meta.nama;
+                area.innerHTML = '' +
+                    '<div class="print-doc">' +
+                    '  <h2>' + escapeHtml(judul) + '</h2>' +
+                    '  <div class="print-meta">' + escapeHtml(entry.nama || '(Tanpa nama responden)') +
+                    ' &middot; No. Urut ' + escapeHtml(entry.nourut || '-') +
+                    ' &middot; SLS/RT ' + escapeHtml(entry.sls || '-') + '</div>' +
+                    '  <div class="rd-body">' + formatDetailHtml(entry.ringkasan) + '</div>' +
+                    '  <div class="print-footer">Dicetak ' + new Date().toLocaleString('id-ID') + ' &middot; Dasbor Instrumen Enumerator SE2026</div>' +
+                    '</div>';
+                var judulAsli = document.title;
+                var namaBerkas = 'Riwayat_' + (entry.nama || 'Responden').trim().replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_-]/g, '');
+                document.title = namaBerkas || judulAsli;
+                function pulihkanJudul() {
+                    document.title = judulAsli;
+                    window.removeEventListener('afterprint', pulihkanJudul);
+                }
+                window.addEventListener('afterprint', pulihkanJudul);
+                setTimeout(function () { window.print(); }, 60);
+            }
+
             document.addEventListener('click', function (e) {
                 var btnDetail = e.target.closest('[data-riwayat-detail]');
                 if (btnDetail) {
@@ -5233,6 +5564,14 @@
                     });
                     return;
                 }
+                var btnEdit = e.target.closest('[data-rd-edit]');
+                if (btnEdit) { enterEdit(btnEdit.getAttribute('data-rd-edit')); return; }
+                var btnSave = e.target.closest('[data-rd-save]');
+                if (btnSave) { saveEdit(btnSave.getAttribute('data-rd-save')); return; }
+                var btnCancelEdit = e.target.closest('[data-rd-cancel]');
+                if (btnCancelEdit) { cancelEdit(btnCancelEdit.getAttribute('data-rd-cancel')); return; }
+                var btnPdf = e.target.closest('[data-rd-pdf]');
+                if (btnPdf) { exportEntryToPdf(btnPdf.getAttribute('data-rd-pdf')); return; }
             });
 
             var filterInput = document.getElementById('riwayat-filter');
@@ -5263,7 +5602,7 @@
                 });
             });
 
-            return { add: add, remove: remove, clearAll: clearAll, all: all, render: render, updateNavBadge: updateNavBadge };
+            return { add: add, remove: remove, update: update, clearAll: clearAll, all: all, render: render, updateNavBadge: updateNavBadge };
         })();
         window.renderRiwayat = Riwayat.render;
         window.Riwayat = Riwayat;
@@ -7061,53 +7400,39 @@
             el('btn-tambah-motor-sosek').addEventListener('click', function () { tambahKendaraanItem('motor', true); });
             el('btn-tambah-mobil-sosek').addEventListener('click', function () { tambahKendaraanItem('mobil', true); });
 
+            /* Ringkasan riwayat Sosek sengaja dibuat ringkas: hanya mencantumkan
+               angka-angka yang tampil pada kartu "highlight" (headline) di halaman
+               hasil Sosek — Estimasi Luas Bangunan, Listrik/Bulan, Internet/Bulan,
+               Pangan/Minggu, Non-Pangan/Bulan, Non-Pangan Rutin/Tahun, serta
+               Pemasukan & Selisih (Surplus/Defisit)/Bulan — tanpa rincian per-item
+               (LPG, sabun, dst.) maupun daftar kendaraan. */
             function generateRingkasanSosek() {
                 if (!lastHasilSosek) return null;
                 var h = lastHasilSosek;
                 var nama = el('resp-nama-sosek').value.trim() || '(Tanpa nama responden)';
                 var noUrut = el('resp-nourut-sosek').value.trim() || '-';
                 var sls = el('resp-sls-sosek').value.trim() || '-';
+                var luasTeks = el('out-luas-m2-sosek') ? el('out-luas-m2-sosek').innerText.trim() : '0 m\u00b2';
                 var selisihTeks = (h.selisihBulan === null) ? 'Tidak dihitung (pemasukan belum diisi)' : formatRp(h.selisihBulan);
-
-                function barisKendaraan(list, label) {
-                    if (list.length === 0) return ['Tidak memiliki ' + label.toLowerCase() + '.'];
-                    var baris = list.map(function (v, i) {
-                        return (i + 1) + '. ' + v.m + ' (' + v.t + ') \u2014 Estimasi jual: ' + formatRp(v.lo) + ' - ' + formatRp(v.hi);
-                    });
-                    if (list.length > 1) {
-                        var totalLo = list.reduce(function (s, v) { return s + v.lo; }, 0);
-                        var totalHi = list.reduce(function (s, v) { return s + v.hi; }, 0);
-                        baris.push('Total estimasi ' + list.length + ' unit: ' + formatRp(totalLo) + ' - ' + formatRp(totalHi));
-                    }
-                    return baris;
-                }
-
-                var motorList = collectKendaraanTerpilih('motor');
-                var mobilList = collectKendaraanTerpilih('mobil');
 
                 var lines = [
                     '=== KALKULATOR SOSIAL EKONOMI RUMAH TANGGA ===',
                     'Nama: ' + nama,
                     'No. Urut Bangunan: ' + noUrut,
                     'SLS/RT: ' + sls,
-                    '--- Pengeluaran per Bulan ---',
-                    'Pangan (' + formatRp(h.panganHarian) + '/hari \u00d7 30): ' + formatRp(h.panganBulan),
-                    'Non-Pangan: ' + formatRp(h.totalNonPanganBulan),
-                    'Non-Pangan Rutin Tahunan (dibagi 12): ' + formatRp(h.totalRutinTahun / 12),
-                    'Total Pengeluaran / Bulan: ' + formatRp(h.totalPengeluaranBulan),
+                    '--- Ringkasan Pengeluaran Utama ---',
+                    'Estimasi Luas Bangunan: ' + luasTeks,
+                    'Listrik / Bulan: ' + formatRp(h.listrik),
+                    'Internet / Bulan: ' + formatRp(h.internet),
+                    'Pangan / Minggu: ' + formatRp(h.panganMinggu),
+                    'Non-Pangan / Bulan: ' + formatRp(h.totalNonPanganBulan),
+                    'Non-Pangan Rutin / Tahun: ' + formatRp(h.totalRutinTahun),
                     '--- Pemasukan & Selisih ---',
                     'Pemasukan Keluarga / Bulan: ' + formatRp(h.pemasukanBulan),
+                    'Total Pengeluaran / Bulan: ' + formatRp(h.totalPengeluaranBulan),
                     'Selisih (Surplus/Defisit) / Bulan: ' + selisihTeks,
-                    '--- Pengeluaran per Tahun ---',
-                    'Non-Pangan (\u00d712 bulan): ' + formatRp(h.totalNonPanganBulan * 12),
-                    'Non-Pangan Rutin Tahunan: ' + formatRp(h.totalRutinTahun),
-                    'Total Pengeluaran / Tahun: ' + formatRp(h.totalPengeluaranTahun),
-                    '--- Kepemilikan Kendaraan (Estimasi Aset) ---',
-                    'Sepeda Motor:'
-                ].concat(barisKendaraan(motorList, 'sepeda motor').map(function (s) { return '  ' + s; }))
-                    .concat(['Mobil:'])
-                    .concat(barisKendaraan(mobilList, 'mobil').map(function (s) { return '  ' + s; }))
-                    .concat(['Dicatat: ' + new Date().toLocaleString('id-ID')]);
+                    'Dicatat: ' + new Date().toLocaleString('id-ID')
+                ];
 
                 return lines.join('\n');
             }
