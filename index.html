@@ -7588,18 +7588,20 @@
             }
 
             /* Ringkasan riwayat Sosek sengaja dibuat ringkas: hanya mencantumkan
-               angka-angka yang tampil pada kartu "highlight" (headline) di halaman
-               hasil Sosek — Estimasi Luas Bangunan, Listrik/Bulan, Internet/Bulan,
-               Pangan/Minggu, Non-Pangan/Bulan, Non-Pangan Rutin/Tahun, Kepemilikan
-               Kendaraan, serta Pemasukan & Selisih (Surplus/Defisit)/Bulan — tanpa
-               rincian per-item (LPG, sabun, dst.) maupun daftar kendaraan lengkap. */
+               angka-angka yang benar-benar tampil di kartu "highlight" pada blok
+               "Ringkasan Pengeluaran Utama" di halaman hasil Sosek — Listrik/Bulan,
+               Internet/Bulan, Pangan/Minggu, Non-Pangan/Bulan, Non-Pangan Rutin/Tahun,
+               Kepemilikan Kendaraan, serta Pemasukan & Selisih (Surplus/Defisit)/Bulan.
+               Estimasi Luas Bangunan (kartu terpisah di Keterangan Perumahan) dan Aset
+               Tidak Bergerak (bagian terpisah, bukan bagian dari highlight ini) sengaja
+               TIDAK disertakan, begitu juga rincian per-item (LPG, sabun, dst.) maupun
+               daftar kendaraan lengkap. */
             function generateRingkasanSosek() {
                 if (!lastHasilSosek) return null;
                 var h = lastHasilSosek;
                 var nama = el('resp-nama-sosek').value.trim() || '(Tanpa nama responden)';
                 var noUrut = el('resp-nourut-sosek').value.trim() || '-';
                 var sls = el('resp-sls-sosek').value.trim() || '-';
-                var luasTeks = el('out-luas-m2-sosek') ? el('out-luas-m2-sosek').innerText.trim() : '0 m\u00b2';
                 var selisihTeks = (h.selisihBulan === null) ? 'Tidak dihitung (pemasukan belum diisi)' : formatRp(h.selisihBulan);
                 var kendaraanTeks = el('out-kendaraan-headline-sosek') ? el('out-kendaraan-headline-sosek').innerText.trim() : 'Tidak Memiliki';
 
@@ -7609,19 +7611,15 @@
                     'No. Urut Bangunan: ' + noUrut,
                     'SLS/RT: ' + sls,
                     '--- Ringkasan Pengeluaran Utama ---',
-                    'Estimasi Luas Bangunan: ' + luasTeks,
                     'Listrik / Bulan: ' + formatRp(h.listrik),
                     'Internet / Bulan: ' + formatRp(h.internet),
                     'Pangan / Minggu: ' + formatRp(h.panganMinggu),
                     'Non-Pangan / Bulan: ' + formatRp(h.totalNonPanganBulan),
                     'Non-Pangan Rutin / Tahun: ' + formatRp(h.totalRutinTahun),
                     'Kepemilikan Kendaraan: ' + kendaraanTeks,
-                    '--- Pemasukan & Selisih ---',
                     'Pemasukan Keluarga / Bulan: ' + formatRp(h.pemasukanBulan),
                     'Total Pengeluaran / Bulan: ' + formatRp(h.totalPengeluaranBulan),
                     'Selisih (Surplus/Defisit) / Bulan: ' + selisihTeks,
-                    '--- Aset Tidak Bergerak (Selain Tempat Tinggal) ---',
-                    'Total Estimasi Nilai: ' + formatRp(h.totalAsetTidakBergerak || 0),
                     'Dicatat: ' + new Date().toLocaleString('id-ID')
                 ];
 
