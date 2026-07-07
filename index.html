@@ -4511,6 +4511,24 @@
                             </div>
                         </fieldset>
 
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok F &mdash; Aset Tidak Bergerak
+                                (Lahan &amp; Bangunan Selain yang Ditinggali)</div>
+                            <small class="hint" style="display:block;margin-bottom:14px;">Catat lahan/tanah kosong,
+                                lahan pertanian, atau rumah/bangunan lain milik rumah tangga <b>di luar</b> bangunan
+                                tempat tinggal yang sudah diisi di Keterangan Perumahan. Jika tidak ada, biarkan
+                                pilihan &ldquo;Tidak Memiliki Aset Lain&rdquo;.</small>
+                            <div class="kendaraan-list" id="aset-list-sosek"></div>
+                            <button type="button" class="btn-tambah-item" id="btn-tambah-aset-sosek">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                </svg>
+                                Tambah Aset Lainnya
+                            </button>
+                        </fieldset>
+
                         <button type="button" class="btn-hitung" id="btn-hitung-sosek">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -4571,11 +4589,17 @@
                                     <div class="headline-label">Non-Pangan Rutin / Tahun</div>
                                     <div class="headline-value" id="out-rutin-tahun-sosek">Rp 0</div>
                                 </div>
-                                <div class="headline alt">
-                                    <div class="headline-label">Selisih (Surplus/Defisit)</div>
-                                    <div class="headline-value" id="out-selisih-sosek">Rp 0</div>
-                                    <div class="headline-sub" id="out-headline-sub-selisih-sosek">&nbsp;</div>
+                                <div class="headline">
+                                    <div class="headline-label">Kepemilikan Kendaraan</div>
+                                    <div class="headline-value" id="out-kendaraan-headline-sosek">Belum diisi</div>
+                                    <div class="headline-sub" id="out-kendaraan-sub-sosek">Isi Blok E untuk melihat ringkasannya.</div>
                                 </div>
+                            </div>
+
+                            <div class="headline alt" id="headline-selisih-sosek">
+                                <div class="headline-label">Selisih Pemasukan &ndash; Pengeluaran / Bulan (Surplus/Defisit)</div>
+                                <div class="headline-value" id="out-selisih-sosek">Rp 0</div>
+                                <div class="headline-sub" id="out-headline-sub-selisih-sosek">&nbsp;</div>
                             </div>
 
                         <div class="result-head">
@@ -4673,6 +4697,26 @@
                             <tr class="total-row">
                                 <td>Total Non-Pangan Rutin / Tahun</td>
                                 <td id="out-rutin-tahun-detail-sosek">0</td>
+                            </tr>
+                        </table>
+
+                        <div class="result-head">
+                            <h3>Rincian Aset Tidak Bergerak</h3><span>Blok I</span>
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Jenis Aset</th>
+                                <th>Estimasi Nilai</th>
+                            </tr>
+                            <tbody id="tabel-aset-sosek">
+                                <tr>
+                                    <td colspan="2" style="text-align:center;color:var(--ink-faint);">Belum ada aset
+                                        tidak bergerak lain yang ditambahkan.</td>
+                                </tr>
+                            </tbody>
+                            <tr class="total-row">
+                                <td>Total Estimasi Nilai Aset Tidak Bergerak</td>
+                                <td id="out-total-aset-tidak-bergerak-sosek">0</td>
                             </tr>
                         </table>
 
@@ -7203,6 +7247,8 @@
                 el("out-rutin-tahun-sosek").innerText = formatRp(totalRutinTahun);
                 el("out-listrik-headline-sosek").innerText = formatRp(listrik);
                 el("out-internet-headline-sosek").innerText = formatRp(internet);
+                updateKendaraanHeadline();
+                var totalAsetTidakBergerak = renderTabelAset();
 
                 /* Blok D — Ringkasan Pemasukan vs Total Pengeluaran per Bulan */
                 let AMBANG_TIPIS = 200000; /* selisih <= Rp 200.000 dianggap rawan/tipis */
@@ -7285,7 +7331,8 @@
                     pemasukanBulan: pemasukanBulan,
                     totalPengeluaranBulan: totalPengeluaranBulan,
                     totalPengeluaranTahun: totalPengeluaranTahun,
-                    selisihBulan: selisihBulan
+                    selisihBulan: selisihBulan,
+                    totalAsetTidakBergerak: totalAsetTidakBergerak
                 };
             }
 
@@ -7400,12 +7447,152 @@
             el('btn-tambah-motor-sosek').addEventListener('click', function () { tambahKendaraanItem('motor', true); });
             el('btn-tambah-mobil-sosek').addEventListener('click', function () { tambahKendaraanItem('mobil', true); });
 
+            /* Blok F — Aset Tidak Bergerak: lahan/bangunan di luar tempat tinggal utama.
+               Baris pertama dibuat otomatis dengan pilihan "Tidak Memiliki Aset Lain";
+               responden bisa menambah baris lagi lewat tombol "Tambah" jika memiliki
+               lebih dari satu bidang lahan/bangunan lain. Nilai per baris (luas x harga
+               per m2) langsung tampil begitu diisi, tidak perlu tekan Hitung. */
+            var ASET_JENIS_OPTIONS = [
+                { value: 'none', label: 'Tidak Memiliki Aset Lain' },
+                { value: 'lahan_kosong', label: 'Lahan / Tanah Kosong' },
+                { value: 'lahan_tani', label: 'Lahan Pertanian (Sawah / Kebun / Ladang)' },
+                { value: 'rumah_lain', label: 'Rumah / Bangunan Tempat Tinggal Lain' },
+                { value: 'ruko', label: 'Ruko / Bangunan Usaha' },
+                { value: 'lainnya', label: 'Lainnya' }
+            ];
+
+            function tambahAsetItem(withRemove) {
+                var listEl = el('aset-list-sosek');
+                var item = document.createElement('div');
+                item.className = 'kendaraan-item';
+                var optsHtml = ASET_JENIS_OPTIONS.map(function (o, i) {
+                    return '<li class="csel-opt" role="option" data-value="' + o.value + '"' + (i === 0 ? ' aria-selected="true"' : '') + '>' + o.label + '</li>';
+                }).join('');
+                item.innerHTML =
+                    (withRemove ? '<div class="kendaraan-item-idx">Aset Tambahan</div>' : '') +
+                    '<div class="kendaraan-item-row">' +
+                    '<div class="csel">' +
+                    '<button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">' +
+                    '<span class="csel-value">Tidak Memiliki Aset Lain</span>' +
+                    '<svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>' +
+                    '</button>' +
+                    '<ul class="csel-panel" role="listbox" tabindex="-1">' + optsHtml + '</ul>' +
+                    '<input type="hidden" class="jenis-aset-sosek" value="none">' +
+                    '</div>' +
+                    (withRemove ? '<button type="button" class="btn-hapus-item" aria-label="Hapus aset ini">' +
+                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+                        '</button>' : '') +
+                    '</div>' +
+                    '<div class="aset-detail-fields" style="display:none;margin-top:12px;">' +
+                    '<div class="field-row-2">' +
+                    '<div class="field"><label class="field-label">Luas (m&sup2;)</label>' +
+                    '<input type="number" class="luas-aset-sosek" inputmode="decimal" step="0.01" min="0" placeholder="Contoh: 200"></div>' +
+                    '<div class="field"><label class="field-label">Estimasi Harga per m&sup2;</label>' +
+                    '<div class="prefix-wrap"><span class="rp">Rp</span><input type="text" class="harga-aset-sosek" inputmode="numeric" placeholder="Contoh: 500.000"></div></div>' +
+                    '</div>' +
+                    '<div class="kendaraan-hasil aset-hasil"></div>' +
+                    '</div>';
+                listEl.appendChild(item);
+                initCselIn(item);
+
+                var hidden = item.querySelector('.jenis-aset-sosek');
+                var detailFields = item.querySelector('.aset-detail-fields');
+                var luasInput = item.querySelector('.luas-aset-sosek');
+                var hargaInput = item.querySelector('.harga-aset-sosek');
+                var hasilBox = item.querySelector('.aset-hasil');
+
+                function updateAsetHasil() {
+                    if (hidden.value === 'none' || hidden.value === '') {
+                        detailFields.style.display = 'none';
+                        hasilBox.classList.remove('has-value');
+                        hasilBox.innerHTML = '';
+                        return;
+                    }
+                    detailFields.style.display = '';
+                    var luas = getRawNumber(luasInput.value);
+                    var harga = getRawNumber(hargaInput.value);
+                    var nilai = luas * harga;
+                    if (nilai > 0) {
+                        hasilBox.classList.add('has-value');
+                        hasilBox.innerHTML = '<div class="kh-label">Estimasi Nilai Aset</div>' +
+                            '<div class="kh-value">' + formatRp(bulatkanRibuan(nilai)) + '</div>' +
+                            '<div class="kh-sub">' + luas + ' m&sup2; &times; ' + formatRp(harga) + '/m&sup2;</div>';
+                    } else {
+                        hasilBox.classList.remove('has-value');
+                        hasilBox.innerHTML = '<span class="kh-empty">Isi luas &amp; estimasi harga per m&sup2; untuk melihat estimasi nilainya.</span>';
+                    }
+                }
+
+                hidden.addEventListener('change', updateAsetHasil);
+                luasInput.addEventListener('keyup', updateAsetHasil);
+                luasInput.addEventListener('change', updateAsetHasil);
+                hargaInput.addEventListener('keyup', function () { formatInputRibuan(this); updateAsetHasil(); });
+
+                if (withRemove) {
+                    item.querySelector('.btn-hapus-item').addEventListener('click', function () { item.remove(); renderTabelAset(); });
+                }
+            }
+
+            tambahAsetItem(false);
+            el('btn-tambah-aset-sosek').addEventListener('click', function () { tambahAsetItem(true); });
+
+            var ASET_LABEL_BY_VALUE = {};
+            ASET_JENIS_OPTIONS.forEach(function (o) { ASET_LABEL_BY_VALUE[o.value] = o.label; });
+
+            /* Kumpulkan seluruh aset tidak bergerak yang sudah diisi (bukan "Tidak
+               Memiliki"), dipakai untuk tabel rincian & ringkasan riwayat. */
+            function collectAsetTidakBergerak() {
+                var hasil = [];
+                el('aset-list-sosek').querySelectorAll('.kendaraan-item').forEach(function (item) {
+                    var hidden = item.querySelector('.jenis-aset-sosek');
+                    if (!hidden || hidden.value === 'none' || hidden.value === '') return;
+                    var luas = getRawNumber(item.querySelector('.luas-aset-sosek').value);
+                    var harga = getRawNumber(item.querySelector('.harga-aset-sosek').value);
+                    hasil.push({ jenis: ASET_LABEL_BY_VALUE[hidden.value] || hidden.value, luas: luas, harga: harga, nilai: luas * harga });
+                });
+                return hasil;
+            }
+
+            function renderTabelAset() {
+                var daftar = collectAsetTidakBergerak();
+                var tbody = el('tabel-aset-sosek');
+                var total = 0;
+                if (daftar.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="2" style="text-align:center;color:var(--ink-faint);">Belum ada aset tidak bergerak lain yang ditambahkan.</td></tr>';
+                } else {
+                    tbody.innerHTML = daftar.map(function (a) {
+                        total += a.nilai;
+                        return '<tr><td>' + a.jenis + (a.luas > 0 ? ' (' + a.luas + ' m&sup2;)' : '') + '</td><td>' + formatRp(bulatkanRibuan(a.nilai)) + '</td></tr>';
+                    }).join('');
+                }
+                el('out-total-aset-tidak-bergerak-sosek').innerText = formatRp(bulatkanRibuan(total));
+                return total;
+            }
+
+            /* Kartu highlight "Kepemilikan Kendaraan": ringkasan jumlah motor & mobil
+               yang sudah dipilih di Blok E, beserta estimasi total nilai jualnya. */
+            function updateKendaraanHeadline() {
+                var motors = collectKendaraanTerpilih('motor');
+                var mobils = collectKendaraanTerpilih('mobil');
+                var bagian = [];
+                if (motors.length > 0) bagian.push(motors.length + ' Motor');
+                if (mobils.length > 0) bagian.push(mobils.length + ' Mobil');
+                var teks = bagian.length > 0 ? bagian.join(' & ') : 'Tidak Memiliki';
+                var totalEstimasi = 0;
+                motors.concat(mobils).forEach(function (v) { totalEstimasi += (v.lo + v.hi) / 2; });
+                el('out-kendaraan-headline-sosek').innerText = teks;
+                el('out-kendaraan-sub-sosek').innerText = totalEstimasi > 0
+                    ? ('Estimasi total nilai jual \u2248 ' + formatRp(bulatkanRibuan(totalEstimasi)))
+                    : 'Isi Blok E jika responden memiliki kendaraan.';
+                return { teks: teks, totalEstimasi: totalEstimasi };
+            }
+
             /* Ringkasan riwayat Sosek sengaja dibuat ringkas: hanya mencantumkan
                angka-angka yang tampil pada kartu "highlight" (headline) di halaman
                hasil Sosek — Estimasi Luas Bangunan, Listrik/Bulan, Internet/Bulan,
-               Pangan/Minggu, Non-Pangan/Bulan, Non-Pangan Rutin/Tahun, serta
-               Pemasukan & Selisih (Surplus/Defisit)/Bulan — tanpa rincian per-item
-               (LPG, sabun, dst.) maupun daftar kendaraan. */
+               Pangan/Minggu, Non-Pangan/Bulan, Non-Pangan Rutin/Tahun, Kepemilikan
+               Kendaraan, serta Pemasukan & Selisih (Surplus/Defisit)/Bulan — tanpa
+               rincian per-item (LPG, sabun, dst.) maupun daftar kendaraan lengkap. */
             function generateRingkasanSosek() {
                 if (!lastHasilSosek) return null;
                 var h = lastHasilSosek;
@@ -7414,6 +7601,7 @@
                 var sls = el('resp-sls-sosek').value.trim() || '-';
                 var luasTeks = el('out-luas-m2-sosek') ? el('out-luas-m2-sosek').innerText.trim() : '0 m\u00b2';
                 var selisihTeks = (h.selisihBulan === null) ? 'Tidak dihitung (pemasukan belum diisi)' : formatRp(h.selisihBulan);
+                var kendaraanTeks = el('out-kendaraan-headline-sosek') ? el('out-kendaraan-headline-sosek').innerText.trim() : 'Tidak Memiliki';
 
                 var lines = [
                     '=== KALKULATOR SOSIAL EKONOMI RUMAH TANGGA ===',
@@ -7427,10 +7615,13 @@
                     'Pangan / Minggu: ' + formatRp(h.panganMinggu),
                     'Non-Pangan / Bulan: ' + formatRp(h.totalNonPanganBulan),
                     'Non-Pangan Rutin / Tahun: ' + formatRp(h.totalRutinTahun),
+                    'Kepemilikan Kendaraan: ' + kendaraanTeks,
                     '--- Pemasukan & Selisih ---',
                     'Pemasukan Keluarga / Bulan: ' + formatRp(h.pemasukanBulan),
                     'Total Pengeluaran / Bulan: ' + formatRp(h.totalPengeluaranBulan),
                     'Selisih (Surplus/Defisit) / Bulan: ' + selisihTeks,
+                    '--- Aset Tidak Bergerak (Selain Tempat Tinggal) ---',
+                    'Total Estimasi Nilai: ' + formatRp(h.totalAsetTidakBergerak || 0),
                     'Dicatat: ' + new Date().toLocaleString('id-ID')
                 ];
 
