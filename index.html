@@ -4580,7 +4580,7 @@
                                 </div>
                             </div>
 
-                            <div class="headline-grid-3">
+                            <div class="headline-grid">
                                 <div class="headline">
                                     <div class="headline-label">Non-Pangan / Bulan</div>
                                     <div class="headline-value" id="out-nonpangan-bulan-sosek">Rp 0</div>
@@ -4588,11 +4588,6 @@
                                 <div class="headline">
                                     <div class="headline-label">Non-Pangan Rutin / Tahun</div>
                                     <div class="headline-value" id="out-rutin-tahun-sosek">Rp 0</div>
-                                </div>
-                                <div class="headline">
-                                    <div class="headline-label">Kepemilikan Kendaraan</div>
-                                    <div class="headline-value" id="out-kendaraan-headline-sosek">Belum diisi</div>
-                                    <div class="headline-sub" id="out-kendaraan-sub-sosek">Isi Blok E untuk melihat ringkasannya.</div>
                                 </div>
                             </div>
 
@@ -4699,6 +4694,15 @@
                                 <td id="out-rutin-tahun-detail-sosek">0</td>
                             </tr>
                         </table>
+
+                        <div class="result-head">
+                            <h3>Aset Bergerak (Kendaraan)</h3><span>Blok E</span>
+                        </div>
+                        <div class="headline alt" id="headline-kendaraan-sosek">
+                            <div class="headline-label">Kepemilikan Kendaraan</div>
+                            <div class="headline-value" id="out-kendaraan-headline-sosek">Belum diisi</div>
+                            <div class="headline-sub" id="out-kendaraan-sub-sosek">Isi Blok E untuk melihat ringkasannya.</div>
+                        </div>
 
                         <div class="result-head">
                             <h3>Rincian Aset Tidak Bergerak</h3><span>Blok I</span>
@@ -7588,14 +7592,17 @@
             }
 
             /* Ringkasan riwayat Sosek sengaja dibuat ringkas: hanya mencantumkan
-               angka-angka yang benar-benar tampil di kartu "highlight" pada blok
-               "Ringkasan Pengeluaran Utama" di halaman hasil Sosek — Listrik/Bulan,
-               Internet/Bulan, Pangan/Minggu, Non-Pangan/Bulan, Non-Pangan Rutin/Tahun,
-               Kepemilikan Kendaraan, serta Pemasukan & Selisih (Surplus/Defisit)/Bulan.
-               Estimasi Luas Bangunan (kartu terpisah di Keterangan Perumahan) dan Aset
-               Tidak Bergerak (bagian terpisah, bukan bagian dari highlight ini) sengaja
-               TIDAK disertakan, begitu juga rincian per-item (LPG, sabun, dst.) maupun
-               daftar kendaraan lengkap. */
+               angka-angka yang benar-benar tampil di kartu "highlight" pada halaman
+               hasil Sosek. "Ringkasan Pengeluaran Utama" murni memuat komponen
+               pengeluaran (Listrik/Bulan, Internet/Bulan, Pangan/Minggu, Non-Pangan/
+               Bulan, Non-Pangan Rutin/Tahun) plus Pemasukan & Selisih (Surplus/
+               Defisit)/Bulan. Kepemilikan Kendaraan dipisah ke bagian "Aset Bergerak"
+               sendiri karena kartunya juga sudah dipisah dari grid Ringkasan
+               Pengeluaran Utama di halaman hasil (kini punya blok headline sendiri,
+               berpasangan dengan Aset Tidak Bergerak). Estimasi Luas Bangunan (kartu
+               terpisah di Keterangan Perumahan) dan rincian Aset Tidak Bergerak
+               sengaja TIDAK disertakan, begitu juga rincian per-item (LPG, sabun,
+               dst.) maupun daftar kendaraan lengkap. */
             function generateRingkasanSosek() {
                 if (!lastHasilSosek) return null;
                 var h = lastHasilSosek;
@@ -7616,10 +7623,11 @@
                     'Pangan / Minggu: ' + formatRp(h.panganMinggu),
                     'Non-Pangan / Bulan: ' + formatRp(h.totalNonPanganBulan),
                     'Non-Pangan Rutin / Tahun: ' + formatRp(h.totalRutinTahun),
-                    'Kepemilikan Kendaraan: ' + kendaraanTeks,
                     'Pemasukan Keluarga / Bulan: ' + formatRp(h.pemasukanBulan),
                     'Total Pengeluaran / Bulan: ' + formatRp(h.totalPengeluaranBulan),
                     'Selisih (Surplus/Defisit) / Bulan: ' + selisihTeks,
+                    '--- Aset Bergerak (Kendaraan) ---',
+                    'Kepemilikan Kendaraan: ' + kendaraanTeks,
                     'Dicatat: ' + new Date().toLocaleString('id-ID')
                 ];
 
