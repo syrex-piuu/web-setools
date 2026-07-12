@@ -2024,6 +2024,45 @@
             font-weight: 600;
         }
 
+        .chip-checklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+            gap: 8px;
+        }
+
+        .chip-checklist > label {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12.5px;
+            color: var(--ink-soft);
+            padding: 7px 10px;
+            border: 1.5px solid var(--line);
+            border-radius: 7px;
+            cursor: pointer;
+            transition: .15s;
+        }
+
+        .chip-checklist > label:has(input:checked) {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            color: var(--accent-deep);
+            font-weight: 600;
+        }
+
+        .chip-checklist > label input {
+            width: 15px;
+            height: 15px;
+            accent-color: var(--accent);
+            flex: 0 0 auto;
+        }
+
+        @media (max-width: 560px) {
+            .chip-checklist {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
         .aset-checklist > label input {
             width: 16px;
             height: 16px;
@@ -6069,7 +6108,13 @@
             }
 
             var blok1Rows = anggota.length ? anggota.map(function (a, i) {
-                return '<tr><td>' + (i + 1) + '</td><td>' + pdfEsc(a.nama || '-') + '</td><td>' + pdfEsc(a.pendidikan || '-') + '</td></tr>';
+                var row = '<tr><td>' + (i + 1) + '</td><td>' + pdfEsc(a.nama || '-') + '</td><td>' + pdfEsc(a.pendidikan || '-') + '</td></tr>';
+                row += '<tr class="pd-rincian-row"><td></td><td colspan="2"><div class="pd-rincian"><div class="pd-rincian-title">Rekening / M-Banking / E-Wallet</div><table class="pd-rincian-table"><tr><td>' + (a.aksesKeuangan ? 'Ya' : 'Tidak') + '</td></tr></table></div></td></tr>';
+                var kondisi = [].concat(a.disabilitas || [], a.penyakitKronis || []);
+                if (kondisi.length) {
+                    row += '<tr class="pd-rincian-row"><td></td><td colspan="2"><div class="pd-rincian"><div class="pd-rincian-title">Disabilitas / Penyakit Kronis</div><table class="pd-rincian-table"><tr><td>' + pdfEsc(kondisi.join(', ')) + '</td></tr></table></div></td></tr>';
+                }
+                return row;
             }).join('') : '<tr><td colspan="3" class="pd-empty">Belum ada anggota keluarga</td></tr>';
 
             var blok2Rows = usahaList.length ? usahaList.map(function (u, i) {
@@ -7305,6 +7350,8 @@
                ========================================================= */
             var STATUS_OPTIONS = ['Kepala Keluarga', 'Suami', 'Istri', 'Anak', 'Menantu', 'Cucu', 'Orang Tua/Mertua', 'Famili Lain', 'Lainnya'];
             var PENDIDIKAN_OPTIONS = ['Tidak/Belum Sekolah', 'Tidak/Belum Tamat SD', 'SD/Sederajat', 'SMP/Sederajat', 'SMA/SMK/Sederajat', 'D1/D2/D3', 'D4/S1', 'S2', 'S3'];
+            var DISABILITAS_OPTIONS = ['Disabilitas Fisik', 'Disabilitas Mental', 'Disabilitas Intelektual', 'Disabilitas Sensorik Netra', 'Disabilitas Sensorik Rungu', 'Disabilitas Sensorik Wicara'];
+            var PENYAKIT_OPTIONS = ['Hipertensi', 'Rematik', 'Asma', 'Masalah Jantung', 'Diabetes', 'TBC', 'Stroke', 'Kanker atau Tumor Ganas', 'Hemofilia', 'Gagal Ginjal', 'HIV/AIDS', 'Kolesterol', 'Sirosis Hati', 'Talasemia', 'Leukimia', 'Alzheimer', 'Lainnya'];
 
             function selectOptionsHtml(list, selected, placeholder) {
                 var html = '<option value="">' + placeholder + '</option>';
@@ -7312,6 +7359,14 @@
                     html += '<option value="' + escAttrK(v) + '"' + (v === selected ? ' selected' : '') + '>' + v + '</option>';
                 });
                 return html;
+            }
+
+            function chipChecklistHtml(options, selected, anggotaId, cls) {
+                selected = selected || [];
+                return options.map(function (opt) {
+                    var checked = selected.indexOf(opt) !== -1 ? ' checked' : '';
+                    return '<label><input type="checkbox" class="' + cls + '" data-id="' + anggotaId + '" data-value="' + escAttrK(opt) + '"' + checked + '> ' + opt + '</label>';
+                }).join('');
             }
 
             function anggotaCardHtml(a, idx) {
@@ -7328,6 +7383,17 @@
                     '<select class="kw-f-status" data-id="' + a.id + '">' + selectOptionsHtml(STATUS_OPTIONS, a.status, 'Pilih status&hellip;') + '</select></div>' +
                     '<div class="field"><label class="field-label">Pendidikan Terakhir (Ijazah)</label>' +
                     '<select class="kw-f-pendidikan" data-id="' + a.id + '">' + selectOptionsHtml(PENDIDIKAN_OPTIONS, a.pendidikan, 'Pilih pendidikan&hellip;') + '</select></div>' +
+                    '</div>' +
+                    '<div class="yn-row"><label>Menggunakan Rekening / M-Banking / E-Wallet?</label>' +
+                    ynToggleHtml('akses', a.id, !!a.aksesKeuangan) +
+                    '</div>' +
+                    '<div class="field">' +
+                    '<label class="field-label">Disabilitas (bisa pilih lebih dari satu, kosongkan jika tidak ada)</label>' +
+                    '<div class="chip-checklist">' + chipChecklistHtml(DISABILITAS_OPTIONS, a.disabilitas, a.id, 'kw-f-disabilitas') + '</div>' +
+                    '</div>' +
+                    '<div class="field">' +
+                    '<label class="field-label">Penyakit Kronis / Menahun (bisa pilih lebih dari satu, kosongkan jika tidak ada)</label>' +
+                    '<div class="chip-checklist">' + chipChecklistHtml(PENYAKIT_OPTIONS, a.penyakitKronis, a.id, 'kw-f-penyakit') + '</div>' +
                     '</div>' +
                     '</div>';
             }
@@ -7360,6 +7426,20 @@
                 if (!a) return;
                 if (e.target.classList.contains('kw-f-status')) { a.status = e.target.value; persist(); }
                 else if (e.target.classList.contains('kw-f-pendidikan')) { a.pendidikan = e.target.value; persist(); }
+                else if (e.target.classList.contains('kw-f-disabilitas')) {
+                    if (!a.disabilitas) a.disabilitas = [];
+                    var valD = e.target.getAttribute('data-value');
+                    if (e.target.checked) { if (a.disabilitas.indexOf(valD) === -1) a.disabilitas.push(valD); }
+                    else { a.disabilitas = a.disabilitas.filter(function (x) { return x !== valD; }); }
+                    persist();
+                }
+                else if (e.target.classList.contains('kw-f-penyakit')) {
+                    if (!a.penyakitKronis) a.penyakitKronis = [];
+                    var valP = e.target.getAttribute('data-value');
+                    if (e.target.checked) { if (a.penyakitKronis.indexOf(valP) === -1) a.penyakitKronis.push(valP); }
+                    else { a.penyakitKronis = a.penyakitKronis.filter(function (x) { return x !== valP; }); }
+                    persist();
+                }
             });
 
             listEl.addEventListener('click', function (e) {
@@ -7375,11 +7455,24 @@
                     });
                     return;
                 }
+                var ynBtn = e.target.closest('.yn-btn');
+                if (ynBtn) {
+                    var toggle = ynBtn.closest('.yn-toggle');
+                    var field = toggle.getAttribute('data-field');
+                    var idY = toggle.getAttribute('data-id');
+                    var val = ynBtn.getAttribute('data-val') === '1';
+                    var aY = findAnggota(idY);
+                    if (!aY) return;
+                    toggle.querySelectorAll('.yn-btn').forEach(function (b) { b.classList.toggle('active', b === ynBtn); });
+                    if (field === 'akses') { aY.aksesKeuangan = val; }
+                    persist();
+                    return;
+                }
             });
 
             var btnTambah = document.getElementById('kw-btn-tambah-anggota');
             if (btnTambah) btnTambah.addEventListener('click', function () {
-                data.anggota.push({ id: KeluargaStore.newAnggotaId(), nama: '', status: '', pendidikan: '', adaGaji: false, pendapatanUpah: 0, adaLainnya: false, pendapatanLainnya: 0 });
+                data.anggota.push({ id: KeluargaStore.newAnggotaId(), nama: '', status: '', pendidikan: '', adaGaji: false, pendapatanUpah: 0, adaLainnya: false, pendapatanLainnya: 0, aksesKeuangan: false, disabilitas: [], penyakitKronis: [] });
                 renderAnggotaList();
                 persist();
             });
