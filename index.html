@@ -3482,6 +3482,66 @@
             border: none;
             padding: 3px 7px 0;
         }
+
+        /* ===================== KENYAMANAN PERANGKAT SENTUH (TABLET/PAD + STYLUS) =====================
+           Hanya aktif di perangkat dengan pointer kasar (touchscreen/stylus/smart pen), TIDAK
+           memengaruhi tampilan di laptop/desktop dengan mouse. Memperbesar target sentuh supaya
+           lebih nyaman diketuk dengan jari atau ujung stylus, tanpa mengubah tata letak halaman. */
+        @media (pointer: coarse) {
+
+            input[type="text"],
+            input[type="number"],
+            textarea,
+            select,
+            .csel-trigger {
+                min-height: 50px;
+                padding-top: 14px;
+                padding-bottom: 14px;
+                font-size: 16px;
+            }
+
+            textarea {
+                min-height: 110px;
+            }
+
+            .csel-opt {
+                padding: 14px 13px;
+                font-size: 15px;
+            }
+
+            .yn-btn {
+                min-height: 48px;
+                font-size: 14.5px;
+            }
+
+            .chip-checklist,
+            .aset-checklist {
+                gap: 10px;
+            }
+
+            .chip-checklist>label,
+            .aset-checklist>label {
+                min-height: 46px;
+                padding: 11px 13px;
+            }
+
+            .chip-checklist>label input,
+            .aset-checklist>label input {
+                width: 20px;
+                height: 20px;
+            }
+
+            .btn-outline-sm,
+            .btn-hitung,
+            .back-link,
+            .nav-item {
+                min-height: 46px;
+            }
+
+            .csel-panel-veh input[type="text"] {
+                min-height: 44px;
+            }
+        }
     </style>
 </head>
 
@@ -3687,6 +3747,22 @@
                                 <label class="field-label" for="kw-nama-kk">Nama Kepala Keluarga</label>
                                 <input type="text" id="kw-nama-kk" placeholder="Contoh: Bapak Asep Saepudin">
                             </div>
+                            <div class="field">
+                                <label class="field-label">Apakah Alamat Keluarga Sesuai dengan Alamat pada Kartu
+                                    Keluarga?</label>
+                                <div class="csel">
+                                    <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                        <span class="csel-value">Pilih jawaban&hellip;</span>
+                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                                    </button>
+                                    <ul class="csel-panel" role="listbox" tabindex="-1">
+                                        <li class="csel-opt" role="option" data-value="">Pilih jawaban&hellip;</li>
+                                        <li class="csel-opt" role="option" data-value="Ya">Ya</li>
+                                        <li class="csel-opt" role="option" data-value="Tidak">Tidak</li>
+                                    </ul>
+                                    <input type="hidden" id="kw-alamat-sesuai-kk" value="">
+                                </div>
+                            </div>
                             <div class="field-row-2">
                                 <div class="field">
                                     <label class="field-label" for="kw-sls">SLS / RT</label>
@@ -3696,6 +3772,12 @@
                                     <label class="field-label" for="kw-nourut">No. Urut Bangunan</label>
                                     <input type="text" id="kw-nourut" placeholder="Contoh: 001-B">
                                 </div>
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="kw-jumlah-menetap">Jumlah Anggota Keluarga yang
+                                    Menetap</label>
+                                <input type="text" id="kw-jumlah-menetap" inputmode="numeric"
+                                    placeholder="Contoh: 4">
                             </div>
                         </fieldset>
                         <div class="kw-nav-buttons" style="justify-content:flex-end;">
@@ -5961,6 +6043,26 @@
             document.addEventListener('click', function () { closeAllCsel(); });
         })();
 
+        /* Set nilai dropdown kustom (csel) secara programatik di luar alur
+           AutoSave.restore() biasa -- dipakai untuk field yang datanya dikelola
+           langsung lewat KeluargaStore (mis. Blok 1 Identitas). */
+        function setCselValue(hiddenId, val) {
+            var hidden = document.getElementById(hiddenId);
+            if (!hidden) return;
+            var wrap = hidden.closest('.csel');
+            if (!wrap) { hidden.value = val || ''; return; }
+            var opts = wrap.querySelectorAll('.csel-opt');
+            var valueEl = wrap.querySelector('.csel-value');
+            var matched = null;
+            opts.forEach(function (o) {
+                var isMatch = o.getAttribute('data-value') === (val || '');
+                o.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+                if (isMatch) matched = o;
+            });
+            hidden.value = val || '';
+            if (valueEl && matched) valueEl.textContent = matched.textContent;
+        }
+
         /* ===================== NOTIFIKASI DALAM APLIKASI (PENGGANTI alert/confirm SISTEM) ===================== */
         var scToastTimer = null;
         function showToast(message) {
@@ -6109,6 +6211,7 @@
 
             var blok1Rows = anggota.length ? anggota.map(function (a, i) {
                 var row = '<tr><td>' + (i + 1) + '</td><td>' + pdfEsc(a.nama || '-') + '</td><td>' + pdfEsc(a.pendidikan || '-') + '</td></tr>';
+                row += '<tr class="pd-rincian-row"><td></td><td colspan="2"><div class="pd-rincian"><div class="pd-rincian-title">Nama &amp; NIK Sesuai</div><table class="pd-rincian-table"><tr><td>' + (a.namaNikSesuai ? 'Ya' : 'Tidak') + '</td></tr></table></div></td></tr>';
                 row += '<tr class="pd-rincian-row"><td></td><td colspan="2"><div class="pd-rincian"><div class="pd-rincian-title">Rekening / M-Banking / E-Wallet</div><table class="pd-rincian-table"><tr><td>' + (a.aksesKeuangan ? 'Ya' : 'Tidak') + '</td></tr></table></div></td></tr>';
                 var kondisi = [].concat(a.disabilitas || [], a.penyakitKronis || []);
                 if (kondisi.length) {
@@ -6169,6 +6272,7 @@
                 '<div class="pd-meta">' +
                 'Nama Kepala Keluarga: <b>' + pdfEsc(idn.namaKK || '-') + '</b><br>' +
                 'SLS/RT: <b>' + pdfEsc(idn.sls || '-') + '</b> &nbsp;&middot;&nbsp; No. Urut Bangunan: <b>' + pdfEsc(idn.noUrut || '-') + '</b> &nbsp;&middot;&nbsp; No. WA/HP: <b>' + pdfEsc(idn.noWa || '-') + '</b><br>' +
+                'Alamat Sesuai KK: <b>' + pdfEsc(idn.alamatSesuaiKK || '-') + '</b> &nbsp;&middot;&nbsp; Jumlah Anggota Keluarga yang Menetap: <b>' + pdfEsc(idn.jumlahMenetap || '-') + '</b><br>' +
                 'Dicetak: ' + new Date().toLocaleString('id-ID') +
                 '</div></div>' +
 
@@ -6842,7 +6946,7 @@
             var EDITING_KEY = 'se2026_keluarga_editing_id';
 
             function blank() {
-                return { identitas: { namaKK: '', sls: '', noUrut: '', noWa: '', catatan: '' }, anggota: [], usahaList: [] };
+                return { identitas: { namaKK: '', sls: '', noUrut: '', noWa: '', catatan: '', alamatSesuaiKK: '', jumlahMenetap: '' }, anggota: [], usahaList: [] };
             }
             function load() {
                 try {
@@ -7237,9 +7341,11 @@
             var data = KeluargaStore.load();
             if (!data.anggota) data.anggota = [];
             if (!data.usahaList) data.usahaList = [];
-            if (!data.identitas) data.identitas = { namaKK: '', sls: '', noUrut: '', noWa: '', catatan: '' };
+            if (!data.identitas) data.identitas = { namaKK: '', sls: '', noUrut: '', noWa: '', catatan: '', alamatSesuaiKK: '', jumlahMenetap: '' };
             if (data.identitas.noWa === undefined) data.identitas.noWa = '';
             if (data.identitas.catatan === undefined) data.identitas.catatan = '';
+            if (data.identitas.alamatSesuaiKK === undefined) data.identitas.alamatSesuaiKK = '';
+            if (data.identitas.jumlahMenetap === undefined) data.identitas.jumlahMenetap = '';
 
             /* Migrasi draft lama (sebelum Blok 2/3 dipisah): aktifkan toggle Ya/Tidak
                otomatis bila sebelumnya sudah ada nominal, dan pindahkan usahaLink lama
@@ -7269,6 +7375,8 @@
             var elNourut = document.getElementById('kw-nourut');
             var elNowa = document.getElementById('kw-nowa');
             var elCatatan = document.getElementById('catatan-tambahan-kw');
+            var elAlamatSesuai = document.getElementById('kw-alamat-sesuai-kk');
+            var elJumlahMenetap = document.getElementById('kw-jumlah-menetap');
             var listEl = document.getElementById('kw-anggota-list');
             var usahaListEl = document.getElementById('kw-usaha-list');
             var pendapatanListEl = document.getElementById('kw-pendapatan-list');
@@ -7278,6 +7386,8 @@
             elNourut.value = data.identitas.noUrut || '';
             elNowa.value = data.identitas.noWa || '';
             if (elCatatan) elCatatan.value = data.identitas.catatan || '';
+            setCselValue('kw-alamat-sesuai-kk', data.identitas.alamatSesuaiKK || '');
+            if (elJumlahMenetap) elJumlahMenetap.value = data.identitas.jumlahMenetap || '';
 
             function triggerDraftIndicator() {
                 var indEl = document.getElementById('draft-indicator-keluarga');
@@ -7296,6 +7406,8 @@
                 data.identitas.noUrut = elNourut.value;
                 data.identitas.noWa = elNowa.value;
                 if (elCatatan) data.identitas.catatan = elCatatan.value;
+                if (elAlamatSesuai) data.identitas.alamatSesuaiKK = elAlamatSesuai.value;
+                if (elJumlahMenetap) data.identitas.jumlahMenetap = elJumlahMenetap.value;
                 persist();
             }
             elNama.addEventListener('input', persistIdentitas);
@@ -7303,6 +7415,8 @@
             elNourut.addEventListener('input', persistIdentitas);
             elNowa.addEventListener('input', persistIdentitas);
             if (elCatatan) elCatatan.addEventListener('input', persistIdentitas);
+            if (elAlamatSesuai) elAlamatSesuai.addEventListener('change', persistIdentitas);
+            if (elJumlahMenetap) elJumlahMenetap.addEventListener('input', persistIdentitas);
 
             function formatRpK(n) { return 'Rp ' + Math.round(n || 0).toLocaleString('id-ID'); }
             function escAttrK(s) { return String(s == null ? '' : s).replace(/"/g, '&quot;'); }
@@ -7378,6 +7492,9 @@
                     '<button type="button" class="kw-btn-hapus-anggota" data-hapus="' + a.id + '" title="Hapus anggota">' +
                     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m2 0-1 13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L6 7"/></svg>' +
                     '</button></div>' +
+                    '<div class="yn-row"><label>Apakah Nama dan NIK Sesuai?</label>' +
+                    ynToggleHtml('namanik', a.id, !!a.namaNikSesuai) +
+                    '</div>' +
                     '<div class="field-row-2">' +
                     '<div class="field"><label class="field-label">Status dalam Keluarga</label>' +
                     '<select class="kw-f-status" data-id="' + a.id + '">' + selectOptionsHtml(STATUS_OPTIONS, a.status, 'Pilih status&hellip;') + '</select></div>' +
@@ -7465,6 +7582,7 @@
                     if (!aY) return;
                     toggle.querySelectorAll('.yn-btn').forEach(function (b) { b.classList.toggle('active', b === ynBtn); });
                     if (field === 'akses') { aY.aksesKeuangan = val; }
+                    else if (field === 'namanik') { aY.namaNikSesuai = val; }
                     persist();
                     return;
                 }
@@ -7472,7 +7590,7 @@
 
             var btnTambah = document.getElementById('kw-btn-tambah-anggota');
             if (btnTambah) btnTambah.addEventListener('click', function () {
-                data.anggota.push({ id: KeluargaStore.newAnggotaId(), nama: '', status: '', pendidikan: '', adaGaji: false, pendapatanUpah: 0, adaLainnya: false, pendapatanLainnya: 0, aksesKeuangan: false, disabilitas: [], penyakitKronis: [] });
+                data.anggota.push({ id: KeluargaStore.newAnggotaId(), nama: '', status: '', pendidikan: '', adaGaji: false, pendapatanUpah: 0, adaLainnya: false, pendapatanLainnya: 0, aksesKeuangan: false, namaNikSesuai: false, disabilitas: [], penyakitKronis: [] });
                 renderAnggotaList();
                 persist();
             });
@@ -7731,7 +7849,7 @@
 
             window.kwReloadFromStore = function () {
                 data = KeluargaStore.load();
-                if (!data.identitas) data.identitas = { namaKK: '', sls: '', noUrut: '', noWa: '', catatan: '' };
+                if (!data.identitas) data.identitas = { namaKK: '', sls: '', noUrut: '', noWa: '', catatan: '', alamatSesuaiKK: '', jumlahMenetap: '' };
                 if (!data.anggota) data.anggota = [];
                 if (!data.usahaList) data.usahaList = [];
                 elNama.value = data.identitas.namaKK || '';
@@ -7739,6 +7857,8 @@
                 elNourut.value = data.identitas.noUrut || '';
                 elNowa.value = data.identitas.noWa || '';
                 if (elCatatan) elCatatan.value = data.identitas.catatan || '';
+                setCselValue('kw-alamat-sesuai-kk', data.identitas.alamatSesuaiKK || '');
+                if (elJumlahMenetap) elJumlahMenetap.value = data.identitas.jumlahMenetap || '';
                 renderAnggotaList();
                 renderUsahaList();
                 renderPendapatan();
@@ -9587,8 +9707,10 @@
                 var lines = [
                     '=== KUESIONER KELUARGA TERPADU (BLOK 1\u20134) ===',
                     'Nama Kepala Keluarga: ' + (idn.namaKK || '(Tanpa nama)'),
+                    'Alamat Sesuai Kartu Keluarga: ' + (idn.alamatSesuaiKK || '-'),
                     'SLS/RT: ' + (idn.sls || '-'),
                     'No. Urut Bangunan: ' + (idn.noUrut || '-'),
+                    'Jumlah Anggota Keluarga yang Menetap: ' + (idn.jumlahMenetap || '-'),
                     'No. WhatsApp/HP: ' + (idn.noWa || '-'),
                     '',
                     '--- BLOK 1: ANGGOTA KELUARGA (' + anggota.length + ' orang) ---'
