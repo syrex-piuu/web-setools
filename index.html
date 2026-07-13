@@ -3485,61 +3485,33 @@
 
         /* ===================== KENYAMANAN PERANGKAT SENTUH (TABLET/PAD + STYLUS) =====================
            Hanya aktif di perangkat dengan pointer kasar (touchscreen/stylus/smart pen), TIDAK
-           memengaruhi tampilan di laptop/desktop dengan mouse. Memperbesar target sentuh supaya
-           lebih nyaman diketuk dengan jari atau ujung stylus, tanpa mengubah tata letak halaman. */
+           memengaruhi tampilan di laptop/desktop dengan mouse. Hanya memperbesar kolom isian
+           manual (teks/angka) supaya lebih leluasa dipakai menulis dengan stylus/smart pen;
+           dropdown, tombol Ya/Tidak, checklist, dan tombol lainnya dibiarkan seperti semula. */
         @media (pointer: coarse) {
 
             input[type="text"],
-            input[type="number"],
-            textarea,
-            select,
-            .csel-trigger {
-                min-height: 50px;
-                padding-top: 14px;
-                padding-bottom: 14px;
+            input[type="number"] {
+                min-height: 60px;
+                padding-top: 18px;
+                padding-bottom: 18px;
                 font-size: 16px;
             }
 
             textarea {
-                min-height: 110px;
+                min-height: 140px;
+                padding-top: 16px;
+                padding-bottom: 16px;
+                font-size: 16px;
             }
 
-            .csel-opt {
-                padding: 14px 13px;
-                font-size: 15px;
-            }
-
-            .yn-btn {
-                min-height: 48px;
-                font-size: 14.5px;
-            }
-
-            .chip-checklist,
-            .aset-checklist {
-                gap: 10px;
-            }
-
-            .chip-checklist>label,
-            .aset-checklist>label {
-                min-height: 46px;
-                padding: 11px 13px;
-            }
-
-            .chip-checklist>label input,
-            .aset-checklist>label input {
-                width: 20px;
-                height: 20px;
-            }
-
-            .btn-outline-sm,
-            .btn-hitung,
-            .back-link,
-            .nav-item {
-                min-height: 46px;
-            }
-
+            /* Kecualikan input pencarian di dalam dropdown Data Kendaraan --
+               itu bagian dari dropdown, bukan kolom isian manual. */
             .csel-panel-veh input[type="text"] {
-                min-height: 44px;
+                min-height: 0;
+                padding-top: 9px;
+                padding-bottom: 9px;
+                font-size: 13px;
             }
         }
     </style>
