@@ -663,6 +663,27 @@
             flex: 1 1 190px;
         }
 
+        .riwayat-search-wrap {
+            position: relative;
+            flex: 2 1 240px;
+            min-width: 220px;
+        }
+
+        .riwayat-search-icon {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            color: var(--ink-faint, #9aa5a2);
+            pointer-events: none;
+        }
+
+        .riwayat-search-wrap input[type="text"] {
+            padding-left: 38px;
+        }
+
         .btn-outline-sm {
             display: inline-flex;
             align-items: center;
@@ -2608,6 +2629,94 @@
             transform: translateY(0) scale(1);
         }
 
+        .preview-modal-box {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            max-width: 880px;
+            width: 100%;
+            max-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: translateY(8px) scale(.98);
+            transition: transform .18s var(--ease);
+        }
+
+        .sc-modal-overlay.show .preview-modal-box {
+            transform: translateY(0) scale(1);
+        }
+
+        .preview-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px 18px;
+            border-bottom: 1.5px solid var(--line);
+            flex: 0 0 auto;
+        }
+
+        .preview-modal-header h3 {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: var(--ink);
+            margin: 0;
+        }
+
+        .preview-modal-close {
+            width: 34px;
+            height: 34px;
+            flex: 0 0 auto;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: var(--ink-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: .15s;
+        }
+
+        .preview-modal-close:hover {
+            background: var(--surface-alt);
+            color: var(--ink);
+        }
+
+        .preview-modal-close svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .preview-modal-body {
+            overflow-y: auto;
+            padding: 18px;
+            flex: 1 1 auto;
+            background: #eef0ef;
+        }
+
+        .preview-modal-body.pd-print-content {
+            display: block;
+        }
+
+        .preview-modal-body .pd-wrap {
+            background: var(--surface);
+            padding: 18px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+        }
+
+        @media (max-width: 640px) {
+            .preview-modal-box {
+                max-height: 92vh;
+            }
+
+            .preview-modal-body {
+                padding: 10px;
+            }
+        }
+
         .sc-modal-icon {
             width: 46px;
             height: 46px;
@@ -3321,20 +3430,20 @@
             }
         }
 
-        #print-area .pd-wrap {
+        .pd-print-content .pd-wrap {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             color: #16232c;
             max-width: 190mm;
             margin: 0 auto;
         }
 
-        #print-area .pd-header {
+        .pd-print-content .pd-header {
             border-bottom: 2.5px solid #16232c;
             padding-bottom: 10px;
             margin-bottom: 18px;
         }
 
-        #print-area .pd-eyebrow {
+        .pd-print-content .pd-eyebrow {
             font-size: 10px;
             font-weight: 800;
             letter-spacing: .06em;
@@ -3342,23 +3451,23 @@
             color: #55666f;
         }
 
-        #print-area .pd-header h1 {
+        .pd-print-content .pd-header h1 {
             font-size: 18px;
             margin: 4px 0 8px;
         }
 
-        #print-area .pd-meta {
+        .pd-print-content .pd-meta {
             font-size: 11px;
             color: #333;
             line-height: 1.7;
         }
 
-        #print-area .pd-blok {
+        .pd-print-content .pd-blok {
             margin-bottom: 20px;
             page-break-inside: avoid;
         }
 
-        #print-area .pd-blok h2 {
+        .pd-print-content .pd-blok h2 {
             font-size: 12.5px;
             text-transform: uppercase;
             letter-spacing: .03em;
@@ -3368,21 +3477,21 @@
             border-left: 4px solid #16232c;
         }
 
-        #print-area .pd-blok h3 {
+        .pd-print-content .pd-blok h3 {
             font-size: 11.5px;
             margin: 14px 0 6px;
             color: #333;
         }
 
-        #print-area table {
+        .pd-print-content table {
             width: 100%;
             border-collapse: collapse;
             font-size: 10.5px;
             margin-bottom: 4px;
         }
 
-        #print-area th,
-        #print-area td {
+        .pd-print-content th,
+        .pd-print-content td {
             border: 1px solid #ccc;
             padding: 5px 7px;
             text-align: left;
@@ -3391,34 +3500,34 @@
             overflow-wrap: anywhere;
         }
 
-        #print-area th {
+        .pd-print-content th {
             background: #f7f7f7;
             font-weight: 700;
         }
 
-        #print-area td.num,
-        #print-area th.num {
+        .pd-print-content td.num,
+        .pd-print-content th.num {
             text-align: right;
             font-variant-numeric: tabular-nums;
         }
 
-        #print-area .pd-catatan-table {
+        .pd-print-content .pd-catatan-table {
             table-layout: fixed;
             width: 100%;
         }
 
-        #print-area .pd-catatan-table td {
+        .pd-print-content .pd-catatan-table td {
             white-space: pre-wrap;
             word-break: break-all;
             overflow-wrap: anywhere;
         }
 
-        #print-area .pd-total-row td {
+        .pd-print-content .pd-total-row td {
             font-weight: 700;
             background: #f2f4f3;
         }
 
-        #print-area .pd-footer {
+        .pd-print-content .pd-footer {
             margin-top: 24px;
             font-size: 9.5px;
             color: #888;
@@ -3427,19 +3536,19 @@
             padding-top: 8px;
         }
 
-        #print-area .pd-empty {
+        .pd-print-content .pd-empty {
             text-align: center;
             color: #888;
             font-style: italic;
         }
 
-        #print-area .pd-rincian-row td {
+        .pd-print-content .pd-rincian-row td {
             border-top: none;
             padding: 0 7px 10px;
             background: #fbfbfa;
         }
 
-        #print-area .pd-rincian {
+        .pd-print-content .pd-rincian {
             border: 1px solid #dbe0de;
             border-left: 3px solid #16232c;
             border-radius: 3px;
@@ -3447,7 +3556,7 @@
             background: #fbfbfa;
         }
 
-        #print-area .pd-rincian-title {
+        .pd-print-content .pd-rincian-title {
             font-size: 9.5px;
             font-weight: 700;
             text-transform: uppercase;
@@ -3456,16 +3565,16 @@
             margin-bottom: 4px;
         }
 
-        #print-area .pd-rincian-table {
+        .pd-print-content .pd-rincian-table {
             margin: 0;
         }
 
-        #print-area .pd-rincian-table td {
+        .pd-print-content .pd-rincian-table td {
             font-size: 10px;
             padding: 4px 7px;
         }
 
-        #print-area .pd-rincian-section td {
+        .pd-print-content .pd-rincian-section td {
             font-weight: 700;
             background: #eef2f1;
             text-transform: uppercase;
@@ -3474,7 +3583,7 @@
             color: #33403f;
         }
 
-        #print-area .pd-rincian-note td {
+        .pd-print-content .pd-rincian-note td {
             font-style: italic;
             color: #888;
             font-size: 9px;
@@ -3519,7 +3628,7 @@
 
 <body>
 
-    <div id="print-area"></div>
+    <div id="print-area" class="pd-print-content"></div>
 
     <div class="app-shell" id="app-shell">
 
@@ -3897,6 +4006,12 @@
                                     <input type="text" id="resp-sls-utp" placeholder="Contoh: SLS 12">
                                 </div>
                             </div>
+                            <div class="field">
+                                <label class="field-label" for="resp-tahun-mulai-utp">Tahun Mulai/Beroperasi
+                                    Usaha</label>
+                                <input type="text" id="resp-tahun-mulai-utp" inputmode="numeric"
+                                    placeholder="Contoh: 2018">
+                            </div>
                         </fieldset>
 
                         <fieldset>
@@ -4184,6 +4299,12 @@
                                     <input type="text" id="resp-sls-buah" placeholder="Contoh: SLS 12">
                                 </div>
                             </div>
+                            <div class="field">
+                                <label class="field-label" for="resp-tahun-mulai-buah">Tahun Mulai/Beroperasi
+                                    Usaha</label>
+                                <input type="text" id="resp-tahun-mulai-buah" inputmode="numeric"
+                                    placeholder="Contoh: 2018">
+                            </div>
                         </fieldset>
 
                         <fieldset>
@@ -4453,6 +4574,12 @@
                                     <label class="field-label" for="resp-sls-usaha">SLS / RT</label>
                                     <input type="text" id="resp-sls-usaha" placeholder="Contoh: SLS 12">
                                 </div>
+                            </div>
+                            <div class="field">
+                                <label class="field-label" for="resp-tahun-mulai-usaha">Tahun Mulai/Beroperasi
+                                    Usaha</label>
+                                <input type="text" id="resp-tahun-mulai-usaha" inputmode="numeric"
+                                    placeholder="Contoh: 2018">
                             </div>
                         </fieldset>
 
@@ -5141,7 +5268,138 @@
                         </fieldset>
 
                         <fieldset>
-                            <div class="blok-label"><span class="dot"></span>Blok A &mdash; Pengeluaran Pangan per
+                            <div class="blok-label"><span class="dot"></span>Blok A &mdash; Kondisi Perumahan</div>
+                            <small class="hint" style="display:block;margin-bottom:14px;">Untuk tiap komponen, pilih
+                                bahan bangunan utama terlebih dahulu, baru kondisinya saat ini.</small>
+
+                            <div class="field" id="grup-status-kepemilikan-sosek">
+                                <label class="field-label" for="status-kepemilikan-sosek">Status Kepemilikan Rumah</label>
+                                <div class="csel">
+                                    <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                        <span class="csel-value">Pilih status kepemilikan&hellip;</span>
+                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                                    </button>
+                                    <ul class="csel-panel" role="listbox" tabindex="-1">
+                                        <li class="csel-opt" role="option" data-value="">Pilih status kepemilikan&hellip;</li>
+                                        <li class="csel-opt" role="option" data-value="Milik Sendiri">Milik Sendiri</li>
+                                        <li class="csel-opt" role="option" data-value="Bebas Sewa">Bebas Sewa</li>
+                                        <li class="csel-opt" role="option" data-value="Sewa/Kontrak">Sewa / Kontrak</li>
+                                        <li class="csel-opt" role="option" data-value="Dinas">Dinas</li>
+                                        <li class="csel-opt" role="option" data-value="Lainnya">Lainnya</li>
+                                    </ul>
+                                    <input type="hidden" id="status-kepemilikan-sosek" value="">
+                                </div>
+                            </div>
+                            <div class="field hide" id="grup-harga-sewa-sosek">
+                                <label class="field-label" for="harga-sewa-sosek">Perkiraan Harga Sewa/Disewakan per
+                                    Tahun</label>
+                                <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
+                                        id="harga-sewa-sosek" inputmode="numeric" placeholder="Contoh: 3.500.000"></div>
+                                <small class="hint">Perkiraan nilai sewa rumah ini per tahun jika
+                                    disewakan/dikontrakkan, sesuai kondisi saat ini.</small>
+                            </div>
+
+                            <div class="kondisi-card">
+                                <div class="field-label title">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M3 20h18M4 20V9l8-6 8 6v11"/></svg>
+                                    Lantai
+                                </div>
+                                <div class="sub-label">Bahan Utama</div>
+                                <div class="csel">
+                                    <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                        <span class="csel-value">Pilih bahan lantai&hellip;</span>
+                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                                    </button>
+                                    <ul class="csel-panel" role="listbox" tabindex="-1">
+                                        <li class="csel-opt" role="option" data-value="">Pilih bahan lantai&hellip;</li>
+                                        <li class="csel-opt" role="option" data-value="Marmer/Granit">Marmer / Granit</li>
+                                        <li class="csel-opt" role="option" data-value="Keramik">Keramik</li>
+                                        <li class="csel-opt" role="option" data-value="Vinil/Karpet">Vinil / Karpet</li>
+                                        <li class="csel-opt" role="option" data-value="Ubin/Tegel">Ubin / Tegel</li>
+                                        <li class="csel-opt" role="option" data-value="Kayu/Papan">Kayu / Papan</li>
+                                        <li class="csel-opt" role="option" data-value="Semen">Semen</li>
+                                        <li class="csel-opt" role="option" data-value="Bambu">Bambu</li>
+                                        <li class="csel-opt" role="option" data-value="Tanah">Tanah</li>
+                                        <li class="csel-opt" role="option" data-value="Lainnya">Lainnya</li>
+                                    </ul>
+                                    <input type="hidden" id="lantai-bahan-sosek" value="">
+                                </div>
+                                <div class="sub-label">Kondisi Saat Ini</div>
+                                <div class="segmented-4" id="lantai-kondisi-sosek">
+                                    <label class="seg-opt"><input type="radio" name="lantai_kondisi_sosek" value="Baik"><span>Baik</span></label>
+                                    <label class="seg-opt"><input type="radio" name="lantai_kondisi_sosek" value="Rusak Ringan"><span>Rusak Ringan</span></label>
+                                    <label class="seg-opt"><input type="radio" name="lantai_kondisi_sosek" value="Rusak Sedang"><span>Rusak Sedang</span></label>
+                                    <label class="seg-opt"><input type="radio" name="lantai_kondisi_sosek" value="Rusak Berat"><span>Rusak Berat</span></label>
+                                </div>
+                            </div>
+
+                            <div class="kondisi-card">
+                                <div class="field-label title">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 10h18M9 4v16"/></svg>
+                                    Dinding
+                                </div>
+                                <div class="sub-label">Bahan Utama</div>
+                                <div class="csel">
+                                    <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                        <span class="csel-value">Pilih bahan dinding&hellip;</span>
+                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                                    </button>
+                                    <ul class="csel-panel" role="listbox" tabindex="-1">
+                                        <li class="csel-opt" role="option" data-value="">Pilih bahan dinding&hellip;</li>
+                                        <li class="csel-opt" role="option" data-value="Tembok">Tembok</li>
+                                        <li class="csel-opt" role="option" data-value="Plesteran Anyaman Bambu/Kawat">Plesteran Anyaman Bambu / Kawat</li>
+                                        <li class="csel-opt" role="option" data-value="Kayu/Papan/GRC">Kayu / Papan / GRC</li>
+                                        <li class="csel-opt" role="option" data-value="Anyaman Bambu">Anyaman Bambu</li>
+                                        <li class="csel-opt" role="option" data-value="Bambu">Bambu</li>
+                                        <li class="csel-opt" role="option" data-value="Lainnya">Lainnya</li>
+                                    </ul>
+                                    <input type="hidden" id="dinding-bahan-sosek" value="">
+                                </div>
+                                <div class="sub-label">Kondisi Saat Ini</div>
+                                <div class="segmented-4" id="dinding-kondisi-sosek">
+                                    <label class="seg-opt"><input type="radio" name="dinding_kondisi_sosek" value="Baik"><span>Baik</span></label>
+                                    <label class="seg-opt"><input type="radio" name="dinding_kondisi_sosek" value="Rusak Ringan"><span>Rusak Ringan</span></label>
+                                    <label class="seg-opt"><input type="radio" name="dinding_kondisi_sosek" value="Rusak Sedang"><span>Rusak Sedang</span></label>
+                                    <label class="seg-opt"><input type="radio" name="dinding_kondisi_sosek" value="Rusak Berat"><span>Rusak Berat</span></label>
+                                </div>
+                            </div>
+
+                            <div class="kondisi-card">
+                                <div class="field-label title">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></svg>
+                                    Atap
+                                </div>
+                                <div class="sub-label">Bahan Utama</div>
+                                <div class="csel">
+                                    <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                        <span class="csel-value">Pilih bahan atap&hellip;</span>
+                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                                    </button>
+                                    <ul class="csel-panel" role="listbox" tabindex="-1">
+                                        <li class="csel-opt" role="option" data-value="">Pilih bahan atap&hellip;</li>
+                                        <li class="csel-opt" role="option" data-value="Beton">Beton</li>
+                                        <li class="csel-opt" role="option" data-value="Genteng">Genteng</li>
+                                        <li class="csel-opt" role="option" data-value="Seng">Seng</li>
+                                        <li class="csel-opt" role="option" data-value="Asbes">Asbes</li>
+                                        <li class="csel-opt" role="option" data-value="Bambu">Bambu</li>
+                                        <li class="csel-opt" role="option" data-value="Kayu/Sirap">Kayu / Sirap</li>
+                                        <li class="csel-opt" role="option" data-value="Jerami/Ijuk/Rumbia">Jerami / Ijuk / Rumbia</li>
+                                        <li class="csel-opt" role="option" data-value="Lainnya">Lainnya</li>
+                                    </ul>
+                                    <input type="hidden" id="atap-bahan-sosek" value="">
+                                </div>
+                                <div class="sub-label">Kondisi Saat Ini</div>
+                                <div class="segmented-4" id="atap-kondisi-sosek">
+                                    <label class="seg-opt"><input type="radio" name="atap_kondisi_sosek" value="Baik"><span>Baik</span></label>
+                                    <label class="seg-opt"><input type="radio" name="atap_kondisi_sosek" value="Rusak Ringan"><span>Rusak Ringan</span></label>
+                                    <label class="seg-opt"><input type="radio" name="atap_kondisi_sosek" value="Rusak Sedang"><span>Rusak Sedang</span></label>
+                                    <label class="seg-opt"><input type="radio" name="atap_kondisi_sosek" value="Rusak Berat"><span>Rusak Berat</span></label>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="blok-label"><span class="dot"></span>Blok B &mdash; Pengeluaran Pangan per
                                 Hari</div>
                             <div class="field">
                                 <label class="field-label" for="pangan-harian-sosek">Biaya Pangan per Hari (termasuk
@@ -5154,7 +5412,7 @@
                         </fieldset>
 
                         <fieldset>
-                            <div class="blok-label"><span class="dot"></span>Blok B &mdash; Pengeluaran Non-Pangan per
+                            <div class="blok-label"><span class="dot"></span>Blok C &mdash; Pengeluaran Non-Pangan per
                                 Bulan</div>
 
                             <div class="field">
@@ -5278,7 +5536,7 @@
                         </fieldset>
 
                         <fieldset>
-                            <div class="blok-label"><span class="dot"></span>Blok C &mdash; Non-Pangan Rutin Tahunan</div>
+                            <div class="blok-label"><span class="dot"></span>Blok D &mdash; Non-Pangan Rutin Tahunan</div>
                             <div class="field">
                                 <label class="field-label" for="pajak-kendaraan-sosek">Pajak Kendaraan per Tahun</label>
                                 <div class="prefix-wrap"><span class="rp">Rp</span><input type="text"
@@ -5305,7 +5563,7 @@
                         </fieldset>
 
                         <fieldset>
-                            <div class="blok-label"><span class="dot"></span>Blok D &mdash; Pemasukan Seluruh Keluarga
+                            <div class="blok-label"><span class="dot"></span>Blok E &mdash; Pemasukan Seluruh Keluarga
                             </div>
                             <div class="kw-usaha-hasil-badge" id="sosek-pemasukan-sync">
                                 <div class="txt">
@@ -5323,7 +5581,7 @@
                         </fieldset>
 
                         <fieldset>
-                            <div class="blok-label"><span class="dot"></span>Blok E &mdash; Data Kendaraan (Estimasi
+                            <div class="blok-label"><span class="dot"></span>Blok F &mdash; Data Kendaraan (Estimasi
                                 Aset)</div>
                             <small class="hint" style="display:block;margin-bottom:14px;">Pilih model yang paling
                                 mendekati kendaraan milik responden untuk melihat estimasi harga jual saat ini. Jika
@@ -5358,113 +5616,9 @@
                         </fieldset>
 
                         <fieldset>
-                            <div class="blok-label"><span class="dot"></span>Blok F &mdash; Kondisi Perumahan</div>
-                            <small class="hint" style="display:block;margin-bottom:14px;">Untuk tiap komponen, pilih
-                                bahan bangunan utama terlebih dahulu, baru kondisinya saat ini.</small>
-
-                            <div class="kondisi-card">
-                                <div class="field-label title">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M3 20h18M4 20V9l8-6 8 6v11"/></svg>
-                                    Lantai
-                                </div>
-                                <div class="sub-label">Bahan Utama</div>
-                                <div class="csel">
-                                    <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
-                                        <span class="csel-value">Pilih bahan lantai&hellip;</span>
-                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
-                                    </button>
-                                    <ul class="csel-panel" role="listbox" tabindex="-1">
-                                        <li class="csel-opt" role="option" data-value="">Pilih bahan lantai&hellip;</li>
-                                        <li class="csel-opt" role="option" data-value="Marmer/Granit">Marmer / Granit</li>
-                                        <li class="csel-opt" role="option" data-value="Keramik">Keramik</li>
-                                        <li class="csel-opt" role="option" data-value="Vinil/Karpet">Vinil / Karpet</li>
-                                        <li class="csel-opt" role="option" data-value="Ubin/Tegel">Ubin / Tegel</li>
-                                        <li class="csel-opt" role="option" data-value="Kayu/Papan">Kayu / Papan</li>
-                                        <li class="csel-opt" role="option" data-value="Semen">Semen</li>
-                                        <li class="csel-opt" role="option" data-value="Bambu">Bambu</li>
-                                        <li class="csel-opt" role="option" data-value="Tanah">Tanah</li>
-                                        <li class="csel-opt" role="option" data-value="Lainnya">Lainnya</li>
-                                    </ul>
-                                    <input type="hidden" id="lantai-bahan-sosek" value="">
-                                </div>
-                                <div class="sub-label">Kondisi Saat Ini</div>
-                                <div class="segmented-4" id="lantai-kondisi-sosek">
-                                    <label class="seg-opt"><input type="radio" name="lantai_kondisi_sosek" value="Baik"><span>Baik</span></label>
-                                    <label class="seg-opt"><input type="radio" name="lantai_kondisi_sosek" value="Rusak Ringan"><span>Rusak Ringan</span></label>
-                                    <label class="seg-opt"><input type="radio" name="lantai_kondisi_sosek" value="Rusak Sedang"><span>Rusak Sedang</span></label>
-                                    <label class="seg-opt"><input type="radio" name="lantai_kondisi_sosek" value="Rusak Berat"><span>Rusak Berat</span></label>
-                                </div>
-                            </div>
-
-                            <div class="kondisi-card">
-                                <div class="field-label title">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 10h18M9 4v16"/></svg>
-                                    Dinding
-                                </div>
-                                <div class="sub-label">Bahan Utama</div>
-                                <div class="csel">
-                                    <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
-                                        <span class="csel-value">Pilih bahan dinding&hellip;</span>
-                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
-                                    </button>
-                                    <ul class="csel-panel" role="listbox" tabindex="-1">
-                                        <li class="csel-opt" role="option" data-value="">Pilih bahan dinding&hellip;</li>
-                                        <li class="csel-opt" role="option" data-value="Tembok">Tembok</li>
-                                        <li class="csel-opt" role="option" data-value="Plesteran Anyaman Bambu/Kawat">Plesteran Anyaman Bambu / Kawat</li>
-                                        <li class="csel-opt" role="option" data-value="Kayu/Papan/GRC">Kayu / Papan / GRC</li>
-                                        <li class="csel-opt" role="option" data-value="Anyaman Bambu">Anyaman Bambu</li>
-                                        <li class="csel-opt" role="option" data-value="Bambu">Bambu</li>
-                                        <li class="csel-opt" role="option" data-value="Lainnya">Lainnya</li>
-                                    </ul>
-                                    <input type="hidden" id="dinding-bahan-sosek" value="">
-                                </div>
-                                <div class="sub-label">Kondisi Saat Ini</div>
-                                <div class="segmented-4" id="dinding-kondisi-sosek">
-                                    <label class="seg-opt"><input type="radio" name="dinding_kondisi_sosek" value="Baik"><span>Baik</span></label>
-                                    <label class="seg-opt"><input type="radio" name="dinding_kondisi_sosek" value="Rusak Ringan"><span>Rusak Ringan</span></label>
-                                    <label class="seg-opt"><input type="radio" name="dinding_kondisi_sosek" value="Rusak Sedang"><span>Rusak Sedang</span></label>
-                                    <label class="seg-opt"><input type="radio" name="dinding_kondisi_sosek" value="Rusak Berat"><span>Rusak Berat</span></label>
-                                </div>
-                            </div>
-
-                            <div class="kondisi-card">
-                                <div class="field-label title">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></svg>
-                                    Atap
-                                </div>
-                                <div class="sub-label">Bahan Utama</div>
-                                <div class="csel">
-                                    <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
-                                        <span class="csel-value">Pilih bahan atap&hellip;</span>
-                                        <svg class="csel-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
-                                    </button>
-                                    <ul class="csel-panel" role="listbox" tabindex="-1">
-                                        <li class="csel-opt" role="option" data-value="">Pilih bahan atap&hellip;</li>
-                                        <li class="csel-opt" role="option" data-value="Beton">Beton</li>
-                                        <li class="csel-opt" role="option" data-value="Genteng">Genteng</li>
-                                        <li class="csel-opt" role="option" data-value="Seng">Seng</li>
-                                        <li class="csel-opt" role="option" data-value="Asbes">Asbes</li>
-                                        <li class="csel-opt" role="option" data-value="Bambu">Bambu</li>
-                                        <li class="csel-opt" role="option" data-value="Kayu/Sirap">Kayu / Sirap</li>
-                                        <li class="csel-opt" role="option" data-value="Jerami/Ijuk/Rumbia">Jerami / Ijuk / Rumbia</li>
-                                        <li class="csel-opt" role="option" data-value="Lainnya">Lainnya</li>
-                                    </ul>
-                                    <input type="hidden" id="atap-bahan-sosek" value="">
-                                </div>
-                                <div class="sub-label">Kondisi Saat Ini</div>
-                                <div class="segmented-4" id="atap-kondisi-sosek">
-                                    <label class="seg-opt"><input type="radio" name="atap_kondisi_sosek" value="Baik"><span>Baik</span></label>
-                                    <label class="seg-opt"><input type="radio" name="atap_kondisi_sosek" value="Rusak Ringan"><span>Rusak Ringan</span></label>
-                                    <label class="seg-opt"><input type="radio" name="atap_kondisi_sosek" value="Rusak Sedang"><span>Rusak Sedang</span></label>
-                                    <label class="seg-opt"><input type="radio" name="atap_kondisi_sosek" value="Rusak Berat"><span>Rusak Berat</span></label>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
                             <div class="blok-label"><span class="dot"></span>Blok G &mdash; Kepemilikan Aset Lainnya</div>
                             <div class="field">
-                                <label class="field-label">Aset Bergerak (di luar kendaraan pada Blok E)</label>
+                                <label class="field-label">Aset Bergerak (di luar kendaraan pada Blok F)</label>
                                 <div class="aset-checklist" id="aset-bergerak-sosek">
                                     <label><input type="checkbox" class="aset-bergerak-chk" name="aset_bergerak_sosek" value="Emas/Perhiasan" id="chk-emas-sosek"> Emas / Perhiasan</label>
                                     <div class="aset-detail" id="detail-emas-sosek" style="display:none;">
@@ -5816,6 +5970,10 @@
                     </div>
 
                     <div class="riwayat-toolbar">
+                        <div class="riwayat-search-wrap">
+                            <svg class="riwayat-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                            <input type="text" id="riwayat-search" placeholder="Cari nama, SLS, atau No. Urut Bangunan&hellip;">
+                        </div>
                         <div class="csel" id="riwayat-filter-wrap">
                             <button type="button" class="csel-trigger" aria-haspopup="listbox" aria-expanded="false">
                                 <span class="csel-value">Semua Instrumen</span>
@@ -5896,6 +6054,18 @@
     </div>
 
     <div id="sc-toast" class="sc-toast" role="status" aria-live="polite"></div>
+
+    <div id="preview-modal" class="sc-modal-overlay">
+        <div class="preview-modal-box" role="dialog" aria-modal="true" aria-label="Preview Kuesioner">
+            <div class="preview-modal-header">
+                <h3>Preview Kuesioner (Baca Saja)</h3>
+                <button type="button" class="preview-modal-close" id="preview-modal-close" aria-label="Tutup preview">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                </button>
+            </div>
+            <div class="preview-modal-body pd-print-content" id="preview-modal-body"></div>
+        </div>
+    </div>
 
     <script>
         /* ===================== UTILITAS ANGKA BERSAMA ===================== */
@@ -6127,6 +6297,21 @@
             document.addEventListener('keydown', handleKey);
         }
 
+        (function () {
+            var overlay = document.getElementById('preview-modal');
+            var closeBtn = document.getElementById('preview-modal-close');
+            var body = document.getElementById('preview-modal-body');
+            if (!overlay || !closeBtn) return;
+            function closePreview() {
+                overlay.classList.remove('show');
+                document.body.style.overflow = '';
+                if (body) body.innerHTML = '';
+            }
+            closeBtn.addEventListener('click', closePreview);
+            overlay.addEventListener('mousedown', function (e) { if (e.target === overlay) closePreview(); });
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.classList.contains('show')) closePreview(); });
+        })();
+
         /* ===================== EKSPOR PDF (CETAK) KUESIONER KELUARGA ===================== */
         function pdfEsc(s) {
             return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
@@ -6168,7 +6353,7 @@
             return '<table class="pd-rincian-table">' + rows + '</table>';
         }
 
-        window.cetakPdfKeluarga = function (entry) {
+        function buildPdfHtmlKeluarga(entry) {
             var kd = entry.snapshotKeluarga || {};
             var sosek = entry.snapshotSosek || {};
             var idn = kd.identitas || {};
@@ -6285,6 +6470,10 @@
                 '</table>' +
 
                 '<h3>Kondisi Perumahan</h3>' +
+                '<table><tr><th>Kategori</th><th class="num">Keterangan</th></tr>' +
+                '<tr><td>Status Kepemilikan Rumah</td><td class="num">' + pdfEsc(per.statusKepemilikan || '-') + '</td></tr>' +
+                (per.hargaSewa ? '<tr><td>Perkiraan Harga Sewa/Disewakan per Tahun</td><td class="num">' + pdfRp(per.hargaSewa) + '</td></tr>' : '') +
+                '</table>' +
                 '<table><tr><th>Komponen</th><th>Bahan Utama</th><th>Kondisi</th></tr>' +
                 '<tr><td>Lantai</td><td>' + pdfEsc(per.lantaiBahan || '-') + '</td><td>' + pdfEsc(per.lantaiKondisi || '-') + '</td></tr>' +
                 '<tr><td>Dinding</td><td>' + pdfEsc(per.dindingBahan || '-') + '</td><td>' + pdfEsc(per.dindingKondisi || '-') + '</td></tr>' +
@@ -6305,6 +6494,13 @@
 
                 '<div class="pd-footer">Dokumen ini dihasilkan otomatis oleh Dasbor Instrumen Enumerator SE2026.</div>' +
                 '</div>';
+
+            return html;
+        }
+
+        window.cetakPdfKeluarga = function (entry) {
+            var html = buildPdfHtmlKeluarga(entry);
+            var idn = (entry.snapshotKeluarga || {}).identitas || {};
 
             var target = document.getElementById('print-area');
             if (!target) { showToast('Area cetak tidak ditemukan.'); return; }
@@ -6331,6 +6527,18 @@
                 /* Cadangan kalau event afterprint tidak terpicu di sebagian WebView/HP */
                 setTimeout(pulihkanJudul, 2000);
             }, 120);
+        };
+
+        /* Preview hasil kuesioner (baca-saja) tanpa memicu dialog cetak dan tanpa
+           masuk ke mode Edit -- dipakai oleh tombol "Preview" di halaman Riwayat. */
+        window.previewKeluarga = function (entry) {
+            var html = buildPdfHtmlKeluarga(entry);
+            var modal = document.getElementById('preview-modal');
+            var body = document.getElementById('preview-modal-body');
+            if (!modal || !body) { showToast('Fitur preview belum siap.'); return; }
+            body.innerHTML = html;
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
         };
 
         /* ===================== AUTO-SAVE DRAFT PER HALAMAN ===================== */
@@ -6633,11 +6841,16 @@
                     '<div class="riwayat-detail-row"><span class="k">Non-Pangan Rutin / Tahun</span><span class="v">' + fmtRpDetail(sosek.totalRutinTahun) + '</span></div>';
 
                 var per = sosek.perumahan || {};
+                var statusKepemilikanHtml = per.statusKepemilikan ?
+                    '<div class="riwayat-detail-row"><span class="k">Status Kepemilikan Rumah</span><span class="v">' + escapeHtml(per.statusKepemilikan) + '</span></div>' +
+                    (per.hargaSewa ? '<div class="riwayat-detail-row"><span class="k">Perkiraan Harga Sewa/Tahun</span><span class="v">' + fmtRpDetail(per.hargaSewa) + '</span></div>' : '')
+                    : '';
                 var perumahanHtml = (per.lantaiBahan || per.dindingBahan || per.atapBahan) ?
+                    statusKepemilikanHtml +
                     '<div class="riwayat-detail-row"><span class="k">Lantai</span><span class="v">' + escapeHtml(per.lantaiBahan || '-') + (per.lantaiKondisi ? ' (' + escapeHtml(per.lantaiKondisi) + ')' : '') + '</span></div>' +
                     '<div class="riwayat-detail-row"><span class="k">Dinding</span><span class="v">' + escapeHtml(per.dindingBahan || '-') + (per.dindingKondisi ? ' (' + escapeHtml(per.dindingKondisi) + ')' : '') + '</span></div>' +
                     '<div class="riwayat-detail-row"><span class="k">Atap</span><span class="v">' + escapeHtml(per.atapBahan || '-') + (per.atapKondisi ? ' (' + escapeHtml(per.atapKondisi) + ')' : '') + '</span></div>'
-                    : '<p class="riwayat-detail-empty">Kondisi perumahan belum didata.</p>';
+                    : (statusKepemilikanHtml || '<p class="riwayat-detail-empty">Kondisi perumahan belum didata.</p>');
 
                 var asetBergerak = (sosek.asetBergerak && sosek.asetBergerak.length) ? sosek.asetBergerak.map(function (label) {
                     if (label === 'Emas/Perhiasan' && sosek.emasGram) {
@@ -6681,6 +6894,8 @@
 
             function render() {
                 var list = all();
+                var searchEl = document.getElementById('riwayat-search');
+                var searchQuery = searchEl ? searchEl.value.trim().toLowerCase() : '';
                 var filterEl = document.getElementById('riwayat-filter');
                 var filter = filterEl ? filterEl.value : '';
                 var slsFilterEl = document.getElementById('riwayat-sls-filter');
@@ -6693,6 +6908,10 @@
                 var filtered = list.filter(function (e) {
                     if (filter && e.modul !== filter) return false;
                     if (slsFilter && (e.sls || '').trim() !== slsFilter) return false;
+                    if (searchQuery) {
+                        var haystack = [e.nama, e.sls, e.nourut].join(' ').toLowerCase();
+                        if (haystack.indexOf(searchQuery) === -1) return false;
+                    }
                     return true;
                 });
 
@@ -6723,7 +6942,7 @@
                         emptyEl.style.display = 'block';
                         var p = emptyEl.querySelector('p');
                         if (p) {
-                            p.innerHTML = (list.length > 0 && (filter || slsFilter))
+                            p.innerHTML = (list.length > 0 && (filter || slsFilter || searchQuery))
                                 ? 'Tidak ada riwayat untuk filter ini.'
                                 : 'Belum ada riwayat tersimpan. Buka salah satu instrumen, tekan Hitung, lalu tekan tombol <b>Simpan ke Riwayat</b>.';
                         }
@@ -6741,6 +6960,7 @@
                     var nilaiLabel = (e.modul === 'sosek' || e.modul === 'keluarga') ? 'Selisih / Bulan' : 'Bersih / Bulan';
                     var isKeluarga = (e.modul === 'keluarga' && e.snapshotKeluarga);
                     var extraActions = isKeluarga ?
+                        '    <button type="button" class="btn-outline-sm" data-riwayat-preview="' + e.id + '">Preview</button>' +
                         '    <button type="button" class="btn-outline-sm" data-riwayat-edit="' + e.id + '">Edit</button>' +
                         '    <button type="button" class="btn-outline-sm" data-riwayat-pdf="' + e.id + '">Ekspor PDF</button>' : '';
                     return '' +
@@ -6857,6 +7077,7 @@
                             if (formSosek) formSosek.reset();
                         }
                         if (typeof window.kwSyncAsetDetailSosek === 'function') window.kwSyncAsetDetailSosek();
+                        if (typeof window.kwSyncHargaSewaSosek === 'function') window.kwSyncHargaSewaSosek();
 
                         switchView('keluarga');
                         setTimeout(function () {
@@ -6876,10 +7097,28 @@
                     else showToast('Fitur ekspor PDF belum siap.');
                     return;
                 }
+                var btnPreview = e.target.closest('[data-riwayat-preview]');
+                if (btnPreview) {
+                    var idPv = btnPreview.getAttribute('data-riwayat-preview');
+                    var entryPv = getById(idPv);
+                    if (!entryPv) { showToast('Data tidak ditemukan.'); return; }
+                    if (typeof window.previewKeluarga === 'function') window.previewKeluarga(entryPv);
+                    else showToast('Fitur preview belum siap.');
+                    return;
+                }
             });
 
             var filterInput = document.getElementById('riwayat-filter');
             if (filterInput) filterInput.addEventListener('change', render);
+
+            var searchInput = document.getElementById('riwayat-search');
+            if (searchInput) {
+                var searchDebounce;
+                searchInput.addEventListener('input', function () {
+                    clearTimeout(searchDebounce);
+                    searchDebounce = setTimeout(render, 150);
+                });
+            }
 
             var slsFilterInput = document.getElementById('riwayat-sls-filter');
             if (slsFilterInput) slsFilterInput.addEventListener('change', render);
@@ -8086,11 +8325,13 @@
                 var nama = el('resp-nama-utp').value.trim() || '(Tanpa nama responden)';
                 var noUrut = el('resp-nourut-utp').value.trim() || '-';
                 var sls = el('resp-sls-utp').value.trim() || '-';
+                var tahunMulai = el('resp-tahun-mulai-utp').value.trim() || '-';
                 return [
                     '=== KALKULATOR PERTANIAN (Instrumen 01) ===',
                     'Nama: ' + nama,
                     'No. Urut Bangunan: ' + noUrut,
                     'SLS/RT: ' + sls,
+                    'Tahun Mulai/Beroperasi Usaha: ' + tahunMulai,
                     'Komoditas: ' + h.komoditasLabel,
                     '--- Pengeluaran / Tahun ---',
                     'Biaya Produksi: ' + formatRp(h.biayaProduksi),
@@ -8318,11 +8559,13 @@
                 var nama = el('resp-nama-buah').value.trim() || '(Tanpa nama responden)';
                 var noUrut = el('resp-nourut-buah').value.trim() || '-';
                 var sls = el('resp-sls-buah').value.trim() || '-';
+                var tahunMulai = el('resp-tahun-mulai-buah').value.trim() || '-';
                 return [
                     '=== KALKULATOR PEDAGANG BUAH KELILING (Instrumen 02) ===',
                     'Nama: ' + nama,
                     'No. Urut Bangunan: ' + noUrut,
                     'SLS/RT: ' + sls,
+                    'Tahun Mulai/Beroperasi Usaha: ' + tahunMulai,
                     'Komoditas: ' + h.namaBuah,
                     'Muatan: ' + h.muatanTotal.toLocaleString('id-ID') + ' kg (beli ' + h.buahBeli.toLocaleString('id-ID') + ' kg, sendiri ' + h.buahSendiri.toLocaleString('id-ID') + ' kg)',
                     '--- Per Sekali Jalan (Trip) ---',
@@ -8612,6 +8855,7 @@
                 var nama = el('resp-nama-usaha').value.trim() || '(Tanpa nama responden)';
                 var noUrut = el('resp-nourut-usaha').value.trim() || '-';
                 var sls = el('resp-sls-usaha').value.trim() || '-';
+                var tahunMulai = el('resp-tahun-mulai-usaha').value.trim() || '-';
                 var labelCara = (h.cara === 'bersih') ? 'Langsung Bersih' : ((h.model === 'jasa') ? 'Jasa' : 'Dagang');
                 var labelOmsetRingkas = (h.cara === 'bersih') ? 'Bersih Usaha (sebelum ops)' : 'Omset (Kotor)';
                 return [
@@ -8619,6 +8863,7 @@
                     'Nama: ' + nama,
                     'No. Urut Bangunan: ' + noUrut,
                     'SLS/RT: ' + sls,
+                    'Tahun Mulai/Beroperasi Usaha: ' + tahunMulai,
                     'Jenis Usaha: ' + h.jenisLabel + ' (Mode ' + labelCara + ')',
                     '--- Per Bulan ---',
                     'Biaya Produksi: ' + formatRupiah(h.modalBulanan),
@@ -9321,6 +9566,8 @@
                 let totalRutinTahun = pajakKendaraan + pajakRumah + hariRaya + uktTahun;
 
                 /* Blok F — Kondisi Perumahan */
+                let statusKepemilikan = el("status-kepemilikan-sosek").value;
+                let hargaSewa = getRawNumber(el("harga-sewa-sosek").value);
                 let lantaiBahan = el("lantai-bahan-sosek").value;
                 let lantaiKondisiEl = document.querySelector('input[name="lantai_kondisi_sosek"]:checked');
                 let lantaiKondisi = lantaiKondisiEl ? lantaiKondisiEl.value : '';
@@ -9442,6 +9689,7 @@
                     totalPengeluaranTahun: totalPengeluaranTahun,
                     selisihBulan: selisihBulan,
                     perumahan: {
+                        statusKepemilikan: statusKepemilikan, hargaSewa: hargaSewa,
                         lantaiBahan: lantaiBahan, lantaiKondisi: lantaiKondisi,
                         dindingBahan: dindingBahan, dindingKondisi: dindingKondisi,
                         atapBahan: atapBahan, atapKondisi: atapKondisi
@@ -9460,7 +9708,7 @@
                 "sabunmandi-harga-sosek", "sabuncuci-harga-sosek", "arisan-harian-sosek",
                 "internet-sosek", "lainnya-sosek",
                 "pajak-kendaraan-sosek", "pajak-rumah-sosek", "hariraya-sosek", "ukt-semester-sosek",
-                "lahan-harga-sosek", "rumah-harga-sosek"
+                "lahan-harga-sosek", "rumah-harga-sosek", "harga-sewa-sosek"
             ].forEach(function (id) {
                 el(id).addEventListener("keyup", function () { formatInputRibuan(this); });
             });
@@ -9490,6 +9738,24 @@
             });
             syncAsetDetailSosek();
             window.kwSyncAsetDetailSosek = syncAsetDetailSosek;
+
+            /* Blok F — tampilkan input "Perkiraan Harga Sewa/Disewakan" hanya jika
+               status kepemilikan rumah Milik Sendiri, Bebas Sewa, atau Sewa/Kontrak.
+               Diekspos ke window supaya bisa dipanggil ulang setelah draft dipulihkan. */
+            var STATUS_KEPEMILIKAN_MUNCULKAN_SEWA = ["Milik Sendiri", "Bebas Sewa", "Sewa/Kontrak"];
+            function syncHargaSewaSosek() {
+                var statusEl = el("status-kepemilikan-sosek");
+                var grupEl = el("grup-harga-sewa-sosek");
+                if (!statusEl || !grupEl) return;
+                if (STATUS_KEPEMILIKAN_MUNCULKAN_SEWA.indexOf(statusEl.value) !== -1) {
+                    grupEl.classList.remove("hide");
+                } else {
+                    grupEl.classList.add("hide");
+                }
+            }
+            el("status-kepemilikan-sosek").addEventListener("change", syncHargaSewaSosek);
+            syncHargaSewaSosek();
+            window.kwSyncHargaSewaSosek = syncHargaSewaSosek;
 
             /* Blok 0 & Blok D disinkronkan otomatis dari Blok 1 (identitas) dan
                Blok 3 (total pendapatan per anggota) milik KeluargaStore, supaya
@@ -9808,6 +10074,7 @@
             AutoSave.bind('sosek', el('form-sosek'));
             AutoSave.restore('sosek', el('form-sosek'));
             syncAsetDetailSosek();
+            syncHargaSewaSosek();
 
             el("btn-hitung-sosek").addEventListener("click", hitungSosek);
         }
